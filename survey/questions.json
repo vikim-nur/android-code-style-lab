@@ -1,5 +1,5 @@
 {
-  "id": "personal-style-review-v1",
+  "id": "personal-style-review-v2",
   "questions": [
     {
       "id": "F01",
@@ -21,14 +21,6 @@
             "max_line_length": "140"
           },
           "output": "fun message() {\n    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)\n    val selectedItem = repository.loadAvailableItemsForCurrentSession(\n        currentAccountIdentifier,\n        selectedCategoryIdentifier,\n        includeArchivedItems\n    ).firstOrNull()\n}\n"
-        },
-        {
-          "id": "3",
-          "label": "Без жёсткого лимита",
-          "settings": {
-            "max_line_length": "off"
-          },
-          "output": "fun message() {\n    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)\n    val selectedItem = repository.loadAvailableItemsForCurrentSession(currentAccountIdentifier, selectedCategoryIdentifier, includeArchivedItems).firstOrNull()\n}\n"
         }
       ]
     },
@@ -37,14 +29,6 @@
       "title": "Нужна последняя запятая в вызовах?",
       "input": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n",
       "options": [
-        {
-          "id": "1",
-          "label": "Сохранить оба вида",
-          "settings": {
-            "ktlint_standard_trailing-comma-on-call-site": "disabled"
-          },
-          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
-        },
         {
           "id": "2",
           "label": "Всегда с запятой",
@@ -74,14 +58,6 @@
       "title": "Нужна последняя запятая в объявлениях?",
       "input": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n",
       "options": [
-        {
-          "id": "1",
-          "label": "Сохранить оба вида",
-          "settings": {
-            "ktlint_standard_trailing-comma-on-declaration-site": "disabled"
-          },
-          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
-        },
         {
           "id": "2",
           "label": "Всегда с запятой",
@@ -182,14 +158,6 @@
       "input": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n        Event.Refresh -> refresh()\n        Event.Close -> close()\n    }\n}\n",
       "options": [
         {
-          "id": "1",
-          "label": "Оставить выбор автору",
-          "settings": {
-            "ktlint_standard_blank-line-between-when-conditions": "disabled"
-          },
-          "output": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n        Event.Refresh -> refresh()\n        Event.Close -> close()\n    }\n}\n"
-        },
-        {
           "id": "2",
           "label": "Добавлять пустую строку",
           "settings": {
@@ -211,27 +179,41 @@
     },
     {
       "id": "F08",
-      "title": "Короткий intent автоматически собирать в строку?",
-      "input": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n",
+      "title": "До какой длины собирать короткий intent в строку?",
+      "input": "private fun first() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n\nprivate fun second() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n",
       "options": [
         {
           "id": "1",
-          "label": "Только сохранять допустимую запись",
+          "label": "До 100 символов всей строки",
           "settings": {
-            "ktlint_nur_compact-intent": "disabled"
+            "ktlint_nur_compact-intent": "enabled",
+            "nur_compact_intent_max_line_length": "100",
+            "max_line_length": "140"
           },
-          "output": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n"
+          "output": "private fun first() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n\nprivate fun second() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n"
         },
         {
           "id": "2",
-          "label": "Короткий intent собирать в строку",
+          "label": "До 120 символов всей строки",
           "settings": {
             "ktlint_nur_compact-intent": "enabled",
-            "nur_compact_intent_max_line_length": "120"
+            "nur_compact_intent_max_line_length": "120",
+            "max_line_length": "140"
           },
-          "output": "private fun back() = intent { postSideEffect(Effect.Back) }\n"
+          "output": "private fun first() = intent { postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\") }\n\nprivate fun second() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n"
+        },
+        {
+          "id": "3",
+          "label": "До 140 символов всей строки",
+          "settings": {
+            "ktlint_nur_compact-intent": "enabled",
+            "nur_compact_intent_max_line_length": "140",
+            "max_line_length": "140"
+          },
+          "output": "private fun first() = intent { postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\") }\n\nprivate fun second() = intent { postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\") }\n"
         }
-      ]
+      ],
+      "explanation": "Порог относится ко всей итоговой строке: отступы, объявление функции, intent, выражение внутри и закрывающие скобки. Условия: одно выражение в теле, нет комментариев и явных параметров лямбды, внутреннее выражение однострочное. Текущий кандидат — 120. Если общий max_line_length меньше, действует меньший лимит. Это порог схлопывания многострочного блока; уже однострочный intent это узкое правило само по себе обратно не разворачивает."
     },
     {
       "id": "F09",

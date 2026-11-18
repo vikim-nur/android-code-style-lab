@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "survey_version": "personal-style-review-v2",
+  "options": 19,
+  "new_format_cases": [
+    {
+      "case": "F08-100",
+      "config_sha256": "86b62f80548d0d8ec315fbea3f80722ce00f28b41773cc1ccb94d37ff8991935",
+      "output_sha256": "168e9b930c91d5bd8ac1cc580da6170ce85bb100b3643f9b28f3649a8b9bd4e6",
+      "stable": true,
+      "check_exit": 0
+    },
+    {
+      "case": "F08-120",
+      "config_sha256": "c310e79b74bc48fb0d0fa3a2544cbbf3882ceb3496a6fa49f4a8a6f3f2362af0",
+      "output_sha256": "1169721bed55b0b26840da4badd97fd26b01c65675ce5ea930aca34a3257aca6",
+      "stable": true,
+      "check_exit": 0
+    },
+    {
+      "case": "F08-140",
+      "config_sha256": "ecfd36ef60e073eafbfff509361ecab195b4b2b9835f6f7c8f975a87430711be",
+      "output_sha256": "458d0c57fc585bd251216519a1dea2d96daba8d01a6a4db4974581c5f4775a3d",
+      "stable": true,
+      "check_exit": 0
+    },
+    {
+      "case": "boundary-119",
+      "config_sha256": "c310e79b74bc48fb0d0fa3a2544cbbf3882ceb3496a6fa49f4a8a6f3f2362af0",
+      "output_sha256": "4f747f57fcc99c1ab005edbc4b493ab46f8f20a89d5e44932d94e64ff2aabd1c",
+      "stable": true,
+      "check_exit": 0
+    },
+    {
+      "case": "boundary-120",
+      "config_sha256": "c310e79b74bc48fb0d0fa3a2544cbbf3882ceb3496a6fa49f4a8a6f3f2362af0",
+      "output_sha256": "559e63232f451014cecf68c16152cd5ad59653500c45a5798b63690213eb07db",
+      "stable": true,
+      "check_exit": 0
+    },
+    {
+      "case": "boundary-121",
+      "config_sha256": "c310e79b74bc48fb0d0fa3a2544cbbf3882ceb3496a6fa49f4a8a6f3f2362af0",
+      "output_sha256": "00ce1be574829fa4cb80945dccf6b526a95ac5fd227ddf2cf6ab9e2bf369a979",
+      "stable": true,
+      "check_exit": 0
+    },
+    {
+      "case": "shared-limit-100",
+      "config_sha256": "0ea38981e6acd172b298bddf2ba6d70c1c2084619e9a77c245efe6a0ed6df037",
+      "output_sha256": "667b4ddc55ed539bb67fed0716d5ed3a860c2907ad54968d8ea9edf2e4934383",
+      "stable": true,
+      "check_exit": 0
+    }
+  ],
+  "existing_variants_unchanged": true,
+  "implementation_changed": false
+}
