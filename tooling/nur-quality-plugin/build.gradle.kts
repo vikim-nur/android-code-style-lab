@@ -36,8 +36,14 @@ val nurRulesJar by tasks.registering(Jar::class) {
     destinationDirectory.set(layout.buildDirectory.dir("rules"))
     from(nurRules.output)
 }
+// Package the candidate profile directly from the shared config source.
+sourceSets.named("main") { resources.exclude("quality/editorconfig") }
 tasks.processResources {
     from(nurRulesJar) { into("quality") }
+    from("../../config/profiles/nur-reference.editorconfig") {
+        into("quality")
+        rename { "editorconfig" }
+    }
 }
 gradlePlugin {
     plugins {

@@ -1,6 +1,10 @@
+import java.util.Properties
+
 plugins { kotlin("jvm") version "2.2.21" }
 group = "kg.nur.quality"
-version = "0.1.0-prototype"
+version = Properties().apply {
+    file("../nur-quality-plugin/src/main/resources/quality/versions.properties").inputStream().use { load(it) }
+}.getProperty("release")
 repositories { mavenCentral() }
 kotlin { jvmToolchain(21) }
 java {

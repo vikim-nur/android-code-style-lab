@@ -1,0 +1,128 @@
+{
+  "version": "0.2.0-candidate.1",
+  "engine": "ktlint 1.8.0",
+  "rule_count": 8,
+  "custom_enabled_A": 6,
+  "custom_enabled_B": 0,
+  "synthetic_files_per_profile": 22,
+  "synthetic_profiles": [
+    {
+      "profile": "nur-reference",
+      "files": 22,
+      "format_exit": 0,
+      "repeat_stable": true,
+      "check_exit": 0,
+      "hashes": {
+        "F04.kt": "c79adf4b390e6f08c04f79e2f8161ff1c5f204e305194246fc1a57d895da5975",
+        "F10.kt": "df65fd2b548759dcbae7afae934842fbfac3a8da3107221480f20c2b73cd269f",
+        "CommaControls.kt": "0548f324054318086c4cdcde72feca325a23b894b04b78f88096e759c2425f2c",
+        "WhenComment.kt": "7a45e46401cc691f82bb9cb2737c420d4ea604270af9156d3d904e13e7b5ca56",
+        "NestedExpanded.kt": "02809b08ac7e44519c699890f11d973ebff301b57b0a82bfbc9de7a0e0ea76b1",
+        "F01.kt": "030ecd3589758c449accd138e85392c271ffd91b9cf63a4dece275c7c2c19e48",
+        "Condition.kt": "3e143df14048859b4a692c5d7b8adfccc8e5ede51e3ce7523421392f09adc7fe",
+        "IntentGuards.kt": "8c3b455b5a1e1543a79eee2ed14f42ab57681f1217c85fb0f17785e458118dda",
+        "F05.kt": "c72247eaba875a30ab0f41389dfa8f703844671d9a69026feadfdec7008eabd4",
+        "F08.kt": "f5e861f12f60eeda7d1f708240395cdf64ea2813bcedcfa1c95c97befcd57afa",
+        "NestedCompact.kt": "eab3d6f32a3e3ccbe9fba68ad3819915c844ca2b81a975fd478a9908e267c0ce",
+        "F05-context-0.kt": "b56ab252141b78d35eec296fe3d2540308526581b1526575981cc600a27a6f18",
+        "F04-context-0.kt": "837e765098763dbd5811dc619ac753e82e92c2df87f701fa7bf61c65062d27ef",
+        "CollectionAndEnum.kt": "4ad8372489b1c5daae62dd49aaf62832450214a982bba8cb99eca627cbf0288f",
+        "F09.kt": "6ef6a3ab647282c534b55b56183a546aaba52cf8b924cab6307214904e453a81",
+        "F02.kt": "e7e9734ac60eba1fc166cf8cc55ec8dd72f5de7de86b0d0407bb89778c020883",
+        "ParametersAndKdoc.kt": "d87f99d8fe7899744e27c3ec0a4407c9c141cbd52755e0cfdfc984d7806b71f9",
+        "F06.kt": "b6fe73ef0ff8e46bb17d427f4ff326b324cba2c0ed1a5ebed1a685875e2b8ff2",
+        "F07.kt": "853fe27fceab04f03506b8680216b9cc6ce436a2853595c37e8a947be575bd37",
+        "WhenNested.kt": "5b3998740b94de416c57d32986b1daeebba42b511972641dccebcfff09e65deb",
+        "TypeSpacing.kt": "c3d2296e6b7e6249dbd0f57b8493fc3ddb3fbc174b3c6884ad5aa5c06da7d77f",
+        "F03.kt": "8dffee7c1e29b4e940dc453c5694a7f29472274db69b0f21ce721660770fccab"
+      },
+      "timing_seconds": {
+        "format": 0.796,
+        "repeat": 0.695,
+        "check": 0.701
+      },
+      "config_sha256": "7ee8f0e0b4e74ab26cabbb6c115828c0689155826fcba57617f272cda1090b56"
+    },
+    {
+      "profile": "ktlint-official",
+      "files": 22,
+      "format_exit": 0,
+      "repeat_stable": true,
+      "check_exit": 0,
+      "hashes": {
+        "F04.kt": "2083eb3ebf6ebbeff4fddfa1c066c306ceceaa16b136b83511290b9c60918e8c",
+        "F10.kt": "f71083d1ca70bea7cce38fc05b3a18089352e5d32dec4ebc4f8dac533817dfca",
+        "CommaControls.kt": "ff7a537537157f964ac011cf224f463d54368f0ce8b110fb0b2d8106a0660037",
+        "WhenComment.kt": "a540e227e4ff10462aff548ef23bfdaac37466c01d96ccbd79a8373489c75edd",
+        "NestedExpanded.kt": "2799a83534c5114b32e08b043307b619aed8dd43518726bd0abd869d644c241b",
+        "F01.kt": "3697d98489096a0448a4b7f9cc719ccde76929d573ff8fbf30c20cc443f7c02e",
+        "Condition.kt": "467b55425704f99049591fdc608a75ea34cabe0538203e167f8a9d06e5ab2b82",
+        "IntentGuards.kt": "fe6cf2e7565f2d77dda04ecd95c3cc7fff5948b4c4f558d6955f7b224a5b6a3a",
+        "F05.kt": "5a087238e50fe7b5d298a6041b17c0940c2101c1a01fff327b9d32f859b80784",
+        "F08.kt": "dc6f123de593bf58bf1dfb9c182e6d423e1cc51c2ea970a6158797e37cd566c3",
+        "NestedCompact.kt": "2799a83534c5114b32e08b043307b619aed8dd43518726bd0abd869d644c241b",
+        "F05-context-0.kt": "74b123476b0a60775f99b8d0b9c25d39bad59800cf33e75a90b820c1bb0dbd08",
+        "F04-context-0.kt": "8df22ccd95c872ff12dc8910e22c4366f700770c101100f0e5c5a364ef6b8be5",
+        "CollectionAndEnum.kt": "71f60cca47ecbd509060d04ee59320090f61641414ae47dfcb25eedca2abc767",
+        "F09.kt": "5e5035b5ed730066c86993e9d2105775912ed092ba519100a6d50edff17813b0",
+        "F02.kt": "1c424d0519ed828d1dab971ed07d1945298dc8310afe4be837fd690d0e1a0c0b",
+        "ParametersAndKdoc.kt": "bb171d08523a2ca19f15a5f6052d0bef30955bbbac006501c7f0fddbb61f19d0",
+        "F06.kt": "b6fe73ef0ff8e46bb17d427f4ff326b324cba2c0ed1a5ebed1a685875e2b8ff2",
+        "F07.kt": "1b90dff91af80ed116e986f1ea10a280f1af6e25c6631bbd152c21bfcdff86f6",
+        "WhenNested.kt": "e3d43180e68bcefd5542cad39921492ebb2c06079a7cd85f5f7130f977e782d4",
+        "TypeSpacing.kt": "c5868b978dfb926bf8264678a643ae3d2d6b72b42ad52adc284c852ef93c7d19",
+        "F03.kt": "db908b07ec9309fc998c20fe087e60b05a0c1a0a089e3365154ff67770827d5c"
+      },
+      "timing_seconds": {
+        "format": 0.742,
+        "repeat": 0.683,
+        "check": 0.688
+      },
+      "config_sha256": "30726c4bc8ed7f3df3056aa61374e5e0199c7a329e4619725c88f6a396a7f0f6"
+    }
+  ],
+  "corpus": [
+    {
+      "profile": "nur-reference",
+      "files": 567,
+      "changed_files": 537,
+      "changed_without_final_newline": 444,
+      "repeat_stable": true,
+      "final_findings": 4,
+      "remaining_rule_counts": {
+        "standard:max-line-length": 4
+      }
+    },
+    {
+      "profile": "ktlint-official",
+      "files": 567,
+      "changed_files": 563,
+      "changed_without_final_newline": 548,
+      "repeat_stable": true,
+      "final_findings": 11,
+      "remaining_rule_counts": {
+        "standard:max-line-length": 11
+      }
+    }
+  ],
+  "new_adapters_token_audit": {
+    "token_audit_cases": 567,
+    "token_audit_scope": "new comma/spacing adapters vs same A profile with those three additions disabled; ignore whitespace and lexically trailing commas only",
+    "plugin_engine_comparison_cases": 44,
+    "plugin_rules_loaded": 8,
+    "actual_full_ide_tested": false,
+    "status": "passed"
+  },
+  "strict_comma_true_control": {
+    "status": "passed",
+    "files": 22,
+    "strict_true_and_custom_nested_wrapping_compatible": true,
+    "repeat_stable": true,
+    "check_exit": 0
+  },
+  "full_ide_ui_tested": false,
+  "android_pilot_or_ci_tested": false,
+  "status": "candidate_for_review_not_approved",
+  "gradle_consumer_sync_format_check": true,
+  "transport_embedded_profile_equals_canonical_A": true
+}

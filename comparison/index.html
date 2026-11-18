@@ -1,0 +1,453 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Два готовых кандидата форматирования Kotlin</title><style>body{font:17px/1.6 system-ui;max-width:1300px;margin:32px auto;padding:0 20px;color:#202733;background:#f4f7fb}article,.panel{background:white;padding:22px;border:1px solid #d8e0e8;border-radius:12px;margin:20px 0}h1{line-height:1.2}pre{font:14px/1.5 monospace;overflow:auto;padding:16px;background:#edf1f6;max-height:800px}.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:18px}.pair>div{min-width:0}a{color:#1857a4}button{font:inherit;padding:10px 16px}textarea{width:100%;min-height:90px;box-sizing:border-box;font:inherit}label{display:block;margin:12px 0}table{border-collapse:collapse}td,th{padding:10px;text-align:left;border-bottom:1px solid #ccd5de}</style><h1>Сначала готовые профили — затем выбор команды</h1><p>Версия 0.2.0-candidate.1 · ktlint 1.8.0 · кандидат для обсуждения.</p>
+<div class="panel"><b>A — стиль по эталону.</b> Оформление на основе разобранных шаблонов с явно выбранными нормами: 140 символов, параметры объявлений с четырёх — столбиком, Modifier с двух вызовов, без последних запятых, пустая строка после многострочной ветки when. Компактные вложенные лямбды сохраняются; короткий intent — до 120. Это конкретное предложение по эталону: там, где исходники различаются, мы выбрали один вариант.</div>
+<div class="panel"><b>B — штатный ktlint_official.</b> Лимит 120 задан явно для сравнения. Применяются штатные правила оформления; наши восемь правил отключены. Это поддерживаемый вариант ktlint, а не заявление о единственно правильном стиле или точном совпадении с Google Style.</div>
+<p><a href="../artifacts/nur-style-rules-0.2.0-candidate.1.jar" download>Скачать JAR</a> · <a href="../artifacts/formatter-candidates-0.2.0-candidate.1.zip" download>Скачать весь комплект</a> · <a href="../config/profiles/nur-reference.editorconfig">Конфиг A</a> · <a href="../config/profiles/ktlint-official.editorconfig">Конфиг B</a> · <a href="https://github.com/vikim-nur/android-code-style-lab/blob/main/docs/candidates.md">Правила, ограничения и запуск</a></p><h2>Реальные различия на одинаковых входах</h2><p>Все результаты ниже получены форматтером. Различаются 21 из 22 учебных файлов; совпавшие результаты не дублируем. Полные файлы доступны по ссылкам. Изменяемые варианты не меняют алгоритм программы намеренно, но проверка formatter не заменяет компиляцию и тесты приложения.</p><article><details><summary><b>CollectionAndEnum.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>enum class Mode {
+    FIRST,
+    SECOND
+}
+
+@Options(values = [&quot;one&quot;, &quot;two&quot;])
+class Sample
+</pre></div><div><h3>B · ktlint_official</h3><pre>enum class Mode {
+    FIRST,
+    SECOND,
+}
+
+@Options(values = [&quot;one&quot;, &quot;two&quot;])
+class Sample
+</pre></div></div><p><a href="../examples/candidates/input/CollectionAndEnum.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/CollectionAndEnum.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/CollectionAndEnum.kt">B .kt</a></p></details></article><article><details><summary><b>CommaControls.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>data class Options(val title: String, val enabled: Boolean)
+
+fun render() {
+    display(
+        title,
+        enabled
+    )
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>data class Options(
+    val title: String,
+    val enabled: Boolean,
+)
+
+fun render() {
+    display(
+        title,
+        enabled,
+    )
+}
+</pre></div></div><p><a href="../examples/candidates/input/CommaControls.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/CommaControls.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/CommaControls.kt">B .kt</a></p></details></article><article><details><summary><b>Condition.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun icon(success: Boolean) {
+    val icon = if (success) Icons.Success
+    else Icons.Warning
+    display(icon)
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun icon(success: Boolean) {
+    val icon =
+        if (success) {
+            Icons.Success
+        } else {
+            Icons.Warning
+        }
+    display(icon)
+}
+</pre></div></div><p><a href="../examples/candidates/input/Condition.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/Condition.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/Condition.kt">B .kt</a></p></details></article><article><details><summary><b>F01.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun message() {
+    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)
+    val selectedItem = repository.loadAvailableItemsForCurrentSession(
+        currentAccountIdentifier,
+        selectedCategoryIdentifier,
+        includeArchivedItems
+    ).firstOrNull()
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun message() {
+    val displayMessage =
+        cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)
+    val selectedItem =
+        repository
+            .loadAvailableItemsForCurrentSession(
+                currentAccountIdentifier,
+                selectedCategoryIdentifier,
+                includeArchivedItems,
+            ).firstOrNull()
+}
+</pre></div></div><p><a href="../examples/candidates/input/F01.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F01.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F01.kt">B .kt</a></p></details></article><article><details><summary><b>F02.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun card() {
+    renderCard(
+        title = title,
+        count = count,
+        onClick = onClick
+    )
+}
+
+fun event() {
+    Analytics.send(Event(&quot;click&quot;) {
+        putString(&quot;target&quot;, target)
+    })
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun card() {
+    renderCard(
+        title = title,
+        count = count,
+        onClick = onClick,
+    )
+}
+
+fun event() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        },
+    )
+}
+</pre></div></div><p><a href="../examples/candidates/input/F02.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F02.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F02.kt">B .kt</a></p></details></article><article><details><summary><b>F03.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>data class CardOptions(val title: String, val count: Int, val enabled: Boolean)
+
+fun event() {
+    Analytics.send(Event(&quot;click&quot;) {
+        putString(&quot;target&quot;, target)
+    })
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean,
+)
+
+fun event() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        },
+    )
+}
+</pre></div></div><p><a href="../examples/candidates/input/F03.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F03.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F03.kt">B .kt</a></p></details></article><article><details><summary><b>F04-context-0.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun installListener() {
+    view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView&lt;*&gt;?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            selectItem(position)
+        }
+        override fun onNothingSelected(parent: AdapterView&lt;*&gt;?) = Unit
+    }
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun installListener() {
+    view.onItemSelectedListener =
+        object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView&lt;*&gt;?,
+                view: View?,
+                position: Int,
+                id: Long,
+            ) {
+                selectItem(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView&lt;*&gt;?) = Unit
+        }
+}
+</pre></div></div><p><a href="../examples/candidates/input/F04-context-0.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F04-context-0.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F04-context-0.kt">B .kt</a></p></details></article><article><details><summary><b>F04.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun renderCard(
+    title: String,
+    count: Int,
+    enabled: Boolean,
+    onClick: () -&gt; Unit
+) {
+    show(title)
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun renderCard(
+    title: String,
+    count: Int,
+    enabled: Boolean,
+    onClick: () -&gt; Unit,
+) {
+    show(title)
+}
+</pre></div></div><p><a href="../examples/candidates/input/F04.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F04.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F04.kt">B .kt</a></p></details></article><article><details open><summary><b>F05-context-0.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>class ContentViewModel @Inject constructor(
+    repository: Repository,
+    stateStore: StateStore,
+    savedState: SavedStateHandle,
+    logger: Logger
+) : BaseViewModel&lt;ContentState&gt;(ContentState()) {
+}
+
+class RowAdapter(
+    private val imageLoader: ImageLoader,
+    private val formatter: Formatter,
+    private val onClick: (Row) -&gt; Unit,
+    private val onLongClick: (Row) -&gt; Unit
+) : ListAdapter&lt;Row, RowAdapter.Holder&gt;(RowDiff()) {
+}
+
+data class RowModel(
+    val id: Long,
+    val title: String,
+    val subtitle: String,
+    val enabled: Boolean
+) : BaseModel()
+</pre></div><div><h3>B · ktlint_official</h3><pre>class ContentViewModel
+    @Inject
+    constructor(
+        repository: Repository,
+        stateStore: StateStore,
+        savedState: SavedStateHandle,
+        logger: Logger,
+    ) : BaseViewModel&lt;ContentState&gt;(ContentState()) {
+    }
+
+class RowAdapter(
+    private val imageLoader: ImageLoader,
+    private val formatter: Formatter,
+    private val onClick: (Row) -&gt; Unit,
+    private val onLongClick: (Row) -&gt; Unit,
+) : ListAdapter&lt;Row, RowAdapter.Holder&gt;(RowDiff()) {
+}
+
+data class RowModel(
+    val id: Long,
+    val title: String,
+    val subtitle: String,
+    val enabled: Boolean,
+) : BaseModel()
+</pre></div></div><p><a href="../examples/candidates/input/F05-context-0.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F05-context-0.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F05-context-0.kt">B .kt</a></p></details></article><article><details><summary><b>F05.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean,
+    val subtitle: String
+)
+</pre></div><div><h3>B · ktlint_official</h3><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean,
+    val subtitle: String,
+)
+</pre></div></div><p><a href="../examples/candidates/input/F05.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F05.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F05.kt">B .kt</a></p></details></article><article><details open><summary><b>F07.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            closeKeyboard()
+            openDetails()
+        }
+
+        Event.Back -&gt; goBack()
+        Event.Refresh -&gt; refresh()
+        Event.Close -&gt; close()
+    }
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            closeKeyboard()
+            openDetails()
+        }
+
+        Event.Back -&gt; {
+            goBack()
+        }
+
+        Event.Refresh -&gt; {
+            refresh()
+        }
+
+        Event.Close -&gt; {
+            close()
+        }
+    }
+}
+</pre></div></div><p><a href="../examples/candidates/input/F07.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F07.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F07.kt">B .kt</a></p></details></article><article><details><summary><b>F08.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>private fun back() = intent { postSideEffect(Effect.Back) }
+</pre></div><div><h3>B · ktlint_official</h3><pre>private fun back() =
+    intent {
+        postSideEffect(Effect.Back)
+    }
+</pre></div></div><p><a href="../examples/candidates/input/F08.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F08.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F08.kt">B .kt</a></p></details></article><article><details><summary><b>F09.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>import androidx.compose.ui.Modifier
+
+fun card(modifier: Modifier) {
+    val objectChain = Modifier
+        .fillMaxSize()
+        .padding(8)
+    val parameterChain = modifier
+        .fillMaxSize()
+        .padding(8)
+    val normalizedText = text.trim().lowercase()
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>import androidx.compose.ui.Modifier
+
+fun card(modifier: Modifier) {
+    val objectChain = Modifier.fillMaxSize().padding(8)
+    val parameterChain = modifier.fillMaxSize().padding(8)
+    val normalizedText = text.trim().lowercase()
+}
+</pre></div></div><p><a href="../examples/candidates/input/F09.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F09.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F09.kt">B .kt</a></p></details></article><article><details><summary><b>F10.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>class SummaryViewModel @Inject constructor(private val repository: Repository) : BaseViewModel&lt;SummaryState&gt;(SummaryState()) {
+}
+
+class RowAdapter(private val onClick: (Row) -&gt; Unit) :
+    ListAdapter&lt;Row, RowAdapter.Holder&gt;(
+        RowDiff()
+    ) {
+    inner class Holder(private val binding: RowBinding) : RecyclerView.ViewHolder(binding.root)
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>class SummaryViewModel
+    @Inject
+    constructor(
+        private val repository: Repository,
+    ) : BaseViewModel&lt;SummaryState&gt;(SummaryState()) {
+    }
+
+class RowAdapter(
+    private val onClick: (Row) -&gt; Unit,
+) : ListAdapter&lt;Row, RowAdapter.Holder&gt;(
+        RowDiff(),
+    ) {
+    inner class Holder(
+        private val binding: RowBinding,
+    ) : RecyclerView.ViewHolder(binding.root)
+}
+</pre></div></div><p><a href="../examples/candidates/input/F10.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/F10.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/F10.kt">B .kt</a></p></details></article><article><details><summary><b>IntentGuards.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>private fun simple() = intent { postSideEffect(Effect.Back) }
+
+private fun explained() = intent {
+    // Keep the explanation.
+    postSideEffect(Effect.Back)
+}
+
+private fun multiple() = intent {
+    first()
+    second()
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>private fun simple() =
+    intent {
+        postSideEffect(Effect.Back)
+    }
+
+private fun explained() =
+    intent {
+        // Keep the explanation.
+        postSideEffect(Effect.Back)
+    }
+
+private fun multiple() =
+    intent {
+        first()
+        second()
+    }
+</pre></div></div><p><a href="../examples/candidates/input/IntentGuards.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/IntentGuards.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/IntentGuards.kt">B .kt</a></p></details></article><article><details open><summary><b>NestedCompact.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun track() {
+    Analytics.send(Event(&quot;click&quot;) {
+        putString(&quot;target&quot;, target)
+    })
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun track() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        },
+    )
+}
+</pre></div></div><p><a href="../examples/candidates/input/NestedCompact.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/NestedCompact.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/NestedCompact.kt">B .kt</a></p></details></article><article><details><summary><b>NestedExpanded.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun track() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        }
+    )
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun track() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        },
+    )
+}
+</pre></div></div><p><a href="../examples/candidates/input/NestedExpanded.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/NestedExpanded.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/NestedExpanded.kt">B .kt</a></p></details></article><article><details><summary><b>ParametersAndKdoc.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>/** Displays a card. */
+fun card(
+    title: String,
+    count: Int,
+    enabled: Boolean,
+    onClick: () -&gt; Unit
+) {
+    render(title, count, enabled, onClick)
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>/** Displays a card. */
+fun card(
+    title: String,
+    count: Int,
+    enabled: Boolean,
+    onClick: () -&gt; Unit,
+) {
+    render(title, count, enabled, onClick)
+}
+</pre></div></div><p><a href="../examples/candidates/input/ParametersAndKdoc.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/ParametersAndKdoc.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/ParametersAndKdoc.kt">B .kt</a></p></details></article><article><details><summary><b>TypeSpacing.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>class Sample(val title: String) : Base()
+
+interface Left : Right
+</pre></div><div><h3>B · ktlint_official</h3><pre>class Sample(
+    val title: String,
+) : Base()
+
+interface Left : Right
+</pre></div></div><p><a href="../examples/candidates/input/TypeSpacing.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/TypeSpacing.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/TypeSpacing.kt">B .kt</a></p></details></article><article><details><summary><b>WhenComment.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            prepare()
+            open()
+        }
+        // Keep this explanation attached to Close.
+        Event.Close -&gt; close()
+        Event.Back -&gt; back()
+    }
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            prepare()
+            open()
+        }
+
+        // Keep this explanation attached to Close.
+        Event.Close -&gt; {
+            close()
+        }
+
+        Event.Back -&gt; {
+            back()
+        }
+    }
+}
+</pre></div></div><p><a href="../examples/candidates/input/WhenComment.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/WhenComment.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/WhenComment.kt">B .kt</a></p></details></article><article><details><summary><b>WhenNested.kt</b></summary><div class="pair"><div><h3>A · по эталону</h3><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            when (state) {
+                State.Ready -&gt; display()
+                State.Empty -&gt; hide()
+            }
+        }
+
+        Event.Close -&gt; close()
+        Event.Back -&gt; back()
+    }
+}
+</pre></div><div><h3>B · ktlint_official</h3><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            when (state) {
+                State.Ready -&gt; display()
+                State.Empty -&gt; hide()
+            }
+        }
+
+        Event.Close -&gt; {
+            close()
+        }
+
+        Event.Back -&gt; {
+            back()
+        }
+    }
+}
+</pre></div></div><p><a href="../examples/candidates/input/WhenNested.kt">Исходный ввод</a> · <a href="../examples/candidates/nur-reference/WhenNested.kt">A .kt</a> · <a href="../examples/candidates/ktlint-official/WhenNested.kt">B .kt</a></p></details></article><details><summary>Совпавшие файлы (1)</summary><p>F06.kt</p></details><p><a href="https://github.com/vikim-nur/android-code-style-lab/blob/main/docs/reference-coverage.md">Контракт по всем 23 наблюдениям: что исправляется, что лишь допускается</a></p><h2>Что проверили</h2><p>На 22 учебных файлах каждый профиль прошёл format, повтор без изменений и чистый check. Загрузчик и engine настоящего IDE-плагина ktlint 0.31.0 дали тот же результат в 44 случаях. Это тест движка, не повторная проверка шортката в работающей Studio.</p>
+<table><tr><th>На локальном снимке 567 файлов</th><th>A</th><th>B</th></tr><tr><td>Изменены, без одного лишь EOF</td><td>444</td><td>548</td></tr><tr><td>Замечания после format</td><td>4 о длине строки</td><td>11 о длине строки</td></tr><tr><td>Повтор стабильный</td><td>Да</td><td>Да</td></tr></table><p>Оставшиеся длины строк не исправлены автоматически; это открытые замечания для ручного разбора. Исходный снимок не изменялся. Данные не означают, что 444 или 548 файлов содержали дефекты: это объём изменения оформления. Проверка токенов новых трёх правил на 567 файлах прошла относительно того же профиля без них: исключены пробелы и завершающие запятые, остальные токены совпали.</p><p><a href="../docs/candidate-verification.json">Результаты проверки</a> · <a href="../artifacts/manifest.json">Контрольные суммы JAR, конфигов и исходников</a></p>
+<h2>Предварительный выбор профиля</h2><p>Можно выбрать целый вариант или описать конкретную комбинацию для следующего прогона. Это не принятие стандарта и не автоматическое обновление приложений.</p><label>Имя (необязательно) <input id="respondent" type="text"></label><p id="progress"></p>
+<label><input type="radio" name="PROFILE" value="1"> A — по эталону</label><label><input type="radio" name="PROFILE" value="2"> B — штатный ktlint_official</label><label><input type="radio" name="PROFILE" value="3"> Нужны конкретные изменения — опишу ниже</label>
+<label for="comment-PROFILE">Какие детали оставить или изменить?</label><textarea id="comment-PROFILE"></textarea><label for="baseline-comment">Дополнительный комментарий</label><textarea id="baseline-comment"></textarea>
+<p>Форма ничего не отправляет автоматически. Скачайте JSON или откройте черновик Issue, проверьте его и отправьте вручную. Ответ в Issue будет публичным; скачивание JSON работает без аккаунта.</p><button id="download" type="button">Скачать ответы</button> <label>Восстановить JSON <input id="upload" type="file" accept="application/json,.json"></label><button id="github-draft" type="button">Открыть черновик ответа на GitHub</button><p id="message" role="status"></p><script>const spec={"id": "formatter-candidates-v1", "questions": [{"id": "PROFILE", "options": [{"id": "1", "label": "A — по эталону"}, {"id": "2", "label": "B — штатный ktlint_official"}, {"id": "3", "label": "Нужны конкретные изменения"}]}]};
+function collect(){const answers={};for(const q of spec.questions){const checked=document.querySelector('input[name="'+q.id+'"]:checked');answers[q.id]={choice:checked?checked.value:null,comment:document.getElementById('comment-'+q.id).value};}return {schema:1,form:spec.id,respondent:document.getElementById('respondent').value,baseline_comment:document.getElementById('baseline-comment').value,answers};}
+function progress(){const n=Object.values(collect().answers).filter(x=>x.choice!==null).length;document.getElementById('progress').textContent='Выбрано ответов: '+n+' из '+spec.questions.length+'. Можно сохранить неполный ответ.';}
+function validate(d){if(!d||d.form!==spec.id||d.schema!==1||typeof d.answers!=='object'||d.answers===null||typeof d.respondent!=='string'||typeof d.baseline_comment!=='string')throw Error('Это ответы от другой формы или некорректный файл.');for(const q of spec.questions){const a=d.answers[q.id];if(!a||typeof a.comment!=='string'||!(a.choice===null||a.choice==='discuss'||q.options.some(o=>o.id===a.choice)))throw Error('Некорректный ответ: '+q.id);}return d;}
+document.getElementById('download').addEventListener('click',()=>{const data=collect();const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=spec.id+'-answers.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);document.getElementById('message').textContent='Ответы подготовлены для скачивания. Проверьте папку загрузок.';});
+document.getElementById('upload').addEventListener('change',async event=>{try{const file=event.target.files[0];if(!file)return;const d=validate(JSON.parse(await file.text()));document.getElementById('respondent').value=d.respondent;document.getElementById('baseline-comment').value=d.baseline_comment;for(const q of spec.questions){for(const el of document.querySelectorAll('input[name="'+q.id+'"]'))el.checked=el.value===d.answers[q.id].choice;document.getElementById('comment-'+q.id).value=d.answers[q.id].comment;}progress();document.getElementById('message').textContent='Ответы загружены.';}catch(err){document.getElementById('message').textContent=err.message;}event.target.value='';});
+document.addEventListener('input',progress);progress();
+
+function issueDraft(data){validate(data);const lines=['## Предпочтения по оформлению Kotlin','','Форма: '+spec.id,'Участник: '+(data.respondent||'не указан'),'','Общий комментарий: '+(data.baseline_comment||'—'),''];for(const q of spec.questions){const answer=data.answers[q.id];const selected=q.options.find(o=>o.id===answer.choice);lines.push('- '+q.id+': '+(selected?selected.label:answer.choice==='discuss'?'Хочу обсудить':'Без ответа')+(answer.comment?' — '+answer.comment:''));}return lines.join('\n');}
+document.getElementById('github-draft').addEventListener('click',()=>{const body=issueDraft(collect());const url='https://github.com/vikim-nur/android-code-style-lab/issues/new?title='+encodeURIComponent('Ответы по оформлению Kotlin')+'&body='+encodeURIComponent(body);if(url.length>7500){document.getElementById('message').textContent='Для длинного ответа лучше скачать JSON и приложить его к GitHub Issue.';return;}window.open(url,'_blank','noopener,noreferrer');document.getElementById('message').textContent='Открыт черновик на GitHub. Проверьте текст и отправьте вручную: ответ станет публичным.';});
+</script></html>

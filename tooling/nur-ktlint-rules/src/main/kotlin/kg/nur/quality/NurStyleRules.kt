@@ -111,5 +111,8 @@ class NurStyleRuleSetProvider : RuleSetProviderV3(RuleSetId("nur")) {
         RuleProvider { NestedLambdaWrappingRule() },
         RuleProvider { CallArgumentsRule() },
         RuleProvider { CompactIntentRule() },
+        RuleProvider { ReferenceCallCommaRule() },
+        RuleProvider { ReferenceDeclarationCommaRule() },
+        RuleProvider { WhenBranchSpacingRule() },
     )
 }

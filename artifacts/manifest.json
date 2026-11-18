@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0-candidate.1",
+  "engine": "ktlint 1.8.0",
+  "jar": "nur-style-rules-0.2.0-candidate.1.jar",
+  "jar_sha256": "cec114f655ad599d77f53683e8c7a556c2968b639598b489f2c70cfa365f341f",
+  "profiles": {
+    "nur-reference.editorconfig": "7ee8f0e0b4e74ab26cabbb6c115828c0689155826fcba57617f272cda1090b56",
+    "ktlint-official.editorconfig": "30726c4bc8ed7f3df3056aa61374e5e0199c7a329e4619725c88f6a396a7f0f6"
+  },
+  "source_sha256": {
+    "tooling/nur-ktlint-rules/src/main/kotlin/kg/nur/quality/NurEditorConfig.kt": "86750c76a71158137dfc073430625bf8d7155a96e0039e0d21b403d10009d89b",
+    "tooling/nur-ktlint-rules/src/main/kotlin/kg/nur/quality/ReferenceLayoutRules.kt": "b717acf1a1bc63ca28cd79c479f98f6eb14d40b40b78f47f368b844bed7b5592",
+    "tooling/nur-ktlint-rules/src/main/kotlin/kg/nur/quality/ModifierChainRule.kt": "dfb93a822bc2ea11ed44c8661888c60a192820a8263262ff96266214c8fa6eb4",
+    "tooling/nur-ktlint-rules/src/main/kotlin/kg/nur/quality/NurStyleRules.kt": "78624bdf6004c25dcd3f59ad0c4665273214bc4659eca11749167d1bac9265d2",
+    "tooling/nur-ktlint-rules/src/main/resources/META-INF/services/com.pinterest.ktlint.cli.ruleset.core.api.RuleSetProviderV3": "b2c3f34808ac5e22748622b8d6b03571b05a40919f72b67b6f266ccc99a15313"
+  }
+}
