@@ -1,5 +1,5 @@
 {
-  "id": "personal-style-review-v4",
+  "id": "team-formatting-review-v5",
   "questions": [
     {
       "id": "F01",
@@ -33,52 +33,40 @@
           "id": "2",
           "label": "Всегда с запятой",
           "settings": {
-            "ktlint_standard_trailing-comma-on-call-site": "enabled",
-            "ij_kotlin_allow_trailing_comma_on_call_site": "true",
-            "ktlint_standard_wrapping": "enabled",
-            "ktlint_nur_nested-lambda-wrapping": "disabled"
+            "ij_kotlin_allow_trailing_comma_on_call_site": "true"
           },
-          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick,\n    )\n}\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        },\n    )\n}\n"
+          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick,\n    )\n}\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
         },
         {
           "id": "3",
           "label": "Всегда без запятой",
           "settings": {
-            "ktlint_standard_trailing-comma-on-call-site": "enabled",
-            "ij_kotlin_allow_trailing_comma_on_call_site": "false",
-            "ktlint_standard_wrapping": "enabled",
-            "ktlint_nur_nested-lambda-wrapping": "disabled"
+            "ij_kotlin_allow_trailing_comma_on_call_site": "false"
           },
-          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        }\n    )\n}\n"
+          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
         }
       ]
     },
     {
       "id": "F03",
       "title": "Нужна последняя запятая в объявлениях?",
-      "input": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n",
+      "input": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n    val subtitle: String\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n",
       "options": [
         {
           "id": "2",
           "label": "Всегда с запятой",
           "settings": {
-            "ktlint_standard_trailing-comma-on-declaration-site": "enabled",
-            "ij_kotlin_allow_trailing_comma": "true",
-            "ktlint_standard_wrapping": "enabled",
-            "ktlint_nur_nested-lambda-wrapping": "disabled"
+            "ij_kotlin_allow_trailing_comma": "true"
           },
-          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n)\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        }\n    )\n}\n"
+          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n    val subtitle: String,\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
         },
         {
           "id": "3",
           "label": "Всегда без запятой",
           "settings": {
-            "ktlint_standard_trailing-comma-on-declaration-site": "enabled",
-            "ij_kotlin_allow_trailing_comma": "false",
-            "ktlint_standard_wrapping": "enabled",
-            "ktlint_nur_nested-lambda-wrapping": "disabled"
+            "ij_kotlin_allow_trailing_comma": "false"
           },
-          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        }\n    )\n}\n"
+          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n    val subtitle: String\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
         }
       ]
     },
@@ -195,17 +183,18 @@
       "options": [
         {
           "id": "2",
-          "label": "Добавлять пустую строку",
+          "label": "После большой ветки — пустая строка",
           "settings": {
-            "ktlint_standard_blank-line-between-when-conditions": "enabled",
-            "ij_kotlin_line_break_after_multiline_when_entry": "true"
+            "ktlint_nur_when-branch-spacing": "enabled",
+            "ktlint_standard_blank-line-between-when-conditions": "disabled"
           },
-          "output": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n\n        Event.Refresh -> refresh()\n\n        Event.Close -> close()\n    }\n}\n"
+          "output": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n        Event.Refresh -> refresh()\n        Event.Close -> close()\n    }\n}\n"
         },
         {
           "id": "3",
-          "label": "Убирать пустую строку",
+          "label": "Без пустых строк между ветками",
           "settings": {
+            "ktlint_nur_when-branch-spacing": "disabled",
             "ktlint_standard_blank-line-between-when-conditions": "enabled",
             "ij_kotlin_line_break_after_multiline_when_entry": "false"
           },
