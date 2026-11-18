@@ -1,5 +1,5 @@
 {
-  "id": "personal-style-review-v3",
+  "id": "personal-style-review-v4",
   "questions": [
     {
       "id": "F01",
@@ -103,6 +103,24 @@
           },
           "output": "fun renderCard(\n    title: String,\n    count: Int,\n    enabled: Boolean,\n    onClick: () -> Unit\n) {\n    show(title)\n}\n"
         }
+      ],
+      "contexts": [
+        {
+          "title": "Тот же выбор на обработчике адаптера",
+          "input": "fun installListener() {\n    view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {\n        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {\n            selectItem(position)\n        }\n        override fun onNothingSelected(parent: AdapterView<*>?) = Unit\n    }\n}\n",
+          "options": [
+            {
+              "id": "1",
+              "label": "Можно в строку, если помещается",
+              "output": "fun installListener() {\n    view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {\n        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {\n            selectItem(position)\n        }\n        override fun onNothingSelected(parent: AdapterView<*>?) = Unit\n    }\n}\n"
+            },
+            {
+              "id": "2",
+              "label": "От четырёх — столбиком",
+              "output": "fun installListener() {\n    view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {\n        override fun onItemSelected(\n            parent: AdapterView<*>?,\n            view: View?,\n            position: Int,\n            id: Long\n        ) {\n            selectItem(position)\n        }\n        override fun onNothingSelected(parent: AdapterView<*>?) = Unit\n    }\n}\n"
+            }
+          ]
+        }
       ]
     },
     {
@@ -125,6 +143,24 @@
             "ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than": "4"
           },
           "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n    val subtitle: String\n)\n"
+        }
+      ],
+      "contexts": [
+        {
+          "title": "Тот же выбор: ViewModel, адаптер и модель с наследованием",
+          "input": "class ContentViewModel @Inject constructor(repository: Repository, stateStore: StateStore, savedState: SavedStateHandle, logger: Logger): BaseViewModel<ContentState>(ContentState()) {\n}\n\nclass RowAdapter(private val imageLoader: ImageLoader, private val formatter: Formatter, private val onClick: (Row) -> Unit, private val onLongClick: (Row) -> Unit): ListAdapter<Row, RowAdapter.Holder>(RowDiff()) {\n}\n\ndata class RowModel(val id: Long, val title: String, val subtitle: String, val enabled: Boolean): BaseModel()\n",
+          "options": [
+            {
+              "id": "1",
+              "label": "Можно в строку, если помещается",
+              "output": "class ContentViewModel @Inject constructor(repository: Repository, stateStore: StateStore, savedState: SavedStateHandle, logger: Logger) :\n    BaseViewModel<ContentState>(ContentState()) {\n}\n\nclass RowAdapter(\n    private val imageLoader: ImageLoader,\n    private val formatter: Formatter,\n    private val onClick: (Row) -> Unit,\n    private val onLongClick: (Row) -> Unit\n) : ListAdapter<Row, RowAdapter.Holder>(RowDiff()) {\n}\n\ndata class RowModel(val id: Long, val title: String, val subtitle: String, val enabled: Boolean) : BaseModel()\n"
+            },
+            {
+              "id": "2",
+              "label": "От четырёх — столбиком",
+              "output": "class ContentViewModel @Inject constructor(\n    repository: Repository,\n    stateStore: StateStore,\n    savedState: SavedStateHandle,\n    logger: Logger\n) : BaseViewModel<ContentState>(ContentState()) {\n}\n\nclass RowAdapter(\n    private val imageLoader: ImageLoader,\n    private val formatter: Formatter,\n    private val onClick: (Row) -> Unit,\n    private val onLongClick: (Row) -> Unit\n) : ListAdapter<Row, RowAdapter.Holder>(RowDiff()) {\n}\n\ndata class RowModel(\n    val id: Long,\n    val title: String,\n    val subtitle: String,\n    val enabled: Boolean\n) : BaseModel()\n"
+            }
+          ]
         }
       ]
     },
@@ -221,6 +257,20 @@
             "nur_modifier_chain_min_calls": "3"
           },
           "output": "import androidx.compose.ui.Modifier\n\nfun card(modifier: Modifier) {\n    val objectChain = Modifier.fillMaxSize().padding(8)\n    val parameterChain = modifier.fillMaxSize().padding(8)\n    val normalizedText = text.trim().lowercase()\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F10",
+      "title": "Принимаем такой вид наследования и generic-типов?",
+      "input": "class SummaryViewModel @Inject constructor(\n    private val repository: Repository\n): BaseViewModel<SummaryState>(SummaryState()) {\n}\n\nclass RowAdapter(private val onClick: (Row) -> Unit) :\n    ListAdapter<Row, RowAdapter.Holder>(\n        RowDiff()\n    ) {\n    inner class Holder(private val binding: RowBinding): RecyclerView.ViewHolder(binding.root)\n}\n",
+      "explanation": "Это учебные формы ViewModel, ListAdapter и вложенного ViewHolder. Ниже фактический результат текущего предлагаемого профиля ktlint. Порог переноса параметров выбираем отдельно в F04/F05. Здесь оцениваем вид объявления, двоеточия, базового класса, generic-типов и вызова его конструктора. Отдельной настройки «всегда переносить любой базовый тип на следующую строку» в проверенном каталоге нет. Другой желаемый вид сначала проверяем; не обещаем готовую настройку без эксперимента.",
+      "options": [
+        {
+          "id": "1",
+          "label": "Принимаем показанное штатное оформление наследования",
+          "settings": {},
+          "output": "class SummaryViewModel @Inject constructor(private val repository: Repository) : BaseViewModel<SummaryState>(SummaryState()) {\n}\n\nclass RowAdapter(private val onClick: (Row) -> Unit) :\n    ListAdapter<Row, RowAdapter.Holder>(\n        RowDiff()\n    ) {\n    inner class Holder(private val binding: RowBinding) : RecyclerView.ViewHolder(binding.root)\n}\n"
         }
       ]
     }

@@ -36,7 +36,7 @@ fun normalize() {
     val normalizedText = text.trim().lowercase()
     display(normalizedText)
 }
-</pre><p>Этот образец соответствует предложению в config. Выбор ответа ниже не меняет его автоматически. Сочетание выбранных правил проверяется отдельно.</p><h2>Девять вопросов</h2><p>Редакция 3: выбираем конкретные правила; вопрос про intent возвращён к прежним двум вариантам. Варианты «оставить автору», «сохранить оба вида» и отсутствие лимита удалены. Текущий целый образец выше относится к первоначальному предложению; после голосования соберём и проверим новый согласованный профиль. JSON-ответы прежних редакций автоматически не переносятся.</p><p>Ответы не предвыбраны. Можно ответить частично. Форма ничего никуда не отправляет.</p><p>Имя (необязательно): <input id="respondent" type="text"></p><p id="progress"></p><label for="baseline-comment">Общий комментарий к правилам</label><textarea id="baseline-comment"></textarea><article><h3>F01. Какую длину строки выбираем?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F01" value="1"> 120 символов</label><pre>fun message() {
+</pre><p>Этот образец соответствует предложению в config. Выбор ответа ниже не меняет его автоматически. Сочетание выбранных правил проверяется отдельно.</p><h2>Десять вопросов</h2><p>Редакция 4: добавлены обработчик адаптера, конструкторы с наследованием и отдельный разбор вида базовых классов. Прежние девять вопросов и варианты intent сохранены. Варианты «оставить автору», «сохранить оба вида» и отсутствие лимита удалены. Текущий целый образец выше относится к первоначальному предложению; после голосования соберём и проверим новый согласованный профиль. JSON-ответы прежних редакций автоматически не переносятся.</p><p>Ответы не предвыбраны. Можно ответить частично. Форма ничего никуда не отправляет.</p><p>Имя (необязательно): <input id="respondent" type="text"></p><p id="progress"></p><label for="baseline-comment">Общий комментарий к правилам</label><textarea id="baseline-comment"></textarea><article><h3>F01. Какую длину строки выбираем?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F01" value="1"> 120 символов</label><pre>fun message() {
     val displayMessage =
         cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)
     val selectedItem = repository.loadAvailableItemsForCurrentSession(
@@ -83,7 +83,7 @@ fun event() {
         }
     )
 }
-</pre></div></div><p>Оба варианта требуют штатного wrapping. Наша текущая замена компактных вложенных лямбд в этих вариантах выключена: побочный перенос показан выше. После выбора команды совместимость итогового профиля нужно подтвердить отдельно.</p><p><label><input type="radio" name="F02" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F02">Комментарий</label><textarea id="comment-F02"></textarea></article><article><h3>F03. Нужна последняя запятая в объявлениях?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F03" value="2"> Всегда с запятой</label><pre>data class CardOptions(
+</pre></div></div><p>Оба варианта требуют штатного wrapping. Наша замена компактных вложенных лямбд выключена: побочный перенос показан выше. Совместимость итогового профиля проверим отдельно.</p><p><label><input type="radio" name="F02" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F02">Комментарий</label><textarea id="comment-F02"></textarea></article><article><h3>F03. Нужна последняя запятая в объявлениях?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F03" value="2"> Всегда с запятой</label><pre>data class CardOptions(
     val title: String,
     val count: Int,
     val enabled: Boolean,
@@ -109,7 +109,7 @@ fun event() {
         }
     )
 }
-</pre></div></div><p>Оба варианта требуют штатного wrapping. Наша текущая замена компактных вложенных лямбд в этих вариантах выключена: побочный перенос показан выше. После выбора команды совместимость итогового профиля нужно подтвердить отдельно.</p><p><label><input type="radio" name="F03" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F03">Комментарий</label><textarea id="comment-F03"></textarea></article><article><h3>F04. Объявление функции: четыре параметра уже столбиком?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F04" value="1"> Можно в строку, если помещается</label><pre>fun renderCard(title: String, count: Int, enabled: Boolean, onClick: () -&gt; Unit) {
+</pre></div></div><p>Оба варианта требуют штатного wrapping. Наша замена компактных вложенных лямбд выключена: побочный перенос показан выше. Совместимость итогового профиля проверим отдельно.</p><p><label><input type="radio" name="F03" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F03">Комментарий</label><textarea id="comment-F03"></textarea></article><article><h3>F04. Объявление функции: четыре параметра уже столбиком?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F04" value="1"> Можно в строку, если помещается</label><pre>fun renderCard(title: String, count: Int, enabled: Boolean, onClick: () -&gt; Unit) {
     show(title)
 }
 </pre></div><div class="variant"><label><input type="radio" name="F04" value="2"> От четырёх — столбиком</label><pre>fun renderCard(
@@ -120,6 +120,27 @@ fun event() {
 ) {
     show(title)
 }
+</pre></div></div><h4>Тот же выбор на обработчике адаптера</h4><p>Это дополнительные примеры того же правила. Ваш выбор выше применяется и к этим конструкциям.</p><div class="variants"><div class="variant"><b>Можно в строку, если помещается</b><pre>fun installListener() {
+    view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parent: AdapterView&lt;*&gt;?, view: View?, position: Int, id: Long) {
+            selectItem(position)
+        }
+        override fun onNothingSelected(parent: AdapterView&lt;*&gt;?) = Unit
+    }
+}
+</pre></div><div class="variant"><b>От четырёх — столбиком</b><pre>fun installListener() {
+    view.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(
+            parent: AdapterView&lt;*&gt;?,
+            view: View?,
+            position: Int,
+            id: Long
+        ) {
+            selectItem(position)
+        }
+        override fun onNothingSelected(parent: AdapterView&lt;*&gt;?) = Unit
+    }
+}
 </pre></div></div><p><label><input type="radio" name="F04" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F04">Комментарий</label><textarea id="comment-F04"></textarea></article><article><h3>F05. Конструктор класса: четыре параметра уже столбиком?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F05" value="1"> Можно в строку, если помещается</label><pre>data class CardOptions(val title: String, val count: Int, val enabled: Boolean, val subtitle: String)
 </pre></div><div class="variant"><label><input type="radio" name="F05" value="2"> От четырёх — столбиком</label><pre>data class CardOptions(
     val title: String,
@@ -127,6 +148,41 @@ fun event() {
     val enabled: Boolean,
     val subtitle: String
 )
+</pre></div></div><h4>Тот же выбор: ViewModel, адаптер и модель с наследованием</h4><p>Это дополнительные примеры того же правила. Ваш выбор выше применяется и к этим конструкциям.</p><div class="variants"><div class="variant"><b>Можно в строку, если помещается</b><pre>class ContentViewModel @Inject constructor(repository: Repository, stateStore: StateStore, savedState: SavedStateHandle, logger: Logger) :
+    BaseViewModel&lt;ContentState&gt;(ContentState()) {
+}
+
+class RowAdapter(
+    private val imageLoader: ImageLoader,
+    private val formatter: Formatter,
+    private val onClick: (Row) -&gt; Unit,
+    private val onLongClick: (Row) -&gt; Unit
+) : ListAdapter&lt;Row, RowAdapter.Holder&gt;(RowDiff()) {
+}
+
+data class RowModel(val id: Long, val title: String, val subtitle: String, val enabled: Boolean) : BaseModel()
+</pre></div><div class="variant"><b>От четырёх — столбиком</b><pre>class ContentViewModel @Inject constructor(
+    repository: Repository,
+    stateStore: StateStore,
+    savedState: SavedStateHandle,
+    logger: Logger
+) : BaseViewModel&lt;ContentState&gt;(ContentState()) {
+}
+
+class RowAdapter(
+    private val imageLoader: ImageLoader,
+    private val formatter: Formatter,
+    private val onClick: (Row) -&gt; Unit,
+    private val onLongClick: (Row) -&gt; Unit
+) : ListAdapter&lt;Row, RowAdapter.Holder&gt;(RowDiff()) {
+}
+
+data class RowModel(
+    val id: Long,
+    val title: String,
+    val subtitle: String,
+    val enabled: Boolean
+) : BaseModel()
 </pre></div></div><p><label><input type="radio" name="F05" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F05">Комментарий</label><textarea id="comment-F05"></textarea></article><article><h3>F06. Вызов с четырьмя аргументами тоже переносим?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F06" value="1"> Можно в строку</label><pre>fun card() {
     renderCard(title, count, enabled, onClick)
 }
@@ -167,7 +223,7 @@ fun event() {
     postSideEffect(Effect.Back)
 }
 </pre></div><div class="variant"><label><input type="radio" name="F08" value="2"> Короткий intent собирать в строку</label><pre>private fun back() = intent { postSideEffect(Effect.Back) }
-</pre></div></div><p><label><input type="radio" name="F08" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F08">Комментарий</label><textarea id="comment-F08"></textarea></article><article><h3>F09. Modifier переносим с двух или с трёх вызовов?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F09" value="1"> От двух вызовов</label><pre>import androidx.compose.ui.Modifier
+</pre></div></div><p><label><input type="radio" name="F08" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F08">Комментарий</label><textarea id="comment-F08"></textarea></article><article><h3>F09. Modifier переносим с двух или с трёх вызовов?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F09" value="1"> От двух вызовов</label><pre>import androidx.compose.ui.Modifier
 
 fun card(modifier: Modifier) {
     val objectChain = Modifier
@@ -185,7 +241,16 @@ fun card(modifier: Modifier) {
     val parameterChain = modifier.fillMaxSize().padding(8)
     val normalizedText = text.trim().lowercase()
 }
-</pre></div></div><p><label><input type="radio" name="F09" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F09">Комментарий</label><textarea id="comment-F09"></textarea></article><h2>Сохранить ответы</h2><p>Ответы исчезнут после закрытия страницы. Скачайте JSON; загрузите его сюда, чтобы продолжить.</p><button id="download">Скачать мои ответы</button> <label>Загрузить JSON <input id="upload" type="file" accept="application/json,.json"></label><p><button id="github-draft" type="button">Открыть черновик ответа на GitHub</button></p><p>Черновик откроется в новой вкладке. Он будет опубликован только после вашей отправки на GitHub. Ответы там публичные; для входа нужен GitHub-аккаунт. Скачивание JSON работает без аккаунта.</p><p id="message" role="status"></p><script>const spec={"id": "personal-style-review-v3", "questions": [{"id": "F01", "options": [{"id": "1", "label": "120 символов"}, {"id": "2", "label": "140 символов"}]}, {"id": "F02", "options": [{"id": "2", "label": "Всегда с запятой"}, {"id": "3", "label": "Всегда без запятой"}]}, {"id": "F03", "options": [{"id": "2", "label": "Всегда с запятой"}, {"id": "3", "label": "Всегда без запятой"}]}, {"id": "F04", "options": [{"id": "1", "label": "Можно в строку, если помещается"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F05", "options": [{"id": "1", "label": "Можно в строку, если помещается"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F06", "options": [{"id": "1", "label": "Можно в строку"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F07", "options": [{"id": "2", "label": "Добавлять пустую строку"}, {"id": "3", "label": "Убирать пустую строку"}]}, {"id": "F08", "options": [{"id": "1", "label": "Только сохранять допустимую запись"}, {"id": "2", "label": "Короткий intent собирать в строку"}]}, {"id": "F09", "options": [{"id": "1", "label": "От двух вызовов"}, {"id": "2", "label": "От трёх вызовов"}]}]};
+</pre></div></div><p><label><input type="radio" name="F09" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F09">Комментарий</label><textarea id="comment-F09"></textarea></article><article><h3>F10. Принимаем такой вид наследования и generic-типов?</h3><p>Это учебные формы ViewModel, ListAdapter и вложенного ViewHolder. Ниже фактический результат текущего предлагаемого профиля ktlint. Порог переноса параметров выбираем отдельно в F04/F05. Здесь оцениваем вид объявления, двоеточия, базового класса, generic-типов и вызова его конструктора. Отдельной настройки «всегда переносить любой базовый тип на следующую строку» в проверенном каталоге нет. Другой желаемый вид сначала проверяем; не обещаем готовую настройку без эксперимента.</p><div class="variants"><div class="variant"><label><input type="radio" name="F10" value="1"> Принимаем показанное штатное оформление наследования</label><pre>class SummaryViewModel @Inject constructor(private val repository: Repository) : BaseViewModel&lt;SummaryState&gt;(SummaryState()) {
+}
+
+class RowAdapter(private val onClick: (Row) -&gt; Unit) :
+    ListAdapter&lt;Row, RowAdapter.Holder&gt;(
+        RowDiff()
+    ) {
+    inner class Holder(private val binding: RowBinding) : RecyclerView.ViewHolder(binding.root)
+}
+</pre></div></div><p><label><input type="radio" name="F10" value="discuss"> Предлагаю другое конкретное правило / хочу обсудить</label></p><label for="comment-F10">Комментарий</label><textarea id="comment-F10"></textarea></article><h2>Сохранить ответы</h2><p>Ответы исчезнут после закрытия страницы. Скачайте JSON; загрузите его сюда, чтобы продолжить.</p><button id="download">Скачать мои ответы</button> <label>Загрузить JSON <input id="upload" type="file" accept="application/json,.json"></label><p><button id="github-draft" type="button">Открыть черновик ответа на GitHub</button></p><p>Черновик откроется в новой вкладке. Он будет опубликован только после вашей отправки на GitHub. Ответы там публичные; для входа нужен GitHub-аккаунт. Скачивание JSON работает без аккаунта.</p><p id="message" role="status"></p><script>const spec={"id": "personal-style-review-v4", "questions": [{"id": "F01", "options": [{"id": "1", "label": "120 символов"}, {"id": "2", "label": "140 символов"}]}, {"id": "F02", "options": [{"id": "2", "label": "Всегда с запятой"}, {"id": "3", "label": "Всегда без запятой"}]}, {"id": "F03", "options": [{"id": "2", "label": "Всегда с запятой"}, {"id": "3", "label": "Всегда без запятой"}]}, {"id": "F04", "options": [{"id": "1", "label": "Можно в строку, если помещается"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F05", "options": [{"id": "1", "label": "Можно в строку, если помещается"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F06", "options": [{"id": "1", "label": "Можно в строку"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F07", "options": [{"id": "2", "label": "Добавлять пустую строку"}, {"id": "3", "label": "Убирать пустую строку"}]}, {"id": "F08", "options": [{"id": "1", "label": "Только сохранять допустимую запись"}, {"id": "2", "label": "Короткий intent собирать в строку"}]}, {"id": "F09", "options": [{"id": "1", "label": "От двух вызовов"}, {"id": "2", "label": "От трёх вызовов"}]}, {"id": "F10", "options": [{"id": "1", "label": "Принимаем показанное штатное оформление наследования"}]}]};
 function collect(){const answers={};for(const q of spec.questions){const checked=document.querySelector('input[name="'+q.id+'"]:checked');answers[q.id]={choice:checked?checked.value:null,comment:document.getElementById('comment-'+q.id).value};}return {schema:1,form:spec.id,respondent:document.getElementById('respondent').value,baseline_comment:document.getElementById('baseline-comment').value,answers};}
 function progress(){const n=Object.values(collect().answers).filter(x=>x.choice!==null).length;document.getElementById('progress').textContent='Выбрано ответов: '+n+' из '+spec.questions.length+'. Можно сохранить неполный ответ.';}
 function validate(d){if(!d||d.form!==spec.id||d.schema!==1||typeof d.answers!=='object'||d.answers===null||typeof d.respondent!=='string'||typeof d.baseline_comment!=='string')throw Error('Это ответы от другой формы или некорректный файл.');for(const q of spec.questions){const a=d.answers[q.id];if(!a||typeof a.comment!=='string'||!(a.choice===null||a.choice==='discuss'||q.options.some(o=>o.id===a.choice)))throw Error('Некорректный ответ: '+q.id);}return d;}
