@@ -82,5 +82,7 @@
   "second_review": "pending",
   "temporary_avd_bytes": 0,
   "retained_evidence_size_mib_approx": 185,
-  "evidence_retention": "logs/results and isolated IDE cache retained for diagnosing unfinished IDE integration; clear IDE cache after test runtime ownership/inactivity confirmed"
+  "evidence_retention": "logs/results and isolated IDE cache retained for diagnosing unfinished IDE integration; clear IDE cache after test runtime ownership/inactivity confirmed",
+  "unpacked_zip_profiles_format_check": "passed; 22 examples per profile match packaged output",
+  "archive_sha256": "e9d220b328b68f2e303631e9e7090c67bef4dea58250b39201c8e08d4996ec06"
 }
