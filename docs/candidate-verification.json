@@ -124,5 +124,9 @@
   "android_pilot_or_ci_tested": false,
   "status": "candidate_for_review_not_approved",
   "gradle_consumer_sync_format_check": true,
-  "transport_embedded_profile_equals_canonical_A": true
+  "transport_embedded_profile_equals_canonical_A": true,
+  "extended_validation_report": "validation-report.json",
+  "git_hook_scenarios": 16,
+  "gradle_functional_scenarios": 12,
+  "configuration_cache_functionally_checked": true
 }

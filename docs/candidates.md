@@ -53,3 +53,5 @@ python3 scripts/verify_profiles.py --cli /path/to/ktlint-1.8.0-all.jar --rules a
 [Точный контракт по всем 23 исходным наблюдениям](reference-coverage.md).
 
 Свежий изолированный Gradle consumer прошёл qualitySync → qualityFormat → qualityFormatCheck с этим комплектом. Первому offline-запуску не хватило cache-зависимости; после обычного разрешения публичных зависимостей прогон успешен. Это тест Gradle consumer, не работающей Android Studio и не приложения.
+
+[Расширенная проверка Gradle, Git-хука, cache и времени выполнения](validation-report.html). UI Studio остаётся неподтверждённым.
