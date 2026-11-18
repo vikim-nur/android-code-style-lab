@@ -1,0 +1,14 @@
+.gradle/
+**/build/
+.idea/
+.local/
+.env
+.env.*
+local.properties
+.DS_Store
+__pycache__/
+*.keystore
+*.jks
+*.hprof
+answers*.json
+*-answers.json

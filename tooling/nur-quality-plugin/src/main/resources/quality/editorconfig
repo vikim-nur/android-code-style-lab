@@ -1,0 +1,58 @@
+# Research draft derived from Nur source, ktlint 1.8.0. Not deployed or approved for all projects.
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = android_studio
+indent_style = space
+indent_size = 4
+# Actual source does not establish one hard limit; do not invent 100/120/140 here.
+max_line_length = off
+# Empirical check: this layout disagrees with 43 files, versus149 for alphabetic '*'.
+ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,^
+# Preserve existing accepted comma variants. Enforce true/false only after choosing one policy.
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
+# Preserve reviewed, manually chosen layouts that have no exact built-in selector.
+ktlint_standard_chain-method-continuation = disabled
+ktlint_standard_blank-line-between-when-conditions = disabled
+ktlint_standard_when-entry-bracing = disabled
+ktlint_standard_multiline-if-else = disabled
+ktlint_standard_no-empty-first-line-in-method-block = disabled
+ktlint_function_signature_body_expression_wrapping = default
+ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = unset
+ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = unset
+# Wrap arguments consistently even in large multiline calls.
+ktlint_argument_list_wrapping_ignore_when_parameter_count_greater_or_equal_than = unset
+# Structure, naming and import-policy checks are separate from this formatting experiment.
+ktlint_standard_function-expression-body = disabled
+ktlint_standard_no-empty-class-body = disabled
+ktlint_standard_no-unit-return = disabled
+ktlint_standard_function-naming = disabled
+ktlint_standard_class-naming = disabled
+ktlint_standard_property-naming = disabled
+ktlint_standard_backing-property-naming = disabled
+ktlint_standard_enum-entry-name-case = disabled
+ktlint_standard_package-name = disabled
+ktlint_standard_filename = disabled
+ktlint_standard_no-unused-imports = disabled
+ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_mixed-condition-operators = disabled
+# A 4+ threshold for function declarations in cmp_* is technically possible and separately tested.
+# It is not enabled here: counts alone do not prove the historical author's threshold.
+
+# Experimental replacements. Reviewed source permits both inheritance styles.
+ktlint_standard_colon-spacing = enabled
+ktlint_standard_wrapping = disabled
+ktlint_nur_modifier-chain = enabled
+ktlint_nur_type-colon-spacing = disabled
+ktlint_nur_nested-lambda-wrapping = enabled
+# Optional preferences are not imposed on the source reference.
+ktlint_nur_call-arguments = disabled
+ktlint_nur_compact-intent = disabled
+
+# Custom thresholds can be changed without rebuilding the JAR.
+nur_modifier_chain_min_calls = 2
+nur_call_arguments_min_count = 4
+nur_compact_intent_max_line_length = 120
+
+# Portable IDE parity candidate; inheritance spacing uses the stock rule.

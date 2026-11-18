@@ -1,0 +1,235 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Оформление Kotlin: обсуждение</title><style>body{font:17px/1.55 system-ui;max-width:1120px;margin:32px auto;padding:0 18px;background:#f6f8fa;color:#202733}article{background:white;padding:22px;margin:20px 0;border:1px solid #d8dee4;border-radius:10px}pre{font:14px/1.5 monospace;overflow:auto;background:#eef1f5;padding:15px}.variants{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}.variant{min-width:0}textarea{width:100%;min-height:65px;font:inherit}label{cursor:pointer}a{color:#1857a4}button{padding:10px;font:inherit}</style><h1>Общий стиль Kotlin</h1><p>Лаборатория правил оформления. Статус: предложение, командой ещё не принято.</p><p>Здесь только учебные примеры. Все результаты получены ktlint 1.8.0 с экспериментальными правилами; повторное форматирование стабильно, итоговый check чистый.</p><p><a href="../docs/formatting.md">Предлагаемые правила</a> · <a href="../docs/custom-rules.md">Наши пять правил</a></p><h2>Целый пример в предлагаемом стиле</h2><pre>package example
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean,
+    val subtitle: String
+)
+
+@Composable
+fun SummaryCard(
+    title: String,
+    count: Int,
+    enabled: Boolean,
+    modifier: Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16)
+    ) {
+        Text(text = title)
+        Counter(
+            count = count,
+            enabled = enabled
+        )
+    }
+}
+
+private fun back() = intent { postSideEffect(Effect.Back) }
+
+fun normalize() {
+    val normalizedText = text.trim().lowercase()
+    display(normalizedText)
+}
+</pre><p>Этот образец соответствует предложению в config. Выбор ответа ниже не меняет его автоматически. Сочетание выбранных правил проверяется отдельно.</p><h2>Девять вопросов</h2><p>Ответы не предвыбраны. Можно ответить частично. Форма ничего никуда не отправляет.</p><p>Имя (необязательно): <input id="respondent" type="text"></p><p id="progress"></p><label for="baseline-comment">Общий комментарий к правилам</label><textarea id="baseline-comment"></textarea><article><h3>F01. Какую длину строки выбираем?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F01" value="1"> 120 символов</label><pre>fun message() {
+    val displayMessage =
+        cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)
+    val selectedItem = repository.loadAvailableItemsForCurrentSession(
+        currentAccountIdentifier,
+        selectedCategoryIdentifier,
+        includeArchivedItems
+    ).firstOrNull()
+}
+</pre></div><div class="variant"><label><input type="radio" name="F01" value="2"> 140 символов</label><pre>fun message() {
+    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)
+    val selectedItem = repository.loadAvailableItemsForCurrentSession(
+        currentAccountIdentifier,
+        selectedCategoryIdentifier,
+        includeArchivedItems
+    ).firstOrNull()
+}
+</pre></div><div class="variant"><label><input type="radio" name="F01" value="3"> Без жёсткого лимита</label><pre>fun message() {
+    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)
+    val selectedItem = repository.loadAvailableItemsForCurrentSession(currentAccountIdentifier, selectedCategoryIdentifier, includeArchivedItems).firstOrNull()
+}
+</pre></div></div><p><label><input type="radio" name="F01" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F01">Комментарий</label><textarea id="comment-F01"></textarea></article><article><h3>F02. Нужна последняя запятая в вызовах?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F02" value="1"> Сохранить оба вида</label><pre>fun card() {
+    renderCard(
+        title = title,
+        count = count,
+        onClick = onClick
+    )
+}
+
+fun event() {
+    Analytics.send(Event(&quot;click&quot;) {
+        putString(&quot;target&quot;, target)
+    })
+}
+</pre></div><div class="variant"><label><input type="radio" name="F02" value="2"> Всегда с запятой</label><pre>fun card() {
+    renderCard(
+        title = title,
+        count = count,
+        onClick = onClick,
+    )
+}
+
+fun event() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        },
+    )
+}
+</pre></div><div class="variant"><label><input type="radio" name="F02" value="3"> Всегда без запятой</label><pre>fun card() {
+    renderCard(
+        title = title,
+        count = count,
+        onClick = onClick
+    )
+}
+
+fun event() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        }
+    )
+}
+</pre></div><p>Строгие запятые требуют штатный wrapping. В этих вариантах наша замена compact nested lambda выключена: дополнительный перенос показан в примере.</p></div><p><label><input type="radio" name="F02" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F02">Комментарий</label><textarea id="comment-F02"></textarea></article><article><h3>F03. Нужна последняя запятая в объявлениях?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F03" value="1"> Сохранить оба вида</label><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean
+)
+
+fun event() {
+    Analytics.send(Event(&quot;click&quot;) {
+        putString(&quot;target&quot;, target)
+    })
+}
+</pre></div><div class="variant"><label><input type="radio" name="F03" value="2"> Всегда с запятой</label><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean,
+)
+
+fun event() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        }
+    )
+}
+</pre></div><div class="variant"><label><input type="radio" name="F03" value="3"> Всегда без запятой</label><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean
+)
+
+fun event() {
+    Analytics.send(
+        Event(&quot;click&quot;) {
+            putString(&quot;target&quot;, target)
+        }
+    )
+}
+</pre></div><p>Строгие запятые требуют штатный wrapping. В этих вариантах наша замена compact nested lambda выключена: дополнительный перенос показан в примере.</p></div><p><label><input type="radio" name="F03" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F03">Комментарий</label><textarea id="comment-F03"></textarea></article><article><h3>F04. Объявление функции: четыре параметра уже столбиком?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F04" value="1"> Можно в строку, если помещается</label><pre>fun renderCard(title: String, count: Int, enabled: Boolean, onClick: () -&gt; Unit) {
+    show(title)
+}
+</pre></div><div class="variant"><label><input type="radio" name="F04" value="2"> От четырёх — столбиком</label><pre>fun renderCard(
+    title: String,
+    count: Int,
+    enabled: Boolean,
+    onClick: () -&gt; Unit
+) {
+    show(title)
+}
+</pre></div></div><p><label><input type="radio" name="F04" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F04">Комментарий</label><textarea id="comment-F04"></textarea></article><article><h3>F05. Конструктор класса: четыре параметра уже столбиком?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F05" value="1"> Можно в строку, если помещается</label><pre>data class CardOptions(val title: String, val count: Int, val enabled: Boolean, val subtitle: String)
+</pre></div><div class="variant"><label><input type="radio" name="F05" value="2"> От четырёх — столбиком</label><pre>data class CardOptions(
+    val title: String,
+    val count: Int,
+    val enabled: Boolean,
+    val subtitle: String
+)
+</pre></div></div><p><label><input type="radio" name="F05" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F05">Комментарий</label><textarea id="comment-F05"></textarea></article><article><h3>F06. Вызов с четырьмя аргументами тоже переносим?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F06" value="1"> Можно в строку</label><pre>fun card() {
+    renderCard(title, count, enabled, onClick)
+}
+</pre></div><div class="variant"><label><input type="radio" name="F06" value="2"> От четырёх — столбиком</label><pre>fun card() {
+    renderCard(
+        title,
+        count,
+        enabled,
+        onClick
+    )
+}
+</pre></div></div><p><label><input type="radio" name="F06" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F06">Комментарий</label><textarea id="comment-F06"></textarea></article><article><h3>F07. Пустая строка после многострочной ветки when?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F07" value="1"> Оставить выбор автору</label><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            closeKeyboard()
+            openDetails()
+        }
+
+        Event.Back -&gt; goBack()
+        Event.Refresh -&gt; refresh()
+        Event.Close -&gt; close()
+    }
+}
+</pre></div><div class="variant"><label><input type="radio" name="F07" value="2"> Добавлять пустую строку</label><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            closeKeyboard()
+            openDetails()
+        }
+
+        Event.Back -&gt; goBack()
+
+        Event.Refresh -&gt; refresh()
+
+        Event.Close -&gt; close()
+    }
+}
+</pre></div><div class="variant"><label><input type="radio" name="F07" value="3"> Убирать пустую строку</label><pre>fun handle(event: Event) {
+    when (event) {
+        Event.Open -&gt; {
+            closeKeyboard()
+            openDetails()
+        }
+        Event.Back -&gt; goBack()
+        Event.Refresh -&gt; refresh()
+        Event.Close -&gt; close()
+    }
+}
+</pre></div></div><p><label><input type="radio" name="F07" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F07">Комментарий</label><textarea id="comment-F07"></textarea></article><article><h3>F08. Короткий intent автоматически собирать в строку?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F08" value="1"> Только сохранять допустимую запись</label><pre>private fun back() = intent {
+    postSideEffect(Effect.Back)
+}
+</pre></div><div class="variant"><label><input type="radio" name="F08" value="2"> Короткий intent собирать в строку</label><pre>private fun back() = intent { postSideEffect(Effect.Back) }
+</pre></div></div><p><label><input type="radio" name="F08" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F08">Комментарий</label><textarea id="comment-F08"></textarea></article><article><h3>F09. Modifier переносим с двух или с трёх вызовов?</h3><div class="variants"><div class="variant"><label><input type="radio" name="F09" value="1"> От двух вызовов</label><pre>import androidx.compose.ui.Modifier
+
+fun card(modifier: Modifier) {
+    val objectChain = Modifier
+        .fillMaxSize()
+        .padding(8)
+    val parameterChain = modifier
+        .fillMaxSize()
+        .padding(8)
+    val normalizedText = text.trim().lowercase()
+}
+</pre></div><div class="variant"><label><input type="radio" name="F09" value="2"> От трёх вызовов</label><pre>import androidx.compose.ui.Modifier
+
+fun card(modifier: Modifier) {
+    val objectChain = Modifier.fillMaxSize().padding(8)
+    val parameterChain = modifier.fillMaxSize().padding(8)
+    val normalizedText = text.trim().lowercase()
+}
+</pre></div></div><p><label><input type="radio" name="F09" value="discuss"> Другой вариант / хочу обсудить</label></p><label for="comment-F09">Комментарий</label><textarea id="comment-F09"></textarea></article><h2>Сохранить ответы</h2><p>Ответы исчезнут после закрытия страницы. Скачайте JSON; загрузите его сюда, чтобы продолжить.</p><button id="download">Скачать мои ответы</button> <label>Загрузить JSON <input id="upload" type="file" accept="application/json,.json"></label><p id="message"></p><script>const spec={"id": "personal-style-review-v1", "questions": [{"id": "F01", "options": [{"id": "1", "label": "120 символов"}, {"id": "2", "label": "140 символов"}, {"id": "3", "label": "Без жёсткого лимита"}]}, {"id": "F02", "options": [{"id": "1", "label": "Сохранить оба вида"}, {"id": "2", "label": "Всегда с запятой"}, {"id": "3", "label": "Всегда без запятой"}]}, {"id": "F03", "options": [{"id": "1", "label": "Сохранить оба вида"}, {"id": "2", "label": "Всегда с запятой"}, {"id": "3", "label": "Всегда без запятой"}]}, {"id": "F04", "options": [{"id": "1", "label": "Можно в строку, если помещается"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F05", "options": [{"id": "1", "label": "Можно в строку, если помещается"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F06", "options": [{"id": "1", "label": "Можно в строку"}, {"id": "2", "label": "От четырёх — столбиком"}]}, {"id": "F07", "options": [{"id": "1", "label": "Оставить выбор автору"}, {"id": "2", "label": "Добавлять пустую строку"}, {"id": "3", "label": "Убирать пустую строку"}]}, {"id": "F08", "options": [{"id": "1", "label": "Только сохранять допустимую запись"}, {"id": "2", "label": "Короткий intent собирать в строку"}]}, {"id": "F09", "options": [{"id": "1", "label": "От двух вызовов"}, {"id": "2", "label": "От трёх вызовов"}]}]};
+function collect(){const answers={};for(const q of spec.questions){const checked=document.querySelector('input[name="'+q.id+'"]:checked');answers[q.id]={choice:checked?checked.value:null,comment:document.getElementById('comment-'+q.id).value};}return {schema:1,form:spec.id,respondent:document.getElementById('respondent').value,baseline_comment:document.getElementById('baseline-comment').value,answers};}
+function progress(){const n=Object.values(collect().answers).filter(x=>x.choice!==null).length;document.getElementById('progress').textContent='Выбрано ответов: '+n+' из '+spec.questions.length+'. Можно сохранить неполный ответ.';}
+function validate(d){if(!d||d.form!==spec.id||d.schema!==1||typeof d.answers!=='object'||d.answers===null||typeof d.respondent!=='string'||typeof d.baseline_comment!=='string')throw Error('Это ответы от другой формы или некорректный файл.');for(const q of spec.questions){const a=d.answers[q.id];if(!a||typeof a.comment!=='string'||!(a.choice===null||a.choice==='discuss'||q.options.some(o=>o.id===a.choice)))throw Error('Некорректный ответ: '+q.id);}return d;}
+document.getElementById('download').addEventListener('click',()=>{const data=collect();const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=spec.id+'-answers.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);document.getElementById('message').textContent='Ответы подготовлены для скачивания. Проверьте папку загрузок.';});
+document.getElementById('upload').addEventListener('change',async event=>{try{const file=event.target.files[0];if(!file)return;const d=validate(JSON.parse(await file.text()));document.getElementById('respondent').value=d.respondent;document.getElementById('baseline-comment').value=d.baseline_comment;for(const q of spec.questions){for(const el of document.querySelectorAll('input[name="'+q.id+'"]'))el.checked=el.value===d.answers[q.id].choice;document.getElementById('comment-'+q.id).value=d.answers[q.id].comment;}progress();document.getElementById('message').textContent='Ответы загружены.';}catch(err){document.getElementById('message').textContent=err.message;}event.target.value='';});
+document.addEventListener('input',progress);progress();
+</script></html>

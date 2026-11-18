@@ -1,0 +1,260 @@
+{
+  "id": "personal-style-review-v1",
+  "questions": [
+    {
+      "id": "F01",
+      "title": "Какую длину строки выбираем?",
+      "input": "fun message() {\n    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)\n    val selectedItem = repository.loadAvailableItemsForCurrentSession(currentAccountIdentifier, selectedCategoryIdentifier, includeArchivedItems).firstOrNull()\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "120 символов",
+          "settings": {
+            "max_line_length": "120"
+          },
+          "output": "fun message() {\n    val displayMessage =\n        cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)\n    val selectedItem = repository.loadAvailableItemsForCurrentSession(\n        currentAccountIdentifier,\n        selectedCategoryIdentifier,\n        includeArchivedItems\n    ).firstOrNull()\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "140 символов",
+          "settings": {
+            "max_line_length": "140"
+          },
+          "output": "fun message() {\n    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)\n    val selectedItem = repository.loadAvailableItemsForCurrentSession(\n        currentAccountIdentifier,\n        selectedCategoryIdentifier,\n        includeArchivedItems\n    ).firstOrNull()\n}\n"
+        },
+        {
+          "id": "3",
+          "label": "Без жёсткого лимита",
+          "settings": {
+            "max_line_length": "off"
+          },
+          "output": "fun message() {\n    val displayMessage = cachedMessage ?: repository.loadMessageForAccount(currentAccountIdentifier, selectedLanguageCode)\n    val selectedItem = repository.loadAvailableItemsForCurrentSession(currentAccountIdentifier, selectedCategoryIdentifier, includeArchivedItems).firstOrNull()\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "Нужна последняя запятая в вызовах?",
+      "input": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Сохранить оба вида",
+          "settings": {
+            "ktlint_standard_trailing-comma-on-call-site": "disabled"
+          },
+          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "Всегда с запятой",
+          "settings": {
+            "ktlint_standard_trailing-comma-on-call-site": "enabled",
+            "ij_kotlin_allow_trailing_comma_on_call_site": "true",
+            "ktlint_standard_wrapping": "enabled",
+            "ktlint_nur_nested-lambda-wrapping": "disabled"
+          },
+          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick,\n    )\n}\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        },\n    )\n}\n"
+        },
+        {
+          "id": "3",
+          "label": "Всегда без запятой",
+          "settings": {
+            "ktlint_standard_trailing-comma-on-call-site": "enabled",
+            "ij_kotlin_allow_trailing_comma_on_call_site": "false",
+            "ktlint_standard_wrapping": "enabled",
+            "ktlint_nur_nested-lambda-wrapping": "disabled"
+          },
+          "output": "fun card() {\n    renderCard(\n        title = title,\n        count = count,\n        onClick = onClick\n    )\n}\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        }\n    )\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "Нужна последняя запятая в объявлениях?",
+      "input": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Сохранить оба вида",
+          "settings": {
+            "ktlint_standard_trailing-comma-on-declaration-site": "disabled"
+          },
+          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(Event(\"click\") {\n        putString(\"target\", target)\n    })\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "Всегда с запятой",
+          "settings": {
+            "ktlint_standard_trailing-comma-on-declaration-site": "enabled",
+            "ij_kotlin_allow_trailing_comma": "true",
+            "ktlint_standard_wrapping": "enabled",
+            "ktlint_nur_nested-lambda-wrapping": "disabled"
+          },
+          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n)\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        }\n    )\n}\n"
+        },
+        {
+          "id": "3",
+          "label": "Всегда без запятой",
+          "settings": {
+            "ktlint_standard_trailing-comma-on-declaration-site": "enabled",
+            "ij_kotlin_allow_trailing_comma": "false",
+            "ktlint_standard_wrapping": "enabled",
+            "ktlint_nur_nested-lambda-wrapping": "disabled"
+          },
+          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean\n)\n\nfun event() {\n    Analytics.send(\n        Event(\"click\") {\n            putString(\"target\", target)\n        }\n    )\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "Объявление функции: четыре параметра уже столбиком?",
+      "input": "fun renderCard(title: String, count: Int, enabled: Boolean, onClick: () -> Unit) { show(title) }\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Можно в строку, если помещается",
+          "settings": {
+            "ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than": "unset"
+          },
+          "output": "fun renderCard(title: String, count: Int, enabled: Boolean, onClick: () -> Unit) {\n    show(title)\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "От четырёх — столбиком",
+          "settings": {
+            "ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than": "4"
+          },
+          "output": "fun renderCard(\n    title: String,\n    count: Int,\n    enabled: Boolean,\n    onClick: () -> Unit\n) {\n    show(title)\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "Конструктор класса: четыре параметра уже столбиком?",
+      "input": "data class CardOptions(val title: String, val count: Int, val enabled: Boolean, val subtitle: String)\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Можно в строку, если помещается",
+          "settings": {
+            "ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than": "unset"
+          },
+          "output": "data class CardOptions(val title: String, val count: Int, val enabled: Boolean, val subtitle: String)\n"
+        },
+        {
+          "id": "2",
+          "label": "От четырёх — столбиком",
+          "settings": {
+            "ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than": "4"
+          },
+          "output": "data class CardOptions(\n    val title: String,\n    val count: Int,\n    val enabled: Boolean,\n    val subtitle: String\n)\n"
+        }
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "Вызов с четырьмя аргументами тоже переносим?",
+      "input": "fun card() {\n    renderCard(title, count, enabled, onClick)\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Можно в строку",
+          "settings": {
+            "ktlint_nur_call-arguments": "disabled"
+          },
+          "output": "fun card() {\n    renderCard(title, count, enabled, onClick)\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "От четырёх — столбиком",
+          "settings": {
+            "nur_call_arguments_min_count": "4",
+            "ktlint_nur_call-arguments": "enabled"
+          },
+          "output": "fun card() {\n    renderCard(\n        title,\n        count,\n        enabled,\n        onClick\n    )\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F07",
+      "title": "Пустая строка после многострочной ветки when?",
+      "input": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n        Event.Refresh -> refresh()\n        Event.Close -> close()\n    }\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Оставить выбор автору",
+          "settings": {
+            "ktlint_standard_blank-line-between-when-conditions": "disabled"
+          },
+          "output": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n        Event.Refresh -> refresh()\n        Event.Close -> close()\n    }\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "Добавлять пустую строку",
+          "settings": {
+            "ktlint_standard_blank-line-between-when-conditions": "enabled",
+            "ij_kotlin_line_break_after_multiline_when_entry": "true"
+          },
+          "output": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n\n        Event.Refresh -> refresh()\n\n        Event.Close -> close()\n    }\n}\n"
+        },
+        {
+          "id": "3",
+          "label": "Убирать пустую строку",
+          "settings": {
+            "ktlint_standard_blank-line-between-when-conditions": "enabled",
+            "ij_kotlin_line_break_after_multiline_when_entry": "false"
+          },
+          "output": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n        Event.Back -> goBack()\n        Event.Refresh -> refresh()\n        Event.Close -> close()\n    }\n}\n"
+        }
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "Короткий intent автоматически собирать в строку?",
+      "input": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "Только сохранять допустимую запись",
+          "settings": {
+            "ktlint_nur_compact-intent": "disabled"
+          },
+          "output": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "Короткий intent собирать в строку",
+          "settings": {
+            "ktlint_nur_compact-intent": "enabled",
+            "nur_compact_intent_max_line_length": "120"
+          },
+          "output": "private fun back() = intent { postSideEffect(Effect.Back) }\n"
+        }
+      ]
+    },
+    {
+      "id": "F09",
+      "title": "Modifier переносим с двух или с трёх вызовов?",
+      "input": "import androidx.compose.ui.Modifier\n\nfun card(modifier: Modifier) {\n    val objectChain = Modifier.fillMaxSize().padding(8)\n    val parameterChain = modifier.fillMaxSize().padding(8)\n    val normalizedText = text.trim().lowercase()\n}\n",
+      "options": [
+        {
+          "id": "1",
+          "label": "От двух вызовов",
+          "settings": {
+            "nur_modifier_chain_min_calls": "2"
+          },
+          "output": "import androidx.compose.ui.Modifier\n\nfun card(modifier: Modifier) {\n    val objectChain = Modifier\n        .fillMaxSize()\n        .padding(8)\n    val parameterChain = modifier\n        .fillMaxSize()\n        .padding(8)\n    val normalizedText = text.trim().lowercase()\n}\n"
+        },
+        {
+          "id": "2",
+          "label": "От трёх вызовов",
+          "settings": {
+            "nur_modifier_chain_min_calls": "3"
+          },
+          "output": "import androidx.compose.ui.Modifier\n\nfun card(modifier: Modifier) {\n    val objectChain = Modifier.fillMaxSize().padding(8)\n    val parameterChain = modifier.fillMaxSize().padding(8)\n    val normalizedText = text.trim().lowercase()\n}\n"
+        }
+      ]
+    }
+  ]
+}

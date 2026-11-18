@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "gradle": "9.4.1",
+  "jdk_build": 21,
+  "bytecode_target": 17,
+  "rules_jar_build": true,
+  "rules_jar_service_provider": true,
+  "new_rules_jar_matches_generic_expected_output": true,
+  "new_rules_jar_repeat_stable": true,
+  "new_rules_jar_final_check": 0,
+  "transport_build_and_validate_plugins": true,
+  "actual_android_or_ci_tested": false
+}
