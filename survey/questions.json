@@ -1,5 +1,5 @@
 {
-  "id": "personal-style-review-v2",
+  "id": "personal-style-review-v3",
   "questions": [
     {
       "id": "F01",
@@ -179,41 +179,27 @@
     },
     {
       "id": "F08",
-      "title": "До какой длины собирать короткий intent в строку?",
-      "input": "private fun first() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n\nprivate fun second() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n",
+      "title": "Короткий intent автоматически собирать в строку?",
+      "input": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n",
       "options": [
         {
           "id": "1",
-          "label": "До 100 символов всей строки",
+          "label": "Только сохранять допустимую запись",
           "settings": {
-            "ktlint_nur_compact-intent": "enabled",
-            "nur_compact_intent_max_line_length": "100",
-            "max_line_length": "140"
+            "ktlint_nur_compact-intent": "disabled"
           },
-          "output": "private fun first() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n\nprivate fun second() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n"
+          "output": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n"
         },
         {
           "id": "2",
-          "label": "До 120 символов всей строки",
+          "label": "Короткий intent собирать в строку",
           "settings": {
             "ktlint_nur_compact-intent": "enabled",
-            "nur_compact_intent_max_line_length": "120",
-            "max_line_length": "140"
+            "nur_compact_intent_max_line_length": "120"
           },
-          "output": "private fun first() = intent { postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\") }\n\nprivate fun second() = intent {\n    postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\")\n}\n"
-        },
-        {
-          "id": "3",
-          "label": "До 140 символов всей строки",
-          "settings": {
-            "ktlint_nur_compact-intent": "enabled",
-            "nur_compact_intent_max_line_length": "140",
-            "max_line_length": "140"
-          },
-          "output": "private fun first() = intent { postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\") }\n\nprivate fun second() = intent { postSideEffect(\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\") }\n"
+          "output": "private fun back() = intent { postSideEffect(Effect.Back) }\n"
         }
-      ],
-      "explanation": "Порог относится ко всей итоговой строке: отступы, объявление функции, intent, выражение внутри и закрывающие скобки. Условия: одно выражение в теле, нет комментариев и явных параметров лямбды, внутреннее выражение однострочное. Текущий кандидат — 120. Если общий max_line_length меньше, действует меньший лимит. Это порог схлопывания многострочного блока; уже однострочный intent это узкое правило само по себе обратно не разворачивает."
+      ]
     },
     {
       "id": "F09",
