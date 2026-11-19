@@ -1,5 +1,7 @@
 # Android Code Style Lab
 
+**Актуальная анкета: [21 вопрос А/Б](https://vikim-nur.github.io/android-code-style-lab/survey/reference-ab/)** · [Именные результаты](https://vikim-nur.github.io/android-code-style-lab/survey/reference-ab/results.html) · [Что проверено](survey/reference-ab/technical.html). Варианты ещё предстоит согласовать с командой; старые материалы ниже сохранены как предыдущий этап.
+
 Готовим общий стиль Kotlin для Android. Сейчас выбираем форматирование; правила Detekt обсудим отдельно. Версия **0.2.0-candidate.1**, статус — предложение для команды.
 
 **[Анкета команды — 10 вопросов](https://vikim-nur.github.io/android-code-style-lab/survey/)** · [Сравнить два стиля на коде](https://vikim-nur.github.io/android-code-style-lab/comparison/) · **[Отчёт о проверках](https://vikim-nur.github.io/android-code-style-lab/docs/validation-report.html)** · **[Скачать JAR, настройки и примеры](artifacts/formatter-candidates-0.2.0-candidate.1.zip)**

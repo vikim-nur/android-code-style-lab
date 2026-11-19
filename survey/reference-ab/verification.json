@@ -1,0 +1,30 @@
+{
+  "survey": "moyo-reference-vs-proposal-2026-11-19-v1",
+  "version": "e4a6e80b24a97c19d722",
+  "questions": 21,
+  "topics_reviewed": 45,
+  "strict_A_B_examples": 42,
+  "A_existing_jar_supported": 8,
+  "A_additional_prototype": 13,
+  "prototype_version": "0.4.0-ballot.1",
+  "prototype_sha256": "33cb5924a6187e8802731958b2b660bed90bcc9a0dbcef60dfa7c3a2aa3cb6f8",
+  "default_regression": {
+    "files_per_profile": 63,
+    "profiles": 2,
+    "stable": true
+  },
+  "inheritance_combinations": 16,
+  "exact_independent_choices": 10,
+  "cross_effects": 6,
+  "cli_ide_matches": 125,
+  "model_tests": 16,
+  "dom_scenarios": 12,
+  "visual_browser_review": false,
+  "browser_limitation": "Chrome headless SIGABRT; DOM integration passed",
+  "github_submission_tested": false,
+  "external_votes_created": 0,
+  "common_line_limit": 140,
+  "status": "published questionnaire; rules are proposals",
+  "data_scope_cases": 19,
+  "first_format_limitation": "Two long single-parameter cases initially report max-line-length; final output, repeat and check pass."
+}

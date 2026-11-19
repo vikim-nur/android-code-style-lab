@@ -1,0 +1,499 @@
+{
+  "id": "moyo-reference-vs-proposal-2026-11-19-v1",
+  "version": "e4a6e80b24a97c19d722",
+  "repository": "vikim-nur/android-code-style-lab",
+  "pageUrl": "https://vikim-nur.github.io/android-code-style-lab/survey/reference-ab/",
+  "status": "published proposal; team approval pending",
+  "questions": [
+    {
+      "id": "F01",
+      "title": "Data class: два параметра — в строку, три и больше — столбиком?",
+      "explanation": "Предлагаем: у data class с тремя и более параметрами — каждый с новой строки; один-два — в строку, если помещаются в 140 символов. Сравнение ниже показывает случай с двумя параметрами.",
+      "note": "Обычные классы сохраняют отдельное правило. Длинные строки и сложные параметры могут потребовать переноса и при одном-двух параметрах. В обоих вариантах data class с тремя параметрами будет столбиком.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш вариант: столбиком с трёх параметров"
+      },
+      "examples": {
+        "A": "data class LinkInfo(\n    val name: String?,\n    val link: String?\n)\n",
+        "B": "data class LinkInfo(val name: String?, val link: String?)\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "C07",
+        "C08"
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "Одна зависимость @Inject — в строку или отдельно?",
+      "explanation": "В эталоне есть обе формы. Здесь показан короткий вариант; предложение — переносить даже одну зависимость.",
+      "note": "Это не единственная форма эталона: у большинства проверенных ViewModel с одной зависимостью уже есть перенос.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "@HiltViewModel\nclass ItemListVM @Inject constructor(private val repository: ItemRepository) : BaseViewModel() {}\n",
+        "B": "@HiltViewModel\nclass ItemListVM @Inject constructor(\n    private val repository: ItemRepository\n) : BaseViewModel() {}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "C01",
+        "C02",
+        "C03",
+        "C10"
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "Три параметра функции — столбиком или в строку?",
+      "explanation": "Для обычных функций и Compose смотрим на один и тот же порог.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "@Composable\nfun ConfirmDialog(\n    title: String,\n    onConfirm: () -> Unit,\n    onDismiss: () -> Unit\n) {}\n",
+        "B": "@Composable\nfun ConfirmDialog(title: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "F01",
+        "F02",
+        "F04",
+        "F05"
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "Короткий вызов — аргументы столбиком или всё в строку?",
+      "explanation": "Это же решение влияет на короткие вызовы внутри цепочек и на лямбды внутри их аргументов.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "fun example() {\n    renderCard(\n        title = title,\n        enabled = true,\n        onClick = { close() }\n    )\n}\n",
+        "B": "fun example() {\n    renderCard(title = title, enabled = true, onClick = { close() })\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "P03",
+        "M02",
+        "L02"
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "Последняя запятая в вызове — оставляем или убираем?",
+      "explanation": "Здесь вызов длинный и в обоих вариантах остаётся столбиком. Отличается последняя запятая.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "fun example() {\n    renderCard(\n        title = selectedCustomerContractDisplayTitle,\n        subtitle = selectedCustomerContractAdditionalInformation,\n        onClick = onSelectedCustomerContractClick,\n    )\n}\n",
+        "B": "fun example() {\n    renderCard(\n        title = selectedCustomerContractDisplayTitle,\n        subtitle = selectedCustomerContractAdditionalInformation,\n        onClick = onSelectedCustomerContractClick\n    )\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "A01",
+        "A03",
+        "A04"
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "Последняя запятая в объявлении — оставляем или убираем?",
+      "explanation": "Сравниваем только запятую перед закрывающей скобкой.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "data class ItemDetails(\n    val title: String,\n    val subtitle: String,\n    val enabled: Boolean,\n    val count: Int,\n)\n",
+        "B": "data class ItemDetails(\n    val title: String,\n    val subtitle: String,\n    val enabled: Boolean,\n    val count: Int\n)\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "C01",
+        "C02",
+        "C03",
+        "C07",
+        "C08",
+        "C10",
+        "F01",
+        "F03",
+        "F04",
+        "F05"
+      ]
+    },
+    {
+      "id": "F07",
+      "title": "Аргументы базового класса ViewModel — столбиком или в строку?",
+      "explanation": "Конструктор с зависимостями одинаковый. Смотрим на вызов базового класса после него.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "@HiltViewModel\nclass CustomerSummaryVM @Inject constructor(\n    repository: ItemRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    errorHandler: ErrorHandler\n) : BaseFeatureVM<SummaryState>(\n    SummaryState(),\n    repository,\n    profileService,\n    errorHandler\n) {}\n",
+        "B": "@HiltViewModel\nclass CustomerSummaryVM @Inject constructor(\n    repository: ItemRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    errorHandler: ErrorHandler\n) : BaseFeatureVM<SummaryState>(SummaryState(), repository, profileService, errorHandler) {}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "C03",
+        "C04"
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "Адаптер: callback отдельно или при базовом типе?",
+      "explanation": "Длинный базовый тип в обоих вариантах перенесён. Выбираем оформление его аргумента.",
+      "note": "Эта настройка влияет и на другие базовые вызовы, перенесённые ниже объявления: например, у холдера с интерфейсами. Сочетания проверяются отдельно.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "class CustomerPhoneSuggestionsAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, CustomerPhoneSuggestionsAdapter.PhoneNumberViewHolder>(\n        PhoneNumberDiffUtilCallback\n    ) {}\n",
+        "B": "class CustomerPhoneSuggestionsAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, CustomerPhoneSuggestionsAdapter.PhoneNumberViewHolder>(PhoneNumberDiffUtilCallback) {}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "C06"
+      ]
+    },
+    {
+      "id": "F09",
+      "title": "Короткое наследование после конструктора — переносим или собираем?",
+      "explanation": "Правило будет общим для обычных конструкторов с одним базовым типом; имя ViewHolder не является условием.",
+      "note": "Если раскрывать аргументы любого перенесённого базового класса, здесь binding.root тоже уйдёт на отдельную строку. Этот выбор связан с оформлением аргументов у адаптера.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "class CustomerListRowViewHolder(private val binding: CustomerListRowBinding) :\n    RecyclerView.ViewHolder(binding.root) {}\n",
+        "B": "class CustomerListRowViewHolder(private val binding: CustomerListRowBinding) : RecyclerView.ViewHolder(binding.root) {}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "C05",
+        "C06",
+        "C08",
+        "C14"
+      ]
+    },
+    {
+      "id": "F10",
+      "title": "Класс и интерфейс: первый тип при объявлении или каждый с новой строки?",
+      "explanation": "В эталоне первый базовый тип иногда остаётся при объявлении, а следующий переносится.",
+      "note": "Имена изменены; вариант А повторяет форму VerticalConfigViewHolder с пробелом перед двоеточием. Перенос аргумента view также зависит от общего решения о раскрытии базовых вызовов.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "class CustomerChoiceViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {}\n",
+        "B": "class CustomerChoiceViewHolder(view: View) :\n    CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "C05",
+        "C11",
+        "C14"
+      ]
+    },
+    {
+      "id": "F11",
+      "title": "Перед двоеточием наследования — без пробела или с пробелом?",
+      "explanation": "Это относится к объявлению класса или object, а не к типам параметров.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "class RowHolder(view: View): BaseHolder(view) {}\n\nobject DefaultStyle: Style\n",
+        "B": "class RowHolder(view: View) : BaseHolder(view) {}\n\nobject DefaultStyle : Style\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "C01",
+        "C02",
+        "C03",
+        "C04",
+        "C05",
+        "C06",
+        "C07",
+        "C08",
+        "C10",
+        "C11",
+        "C12",
+        "C14"
+      ]
+    },
+    {
+      "id": "F12",
+      "title": "Два вызова Modifier — в строку или по шагам?",
+      "explanation": "Смотрим на короткую цепочку, которая помещается в строку.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "import androidx.compose.ui.Modifier\n\nfun example(modifier: Modifier) {\n    val objectChain = Modifier.fillMaxSize().imePadding()\n    val parameterChain = modifier.fillMaxWidth().padding(16)\n}\n",
+        "B": "import androidx.compose.ui.Modifier\n\nfun example(modifier: Modifier) {\n    val objectChain = Modifier\n        .fillMaxSize()\n        .imePadding()\n    val parameterChain = modifier\n        .fillMaxWidth()\n        .padding(16)\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "M01"
+      ]
+    },
+    {
+      "id": "F13",
+      "title": "Короткий intent — блоком или в строку?",
+      "explanation": "Одно действие, без комментариев и вложенной логики.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n",
+        "B": "private fun back() = intent { postSideEffect(Effect.Back) }\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "L01",
+        "F03"
+      ]
+    },
+    {
+      "id": "F14",
+      "title": "После большой ветки when — сразу следующая или пустая строка?",
+      "explanation": "Оцениваем промежуток после ветки с несколькими строками.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n        Event.Back -> goBack()\n    }\n}\n",
+        "B": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n    }\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "W01",
+        "W02"
+      ]
+    },
+    {
+      "id": "F15",
+      "title": "Между короткими ветками when — оставляем пустую строку?",
+      "explanation": "Здесь обе ветки короткие. Это отдельное решение от промежутка после большой ветки.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> open()\n\n        Event.Back -> goBack()\n    }\n}\n",
+        "B": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> open()\n        Event.Back -> goBack()\n    }\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "W01",
+        "W03"
+      ]
+    },
+    {
+      "id": "F16",
+      "title": "Короткий результат функции после = — отдельно или в строку?",
+      "explanation": "Это обычная функция с выражением; короткий intent обсуждается отдельно.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "private fun String.readItemId(): Long? =\n    removePrefix(ITEM_PREFIX).toLongOrNull()\n",
+        "B": "private fun String.readItemId(): Long? = removePrefix(ITEM_PREFIX).toLongOrNull()\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "F03",
+        "F02"
+      ]
+    },
+    {
+      "id": "F17",
+      "title": "В начале функции — пустая строка или сразу код?",
+      "explanation": "Сравниваем промежуток после открывающей фигурной скобки.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "fun closeScreen() {\n\n    navigateBack()\n}\n",
+        "B": "fun closeScreen() {\n    navigateBack()\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "F01",
+        "F04"
+      ]
+    },
+    {
+      "id": "F18",
+      "title": "Аннотация параметра класса — отдельно или рядом с параметром?",
+      "explanation": "Смотрим на расположение @SerializedName, а не на значение аннотации.",
+      "note": "Здесь параметры классов. В обнаруженных 112 изменениях аннотаций параметров все случаи относятся к классам; API-функции не менялись.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "data class ItemInfo(\n    @SerializedName(\"id\")\n    val id: Long,\n    @SerializedName(\"name\")\n    val name: String\n)\n",
+        "B": "data class ItemInfo(@SerializedName(\"id\") val id: Long, @SerializedName(\"name\") val name: String)\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "N02",
+        "C07",
+        "C08"
+      ]
+    },
+    {
+      "id": "F19",
+      "title": "Аннотация enum — при значении или над ним?",
+      "explanation": "В эталоне встречается аннотация и значение на одной строке.",
+      "note": "",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "enum class DeliveryMode {\n    @SerializedName(\"FAST\") FAST,\n    @SerializedName(\"REGULAR\") REGULAR\n}\n",
+        "B": "enum class DeliveryMode {\n    @SerializedName(\"FAST\")\n    FAST,\n\n    @SerializedName(\"REGULAR\")\n    REGULAR\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "V01",
+        "N03"
+      ]
+    },
+    {
+      "id": "F20",
+      "title": "Импорты базовых типов — сначала или в общем алфавите?",
+      "explanation": "Показан образец, где общий базовый тип импортирован перед типом модуля.",
+      "note": "Для варианта А потребуется явный список общих пакетов. Из одного примера нельзя вывести порядок всех импортов команды.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "import sample.foundation.State\nimport sample.feature.Promotion\n\nclass Example\n",
+        "B": "import sample.feature.Promotion\nimport sample.foundation.State\n\nclass Example\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": true
+      },
+      "families": [
+        "U01"
+      ]
+    },
+    {
+      "id": "F23",
+      "title": "Пустые скобки перед лямбдой — оставляем или убираем?",
+      "explanation": "Оба варианта вызывают функцию с лямбдой. Выбираем запись вызова.",
+      "note": "Источник этого отдельного отличия — вызов темы в SaimaShimmerAccount; точный ID закреплён в локальном отчёте сопоставления.",
+      "labels": {
+        "A": "Как в образце «Мой О!»",
+        "B": "Наш предложенный вариант"
+      },
+      "examples": {
+        "A": "fun example() {\n    AppTheme() {\n        Content()\n    }\n}\n",
+        "B": "fun example() {\n    AppTheme {\n        Content()\n    }\n}\n"
+      },
+      "capability": {
+        "status": "strict",
+        "currentJarA": false
+      },
+      "families": [
+        "A02"
+      ]
+    }
+  ]
+}

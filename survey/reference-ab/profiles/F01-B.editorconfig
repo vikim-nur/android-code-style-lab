@@ -1,0 +1,63 @@
+# Candidate A: reference-inspired, ktlint 1.8.0 + rules 0.3.2-candidate.1.
+# Not approved or deployed. Analysis/naming/import-policy decisions are separate.
+root = true
+
+[*.{kt,kts}]
+ktlint_code_style = android_studio
+indent_style = space
+indent_size = 4
+max_line_length = 140
+ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,^
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
+ktlint_standard_chain-method-continuation = disabled
+ktlint_standard_blank-line-between-when-conditions = disabled
+ktlint_standard_when-entry-bracing = disabled
+ktlint_standard_multiline-if-else = disabled
+ktlint_standard_no-empty-first-line-in-method-block = enabled
+ktlint_function_signature_body_expression_wrapping = default
+ktlint_function_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = 4
+ktlint_class_signature_rule_force_multiline_when_parameter_count_greater_or_equal_than = 4
+ktlint_argument_list_wrapping_ignore_when_parameter_count_greater_or_equal_than = unset
+ktlint_standard_function-expression-body = disabled
+ktlint_standard_no-empty-class-body = disabled
+ktlint_standard_no-unit-return = disabled
+ktlint_standard_function-naming = disabled
+ktlint_standard_class-naming = disabled
+ktlint_standard_property-naming = disabled
+ktlint_standard_backing-property-naming = disabled
+ktlint_standard_enum-entry-name-case = disabled
+ktlint_standard_package-name = disabled
+ktlint_standard_filename = disabled
+ktlint_standard_no-unused-imports = disabled
+ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_mixed-condition-operators = disabled
+
+ktlint_standard_colon-spacing = enabled
+ktlint_standard_wrapping = disabled
+ktlint_nur_modifier-chain = enabled
+ktlint_nur_type-colon-spacing = disabled
+ktlint_nur_nested-lambda-wrapping = enabled
+ktlint_nur_call-arguments = disabled
+ktlint_nur_compact-intent = enabled
+
+nur_modifier_chain_min_calls = 2
+nur_call_arguments_min_count = 4
+nur_compact_intent_max_line_length = 120
+ktlint_nur_call-site-comma = enabled
+ktlint_nur_declaration-site-comma = enabled
+ij_kotlin_allow_trailing_comma_on_call_site = false
+ij_kotlin_allow_trailing_comma = false
+ktlint_nur_when-branch-spacing = enabled
+
+# Canonical class header replacement; do not enable both class layout engines.
+ktlint_standard_class-signature = disabled
+ktlint_nur_class-layout = enabled
+nur_constructor_min_parameters = 4
+nur_inject_constructor_multiline = true
+nur_wrapped_base_arguments_multiline = false
+ktlint_nur_compact-condition = enabled
+
+ktlint_nur_compact-call = enabled
+
+nur_data_constructor_min_parameters = 3
