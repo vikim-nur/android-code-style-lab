@@ -27,5 +27,14 @@
   "status": "published questionnaire; rules are proposals",
   "data_scope_cases": 19,
   "first_format_limitation": "Two long single-parameter cases initially report max-line-length; final output, repeat and check pass.",
-  "pending_ui_update": false
+  "pending_ui_update": false,
+  "source_audit": {
+    "cards": 21,
+    "source_records": 23,
+    "sha256_and_utf16_verified": true,
+    "formatting_feature_checks": 21,
+    "generic_width_cases": 6,
+    "pinned_snapshot_date": "2026-11-18",
+    "originals_private": true
+  }
 }
