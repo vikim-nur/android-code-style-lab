@@ -1,6 +1,6 @@
 {
   "id": "moyo-reference-vs-proposal-2026-11-19-v1",
-  "version": "e4a6e80b24a97c19d722",
+  "version": "6ab37eed2874da3ab38d",
   "repository": "vikim-nur/android-code-style-lab",
   "pageUrl": "https://vikim-nur.github.io/android-code-style-lab/survey/reference-ab/",
   "status": "published proposal; team approval pending",
@@ -12,7 +12,7 @@
       "note": "Обычные классы сохраняют отдельное правило. Длинные строки и сложные параметры могут потребовать переноса и при одном-двух параметрах. В обоих вариантах data class с тремя параметрами будет столбиком.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш вариант: столбиком с трёх параметров"
+        "B": "Альтернатива: столбиком с трёх параметров"
       },
       "examples": {
         "A": "data class LinkInfo(\n    val name: String?,\n    val link: String?\n)\n",
@@ -34,7 +34,7 @@
       "note": "Это не единственная форма эталона: у большинства проверенных ViewModel с одной зависимостью уже есть перенос.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "@HiltViewModel\nclass ItemListVM @Inject constructor(private val repository: ItemRepository) : BaseViewModel() {}\n",
@@ -58,7 +58,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "@Composable\nfun ConfirmDialog(\n    title: String,\n    onConfirm: () -> Unit,\n    onDismiss: () -> Unit\n) {}\n",
@@ -82,7 +82,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "fun example() {\n    renderCard(\n        title = title,\n        enabled = true,\n        onClick = { close() }\n    )\n}\n",
@@ -109,7 +109,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "fun example() {\n    renderCard(\n        title = selectedCustomerContractDisplayTitle,\n        subtitle = selectedCustomerContractAdditionalInformation,\n        onClick = onSelectedCustomerContractClick,\n    )\n}\n",
@@ -132,7 +132,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "data class ItemDetails(\n    val title: String,\n    val subtitle: String,\n    val enabled: Boolean,\n    val count: Int,\n)\n",
@@ -162,7 +162,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "@HiltViewModel\nclass CustomerSummaryVM @Inject constructor(\n    repository: ItemRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    errorHandler: ErrorHandler\n) : BaseFeatureVM<SummaryState>(\n    SummaryState(),\n    repository,\n    profileService,\n    errorHandler\n) {}\n",
@@ -184,7 +184,7 @@
       "note": "Эта настройка влияет и на другие базовые вызовы, перенесённые ниже объявления: например, у холдера с интерфейсами. Сочетания проверяются отдельно.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "class CustomerPhoneSuggestionsAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, CustomerPhoneSuggestionsAdapter.PhoneNumberViewHolder>(\n        PhoneNumberDiffUtilCallback\n    ) {}\n",
@@ -205,7 +205,7 @@
       "note": "Если раскрывать аргументы любого перенесённого базового класса, здесь binding.root тоже уйдёт на отдельную строку. Этот выбор связан с оформлением аргументов у адаптера.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "class CustomerListRowViewHolder(private val binding: CustomerListRowBinding) :\n    RecyclerView.ViewHolder(binding.root) {}\n",
@@ -229,7 +229,7 @@
       "note": "Имена изменены; вариант А повторяет форму VerticalConfigViewHolder с пробелом перед двоеточием. Перенос аргумента view также зависит от общего решения о раскрытии базовых вызовов.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "class CustomerChoiceViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {}\n",
@@ -252,7 +252,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "class RowHolder(view: View): BaseHolder(view) {}\n\nobject DefaultStyle: Style\n",
@@ -284,7 +284,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "import androidx.compose.ui.Modifier\n\nfun example(modifier: Modifier) {\n    val objectChain = Modifier.fillMaxSize().imePadding()\n    val parameterChain = modifier.fillMaxWidth().padding(16)\n}\n",
@@ -305,7 +305,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n",
@@ -327,7 +327,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n        Event.Back -> goBack()\n    }\n}\n",
@@ -349,7 +349,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> open()\n\n        Event.Back -> goBack()\n    }\n}\n",
@@ -371,7 +371,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "private fun String.readItemId(): Long? =\n    removePrefix(ITEM_PREFIX).toLongOrNull()\n",
@@ -393,7 +393,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "fun closeScreen() {\n\n    navigateBack()\n}\n",
@@ -415,7 +415,7 @@
       "note": "Здесь параметры классов. В обнаруженных 112 изменениях аннотаций параметров все случаи относятся к классам; API-функции не менялись.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "data class ItemInfo(\n    @SerializedName(\"id\")\n    val id: Long,\n    @SerializedName(\"name\")\n    val name: String\n)\n",
@@ -438,7 +438,7 @@
       "note": "",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "enum class DeliveryMode {\n    @SerializedName(\"FAST\") FAST,\n    @SerializedName(\"REGULAR\") REGULAR\n}\n",
@@ -460,7 +460,7 @@
       "note": "Для варианта А потребуется явный список общих пакетов. Из одного примера нельзя вывести порядок всех импортов команды.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "import sample.foundation.State\nimport sample.feature.Promotion\n\nclass Example\n",
@@ -481,7 +481,7 @@
       "note": "Источник этого отдельного отличия — вызов темы в SaimaShimmerAccount; точный ID закреплён в локальном отчёте сопоставления.",
       "labels": {
         "A": "Как в образце «Мой О!»",
-        "B": "Наш предложенный вариант"
+        "B": "Альтернативный вариант"
       },
       "examples": {
         "A": "fun example() {\n    AppTheme() {\n        Content()\n    }\n}\n",

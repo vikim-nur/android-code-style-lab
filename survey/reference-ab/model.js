@@ -29,8 +29,8 @@
   function issueBody(spec, input) {
     const vote = validate(spec, input, true);
     const selections = spec.questions.filter(q => vote.answers[q.id]).map(q => q.id + ': ' + (vote.answers[q.id] === 'A' ? 'А' : 'Б')).join(' · ');
-    return ['Анкета форматирования: А — образец «Мой О!», Б — предложение.',
-      'Имя: ' + vote.name, '', selections, '', 'Вопросы: ' + spec.pageUrl, '',
+    return ['Анкета форматирования: А — образец «Мой О!», Б — альтернатива.',
+      'Имя: ' + vote.name, '', '[Посмотреть результаты голосования](' + spec.pageUrl + 'results.html?autoload=1)', '', selections, '', 'Вопросы: ' + spec.pageUrl, '',
       marker(spec), '```json', JSON.stringify(vote, null, 2), '```'].join('\n');
   }
   function issueUrl(spec, input) {
@@ -103,7 +103,7 @@
     const escape = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\|/g, '\\|').replace(/([\[\]*_`])/g, '\\$1');
     const lines = ['# ' + (options.demo ? 'ДЕМОНСТРАЦИЯ — вымышленные ответы' : 'Предварительные итоги выбора форматирования'), '',
       'Анкета: ' + spec.id + ' · версия ' + spec.version, '',
-      'А — образец «Мой О!», Б — предложение. Ответили: ' + result.participants.length + '.', '',
+      'А — образец «Мой О!», Б — альтернатива. Ответили: ' + result.participants.length + '.', '',
       '| Вопрос | А | Б | Итог |', '|---|---:|---:|---|'];
     for (const [index,q] of result.questions.entries()) lines.push('| ' + (index+1) + '. ' + escape(q.title) + ' | ' + q.A + ' | ' + q.B + ' | ' + (q.winner === 'A' ? 'А' : q.winner === 'B' ? 'Б' : q.winner === 'tie' ? 'Поровну' : 'Нет голосов') + ' |');
     lines.push('', '## Ответы участников', '');

@@ -1,6 +1,6 @@
 {
   "survey": "moyo-reference-vs-proposal-2026-11-19-v1",
-  "version": "e4a6e80b24a97c19d722",
+  "version": "6ab37eed2874da3ab38d",
   "questions": 21,
   "topics_reviewed": 45,
   "strict_A_B_examples": 42,
@@ -17,8 +17,8 @@
   "exact_independent_choices": 10,
   "cross_effects": 6,
   "cli_ide_matches": 125,
-  "model_tests": 16,
-  "dom_scenarios": 12,
+  "model_tests": 17,
+  "dom_scenarios": 13,
   "visual_browser_review": false,
   "browser_limitation": "Chrome headless SIGABRT; DOM integration passed",
   "github_submission_tested": false,
@@ -26,5 +26,6 @@
   "common_line_limit": 140,
   "status": "published questionnaire; rules are proposals",
   "data_scope_cases": 19,
-  "first_format_limitation": "Two long single-parameter cases initially report max-line-length; final output, repeat and check pass."
+  "first_format_limitation": "Two long single-parameter cases initially report max-line-length; final output, repeat and check pass.",
+  "pending_ui_update": false
 }
