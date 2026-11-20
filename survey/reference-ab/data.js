@@ -1,5 +1,5 @@
 globalThis.FORMATTING_SURVEY = {
-  "id": "moyo-original-formatting-2026-11-20-v2",
+  "id": "moyo-original-formatting-2026-11-20-v3-160",
   "repository": "vikim-nur/android-code-style-lab",
   "pageUrl": "https://vikim-nur.github.io/android-code-style-lab/survey/reference-ab/",
   "status": "published proposal; team approval pending",
@@ -36,8 +36,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C07",
@@ -76,8 +76,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C01",
@@ -119,8 +119,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "F01",
@@ -161,8 +161,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "A01",
@@ -206,8 +206,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "A01",
@@ -247,8 +247,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C01",
@@ -295,8 +295,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C03",
@@ -335,8 +335,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C06"
@@ -374,8 +374,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C05",
@@ -416,8 +416,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C05",
@@ -462,16 +462,16 @@ globalThis.FORMATTING_SURVEY = {
         }
       ],
       "examples": {
-        "A": "class HorizontalConfigViewHolder(view: View): CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {\n\n    data object NavigateBack: NurSideEffect",
-        "B": "class HorizontalConfigViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {\n\n    data object NavigateBack : NurSideEffect"
+        "A": "class HorizontalConfigViewHolder(view: View): CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {",
+        "B": "class HorizontalConfigViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {"
       },
       "labels": {
         "A": "Исходный фрагмент «Мой О!»",
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "C01",
@@ -525,16 +525,16 @@ globalThis.FORMATTING_SURVEY = {
         }
       ],
       "examples": {
-        "A": "Modifier.fillMaxSize().imePadding()\n\nmodifier.fillMaxWidth().padding(horizontal = 16.dp)",
-        "B": "Modifier\n                    .fillMaxSize()\n                    .imePadding()\n\nmodifier\n            .fillMaxWidth()\n            .padding(horizontal = 16.dp)"
+        "A": "Modifier.fillMaxSize().imePadding()",
+        "B": "Modifier\n                    .fillMaxSize()\n                    .imePadding()"
       },
       "labels": {
         "A": "Исходный фрагмент «Мой О!»",
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "M01"
@@ -572,8 +572,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "L01",
@@ -613,8 +613,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "W01",
@@ -654,8 +654,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "W01",
@@ -694,8 +694,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "F03",
@@ -734,8 +734,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "F01",
@@ -744,11 +744,11 @@ globalThis.FORMATTING_SURVEY = {
     },
     {
       "id": "F18",
-      "title": "Аннотация параметра класса — отдельно или рядом с параметром?",
+      "title": "Аннотация свойства data class — отдельно или рядом?",
       "group": "Конструкции Kotlin",
       "scope": {
-        "mechanism": "Экспериментальное правило выбирает KtParameter с аннотацией и переносит параметр после последней аннотации.",
-        "other_structures": "Текущий код не ограничивает выбор конструкторами: параметры функций тоже могут затрагиваться. Пример анкеты подтверждён только для параметров класса. Перед принятием нужно проверить функции отдельно или явно сузить условие."
+        "mechanism": "Правило выбирает val/var в основном конструкторе data class и переносит свойство после последней аннотации.",
+        "other_structures": "Подходят разные аннотации свойств, включая SerializedName, SerialName и ColumnInfo. Наличие Parcelize не меняет условие. Обычные функции и конструкторы обычных классов этим переключателем не выбираются. Аннотации класса не затрагиваются."
       },
       "source_examples": [
         {
@@ -774,8 +774,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "N02",
@@ -815,8 +815,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "V01",
@@ -855,8 +855,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "U01"
@@ -894,8 +894,8 @@ globalThis.FORMATTING_SURVEY = {
         "B": "Альтернативный вариант"
       },
       "capability": {
-        "status": "strict",
-        "prototype": "0.4.0-ballot.1"
+        "status": "strict for selected fragments",
+        "prototype": "0.4.0-ballot.2"
       },
       "families": [
         "A02"
@@ -904,5 +904,95 @@ globalThis.FORMATTING_SURVEY = {
   ],
   "source_date": "2026-11-18",
   "source_commit": "a5e20f175744cae856c99f5ac985cebe59c82587",
-  "version": "d106487352ab918491be"
+  "line_limit": 160,
+  "engine": "ktlint 1.8.0",
+  "ruleset_version": "0.4.0-ballot.2",
+  "ruleset_sha256": "dfb22438a17929d359a860cdeeab021af4b81076c688b652760908657a5a8e3e",
+  "profile_hashes": {
+    "F01": {
+      "A": "5fdcbd8c1293f5b6fd931b5b6e0405bb96ea7ab5dd897b479a411e706e9229e0",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F02": {
+      "A": "4fcc06706efbc40982bafc9c6c9a9f409f25958b75bdf1470007437f5b1cf483",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F03": {
+      "A": "13b713e4b22482dc678d3a5f24b1e22fdf1bb3af3a48c48b4f05640480555e0a",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F04": {
+      "A": "2c25621acdada3e5335dc75252194a0d3ce33bca5d10711aaf5fb2253a463bff",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F05": {
+      "A": "bba7bae19ba42f26da1727c61ad0e73b31084b6763d37a2947a59f4dcc4cbfef",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F06": {
+      "A": "570b6eae09236327f134ca2093b78e91f7d5086b1542054a13dd0722f4231c04",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F07": {
+      "A": "e72a6430b14e8f75a534f073aecfc548b9cf5f997f774f0f1ed60ab37ca274c1",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F08": {
+      "A": "42a41b5a8c918dba0e52f6b80faf7765eb694c1a17e2f607a35f67f8c3556b8f",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F09": {
+      "A": "2e060fb39bcf4f79d19e8d218478c16015dd7a6b71d702eb20f34c49c7c2f7b0",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F10": {
+      "A": "69defd2605c39d740e22da43900a5aac8785f6d35db4c5de7bcf8db5eb868d12",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F11": {
+      "A": "db9277f2744e7c7762d07b39b92fa74df116d07df1d01bfabf8213389bbcb1c9",
+      "B": "69defd2605c39d740e22da43900a5aac8785f6d35db4c5de7bcf8db5eb868d12"
+    },
+    "F12": {
+      "A": "d6d02e10feeff102d015794198bf24d4cec2267cfc1cc1e415b9f081265d405c",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F13": {
+      "A": "25934b0f8d5b081f3a2147fcf46a64eb2c1ea6fab413187178b693b6cadef9ac",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F14": {
+      "A": "169e0dae4d697772833ec9559fa482a8134da3b5f1eb40bf656984ee60997fa0",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F15": {
+      "A": "8be7f80295a44913eaa4ba7d780b5991e6c75e85a37bc7a9ba08dd46ff096fbe",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F16": {
+      "A": "5294a21f134de46642392dd273aa0ed8cf3c0eccb67fe951f4dbe37812cc1c3a",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F17": {
+      "A": "58a8a5c75a1e79cb082da25b8c74e78a79e2321060a5b2452f75a74eda115347",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F18": {
+      "A": "897f3306966a3b1507f9da36673a36a06548644ef6d7d8a0141041cefdb65d11",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F19": {
+      "A": "50ae496833090897957caede76d3e8481b531fa077e42f5aa97f4fe29f0b46a3",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F20": {
+      "A": "ccda63e6e901d7e53f62c81c46a8f8affddd9046a0669631893d1f1fddd19e6f",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    },
+    "F23": {
+      "A": "ddd715587e279d4ffc349dbe29ccc360c9838ed60b68050b9031d6a17e6725f3",
+      "B": "40b2a34a38707cd43223c3397eef27d83b5aeadc53dec746bb303bf777ba34f2"
+    }
+  },
+  "version": "349adc66ed0f885382a4"
 };

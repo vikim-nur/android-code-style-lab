@@ -6,7 +6,7 @@ root = true
 ktlint_code_style = android_studio
 indent_style = space
 indent_size = 4
-max_line_length = 140
+max_line_length = 160
 ij_kotlin_imports_layout = *,java.**,javax.**,kotlin.**,^
 ktlint_standard_trailing-comma-on-call-site = disabled
 ktlint_standard_trailing-comma-on-declaration-site = disabled
@@ -53,7 +53,7 @@ ktlint_nur_when-branch-spacing = enabled
 # Canonical class header replacement; do not enable both class layout engines.
 ktlint_standard_class-signature = disabled
 ktlint_nur_class-layout = enabled
-nur_constructor_min_parameters = 1
+nur_constructor_min_parameters = 4
 nur_inject_constructor_multiline = true
 nur_wrapped_base_arguments_multiline = false
 ktlint_nur_compact-condition = enabled
@@ -65,7 +65,3 @@ nur_data_constructor_min_parameters = 3
 ktlint_standard_annotation = disabled
 
 nur_parameter_annotation_newline = true
-
-ktlint_standard_parameter-wrapping = disabled
-
-ktlint_standard_parameter-list-wrapping = disabled
