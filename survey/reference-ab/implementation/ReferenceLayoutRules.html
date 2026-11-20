@@ -1,0 +1,69 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>ReferenceLayoutRules.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>ReferenceLayoutRules.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<span id="L2" class="line"><a href="#L2" class="number">2</a></span>
+<span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.rule.engine.core.api.*</span>
+<span id="L4" class="line"><a href="#L4" class="number">4</a>import com.pinterest.ktlint.rule.engine.core.api.editorconfig.EditorConfig</span>
+<span id="L5" class="line"><a href="#L5" class="number">5</a>import com.pinterest.ktlint.ruleset.standard.rules.TrailingCommaOnCallSiteRule</span>
+<span id="L6" class="line"><a href="#L6" class="number">6</a>import com.pinterest.ktlint.ruleset.standard.rules.TrailingCommaOnDeclarationSiteRule</span>
+<span id="L7" class="line"><a href="#L7" class="number">7</a>import org.jetbrains.kotlin.com.intellij.lang.ASTNode</span>
+<span id="L8" class="line"><a href="#L8" class="number">8</a>import org.jetbrains.kotlin.com.intellij.psi.PsiWhiteSpace</span>
+<span id="L9" class="line"><a href="#L9" class="number">9</a>import org.jetbrains.kotlin.psi.KtWhenExpression</span>
+<span id="L10" class="line"><a href="#L10" class="number">10</a></span>
+<span id="L11" class="line"><a href="#L11" class="number">11</a>/** Reuse pinned ktlint comma logic after our wrapping replacement. */</span>
+<span id="L12" class="line"><a href="#L12" class="number">12</a>class ReferenceCallCommaRule : Rule(</span>
+<span id="L13" class="line"><a href="#L13" class="number">13</a>    RuleId(&quot;nur:call-site-comma&quot;), About(),</span>
+<span id="L14" class="line"><a href="#L14" class="number">14</a>    usesEditorConfigProperties = TrailingCommaOnCallSiteRule().usesEditorConfigProperties,</span>
+<span id="L15" class="line"><a href="#L15" class="number">15</a>    visitorModifiers = setOf(VisitorModifier.RunAfterRule(RuleId(&quot;nur:nested-lambda-wrapping&quot;), VisitorModifier.RunAfterRule.Mode.ONLY_WHEN_RUN_AFTER_RULE_IS_LOADED_AND_ENABLED), VisitorModifier.RunAsLateAsPossible),</span>
+<span id="L16" class="line"><a href="#L16" class="number">16</a>), RuleAutocorrectApproveHandler {</span>
+<span id="L17" class="line"><a href="#L17" class="number">17</a>    private val delegate = TrailingCommaOnCallSiteRule()</span>
+<span id="L18" class="line"><a href="#L18" class="number">18</a>    override fun beforeFirstNode(editorConfig: EditorConfig) = delegate.beforeFirstNode(editorConfig)</span>
+<span id="L19" class="line"><a href="#L19" class="number">19</a>    override fun beforeVisitChildNodes(node: ASTNode, emit: (Int, String, Boolean) -&gt; AutocorrectDecision) =</span>
+<span id="L20" class="line"><a href="#L20" class="number">20</a>        delegate.beforeVisitChildNodes(node, emit)</span>
+<span id="L21" class="line"><a href="#L21" class="number">21</a>}</span>
+<span id="L22" class="line"><a href="#L22" class="number">22</a></span>
+<span id="L23" class="line"><a href="#L23" class="number">23</a>class ReferenceDeclarationCommaRule : Rule(</span>
+<span id="L24" class="line"><a href="#L24" class="number">24</a>    RuleId(&quot;nur:declaration-site-comma&quot;), About(),</span>
+<span id="L25" class="line"><a href="#L25" class="number">25</a>    usesEditorConfigProperties = TrailingCommaOnDeclarationSiteRule().usesEditorConfigProperties,</span>
+<span id="L26" class="line"><a href="#L26" class="number">26</a>    visitorModifiers = setOf(VisitorModifier.RunAfterRule(RuleId(&quot;nur:nested-lambda-wrapping&quot;), VisitorModifier.RunAfterRule.Mode.ONLY_WHEN_RUN_AFTER_RULE_IS_LOADED_AND_ENABLED), VisitorModifier.RunAsLateAsPossible),</span>
+<span id="L27" class="line"><a href="#L27" class="number">27</a>), RuleAutocorrectApproveHandler {</span>
+<span id="L28" class="line"><a href="#L28" class="number">28</a>    private val delegate = TrailingCommaOnDeclarationSiteRule()</span>
+<span id="L29" class="line"><a href="#L29" class="number">29</a>    override fun beforeFirstNode(editorConfig: EditorConfig) = delegate.beforeFirstNode(editorConfig)</span>
+<span id="L30" class="line"><a href="#L30" class="number">30</a>    override fun beforeVisitChildNodes(node: ASTNode, emit: (Int, String, Boolean) -&gt; AutocorrectDecision) =</span>
+<span id="L31" class="line"><a href="#L31" class="number">31</a>        delegate.beforeVisitChildNodes(node, emit)</span>
+<span id="L32" class="line"><a href="#L32" class="number">32</a>}</span>
+<span id="L33" class="line"><a href="#L33" class="number">33</a></span>
+<span id="L34" class="line"><a href="#L34" class="number">34</a>/** Separate multiline branches without inserting gaps between adjacent simple branches. */</span>
+<span id="L35" class="line"><a href="#L35" class="number">35</a>private fun blankFlag(name: String, default: Boolean) = com.pinterest.ktlint.rule.engine.core.api.editorconfig.EditorConfigProperty(</span>
+<span id="L36" class="line"><a href="#L36" class="number">36</a>    type = org.ec4j.core.model.PropertyType.LowerCasingPropertyType(name, name,</span>
+<span id="L37" class="line"><a href="#L37" class="number">37</a>        org.ec4j.core.model.PropertyType.PropertyValueParser.BOOLEAN_VALUE_PARSER, setOf(&quot;true&quot;, &quot;false&quot;)), defaultValue = default,</span>
+<span id="L38" class="line"><a href="#L38" class="number">38</a>)</span>
+<span id="L39" class="line"><a href="#L39" class="number">39</a>private val AFTER_MULTILINE = blankFlag(&quot;nur_blank_after_multiline_when&quot;, true)</span>
+<span id="L40" class="line"><a href="#L40" class="number">40</a>private val AFTER_SIMPLE = blankFlag(&quot;nur_blank_after_simple_when&quot;, false)</span>
+<span id="L41" class="line"><a href="#L41" class="number">41</a>class WhenBranchSpacingRule : Rule(</span>
+<span id="L42" class="line"><a href="#L42" class="number">42</a>    RuleId(&quot;nur:when-branch-spacing&quot;), About(),</span>
+<span id="L43" class="line"><a href="#L43" class="number">43</a>    usesEditorConfigProperties = setOf(AFTER_MULTILINE, AFTER_SIMPLE),</span>
+<span id="L44" class="line"><a href="#L44" class="number">44</a>    visitorModifiers = setOf(VisitorModifier.RunAsLateAsPossible),</span>
+<span id="L45" class="line"><a href="#L45" class="number">45</a>), RuleAutocorrectApproveHandler {</span>
+<span id="L46" class="line"><a href="#L46" class="number">46</a>    private var afterMultiline = true</span>
+<span id="L47" class="line"><a href="#L47" class="number">47</a>    private var afterSimple = false</span>
+<span id="L48" class="line"><a href="#L48" class="number">48</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
+<span id="L49" class="line"><a href="#L49" class="number">49</a>        afterMultiline = editorConfig[AFTER_MULTILINE]</span>
+<span id="L50" class="line"><a href="#L50" class="number">50</a>        afterSimple = editorConfig[AFTER_SIMPLE]</span>
+<span id="L51" class="line"><a href="#L51" class="number">51</a>    }</span>
+<span id="L52" class="line"><a href="#L52" class="number">52</a>    override fun beforeVisitChildNodes(node: ASTNode, emit: (Int, String, Boolean) -&gt; AutocorrectDecision) {</span>
+<span id="L53" class="line"><a href="#L53" class="number">53</a>        val expression = node.psi as? KtWhenExpression ?: return</span>
+<span id="L54" class="line"><a href="#L54" class="number">54</a>        if (&#x27;\n&#x27; !in expression.text) return</span>
+<span id="L55" class="line"><a href="#L55" class="number">55</a>        val entries = expression.entries</span>
+<span id="L56" class="line"><a href="#L56" class="number">56</a>        for (index in 1 until entries.size) {</span>
+<span id="L57" class="line"><a href="#L57" class="number">57</a>            val entry = entries[index]</span>
+<span id="L58" class="line"><a href="#L58" class="number">58</a>            // Do not move or reinterpret comments between branches or semicolon-separated code.</span>
+<span id="L59" class="line"><a href="#L59" class="number">59</a>            val whitespace = entry.prevSibling as? PsiWhiteSpace ?: continue</span>
+<span id="L60" class="line"><a href="#L60" class="number">60</a>            if (whitespace.prevSibling != entries[index - 1] || &#x27;\n&#x27; !in whitespace.text) continue</span>
+<span id="L61" class="line"><a href="#L61" class="number">61</a>            val separated = if (&#x27;\n&#x27; in entries[index - 1].text) afterMultiline else afterSimple</span>
+<span id="L62" class="line"><a href="#L62" class="number">62</a>            val gap = if (separated) &quot;\n\n&quot; else &quot;\n&quot;</span>
+<span id="L63" class="line"><a href="#L63" class="number">63</a>            val desired = gap + whitespace.text.substringAfterLast(&#x27;\n&#x27;)</span>
+<span id="L64" class="line"><a href="#L64" class="number">64</a>            if (whitespace.text == desired) continue</span>
+<span id="L65" class="line"><a href="#L65" class="number">65</a>            emit(whitespace.textOffset, &quot;Use one blank line after a multiline when branch and none after a simple branch&quot;, true)</span>
+<span id="L66" class="line"><a href="#L66" class="number">66</a>                .ifAutocorrectAllowed { whitespace.node.replaceTextWith(desired) }</span>
+<span id="L67" class="line"><a href="#L67" class="number">67</a>        }</span>
+<span id="L68" class="line"><a href="#L68" class="number">68</a>    }</span>
+<span id="L69" class="line"><a href="#L69" class="number">69</a>}</span></code></pre></main></body></html>

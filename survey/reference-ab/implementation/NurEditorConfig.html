@@ -1,0 +1,54 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>NurEditorConfig.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>NurEditorConfig.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<span id="L2" class="line"><a href="#L2" class="number">2</a></span>
+<span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.rule.engine.core.api.editorconfig.EditorConfigProperty</span>
+<span id="L4" class="line"><a href="#L4" class="number">4</a>import org.ec4j.core.model.PropertyType</span>
+<span id="L5" class="line"><a href="#L5" class="number">5</a></span>
+<span id="L6" class="line"><a href="#L6" class="number">6</a>private fun positiveInt(name: String, description: String, default: Int) = EditorConfigProperty(</span>
+<span id="L7" class="line"><a href="#L7" class="number">7</a>    type = PropertyType.LowerCasingPropertyType(</span>
+<span id="L8" class="line"><a href="#L8" class="number">8</a>        name, description, PropertyType.PropertyValueParser.POSITIVE_INT_VALUE_PARSER,</span>
+<span id="L9" class="line"><a href="#L9" class="number">9</a>        setOf(default.toString()),</span>
+<span id="L10" class="line"><a href="#L10" class="number">10</a>    ),</span>
+<span id="L11" class="line"><a href="#L11" class="number">11</a>    defaultValue = default,</span>
+<span id="L12" class="line"><a href="#L12" class="number">12</a>)</span>
+<span id="L13" class="line"><a href="#L13" class="number">13</a></span>
+<span id="L14" class="line"><a href="#L14" class="number">14</a>val MODIFIER_MIN_CALLS = positiveInt(&quot;nur_modifier_chain_min_calls&quot;, &quot;Minimum Modifier calls before wrapping&quot;, 2)</span>
+<span id="L15" class="line"><a href="#L15" class="number">15</a>val CALL_MIN_ARGUMENTS = positiveInt(&quot;nur_call_arguments_min_count&quot;, &quot;Minimum parenthesized call arguments before wrapping&quot;, 4)</span>
+<span id="L16" class="line"><a href="#L16" class="number">16</a>val COMPACT_INTENT_MAX_WIDTH = positiveInt(&quot;nur_compact_intent_max_line_length&quot;, &quot;Maximum width of a compact intent line&quot;, 120)</span>
+<span id="L17" class="line"><a href="#L17" class="number">17</a></span>
+<span id="L18" class="line"><a href="#L18" class="number">18</a>val CONSTRUCTOR_MIN_PARAMETERS = positiveInt(&quot;nur_constructor_min_parameters&quot;, &quot;Wrap ordinary constructors at this parameter count&quot;, 4)</span>
+<span id="L19" class="line"><a href="#L19" class="number">19</a>val DATA_CONSTRUCTOR_MIN_PARAMETERS = positiveInt(&quot;nur_data_constructor_min_parameters&quot;, &quot;Wrap data class constructors at this parameter count&quot;, 4)</span>
+<span id="L20" class="line"><a href="#L20" class="number">20</a>val INJECT_MULTILINE = EditorConfigProperty(</span>
+<span id="L21" class="line"><a href="#L21" class="number">21</a>    type = PropertyType.LowerCasingPropertyType(</span>
+<span id="L22" class="line"><a href="#L22" class="number">22</a>        &quot;nur_inject_constructor_multiline&quot;, &quot;Wrap nonempty Inject constructors&quot;, PropertyType.PropertyValueParser.BOOLEAN_VALUE_PARSER,</span>
+<span id="L23" class="line"><a href="#L23" class="number">23</a>        setOf(&quot;true&quot;, &quot;false&quot;),</span>
+<span id="L24" class="line"><a href="#L24" class="number">24</a>    ),</span>
+<span id="L25" class="line"><a href="#L25" class="number">25</a>    defaultValue = true,</span>
+<span id="L26" class="line"><a href="#L26" class="number">26</a>)</span>
+<span id="L27" class="line"><a href="#L27" class="number">27</a></span>
+<span id="L28" class="line"><a href="#L28" class="number">28</a>val WRAPPED_BASE_ARGUMENTS = EditorConfigProperty(</span>
+<span id="L29" class="line"><a href="#L29" class="number">29</a>    type = PropertyType.LowerCasingPropertyType(</span>
+<span id="L30" class="line"><a href="#L30" class="number">30</a>        &quot;nur_wrapped_base_arguments_multiline&quot;, &quot;Wrap arguments of a base call moved below the class header&quot;, PropertyType.PropertyValueParser.BOOLEAN_VALUE_PARSER,</span>
+<span id="L31" class="line"><a href="#L31" class="number">31</a>        setOf(&quot;true&quot;, &quot;false&quot;),</span>
+<span id="L32" class="line"><a href="#L32" class="number">32</a>    ),</span>
+<span id="L33" class="line"><a href="#L33" class="number">33</a>    defaultValue = true,</span>
+<span id="L34" class="line"><a href="#L34" class="number">34</a>)</span>
+<span id="L35" class="line"><a href="#L35" class="number">35</a></span>
+<span id="L36" class="line"><a href="#L36" class="number">36</a>private fun flag(name: String, description: String, default: Boolean = false) = EditorConfigProperty(</span>
+<span id="L37" class="line"><a href="#L37" class="number">37</a>    type = PropertyType.LowerCasingPropertyType(name, description,</span>
+<span id="L38" class="line"><a href="#L38" class="number">38</a>        PropertyType.PropertyValueParser.BOOLEAN_VALUE_PARSER, setOf(&quot;true&quot;, &quot;false&quot;)),</span>
+<span id="L39" class="line"><a href="#L39" class="number">39</a>    defaultValue = default,</span>
+<span id="L40" class="line"><a href="#L40" class="number">40</a>)</span>
+<span id="L41" class="line"><a href="#L41" class="number">41</a>val BASE_ARGUMENT_MINIMUM = positiveInt(&quot;nur_base_arguments_min_count&quot;, &quot;Expand base calls at this argument count&quot;, Int.MAX_VALUE)</span>
+<span id="L42" class="line"><a href="#L42" class="number">42</a>val PLAIN_CONSTRUCTOR_BASE_NEWLINE = flag(&quot;nur_plain_constructor_base_newline&quot;, &quot;Move the single base after an ordinary constructor to a new line&quot;)</span>
+<span id="L43" class="line"><a href="#L43" class="number">43</a>val FIRST_BASE_INLINE = flag(&quot;nur_first_of_multiple_bases_inline&quot;, &quot;Keep the first of several bases on the header line when it fits&quot;)</span>
+<span id="L44" class="line"><a href="#L44" class="number">44</a>val INHERITANCE_COLON_SPACE = flag(&quot;nur_inheritance_space_before_colon&quot;, &quot;Space before inheritance colon&quot;, true)</span>
+<span id="L45" class="line"><a href="#L45" class="number">45</a>val INTENT_EXPANDED = flag(&quot;nur_intent_expanded&quot;, &quot;Expand short intent bodies&quot;)</span>
+<span id="L46" class="line"><a href="#L46" class="number">46</a>val BODY_FIRST_BLANK_LINE = flag(&quot;nur_body_first_blank_line&quot;, &quot;Insert a blank line before the first function statement&quot;)</span>
+<span id="L47" class="line"><a href="#L47" class="number">47</a>val PARAMETER_ANNOTATION_NEWLINE = flag(&quot;nur_parameter_annotation_newline&quot;, &quot;Move an annotated parameter after its annotation&quot;)</span>
+<span id="L48" class="line"><a href="#L48" class="number">48</a>val ENUM_ANNOTATION_INLINE = flag(&quot;nur_enum_annotation_inline&quot;, &quot;Keep a single enum annotation before its name&quot;)</span>
+<span id="L49" class="line"><a href="#L49" class="number">49</a></span>
+<span id="L50" class="line"><a href="#L50" class="number">50</a>val EMPTY_CALL_PARENTHESES = flag(&quot;nur_empty_call_parentheses&quot;, &quot;Add empty parentheses before a trailing lambda&quot;)</span>
+<span id="L51" class="line"><a href="#L51" class="number">51</a></span>
+<span id="L52" class="line"><a href="#L52" class="number">52</a>val EMPTY_LAMBDA_MULTILINE = flag(&quot;nur_empty_lambda_multiline&quot;, &quot;Expand empty lambda bodies&quot;)</span>
+<span id="L53" class="line"><a href="#L53" class="number">53</a></span>
+<span id="L54" class="line"><a href="#L54" class="number">54</a>val COMPACT_SHORT_MODIFIER = flag(&quot;nur_compact_short_modifier&quot;, &quot;Compact Modifier chains below the wrap threshold when the full line fits&quot;)</span></code></pre></main></body></html>
