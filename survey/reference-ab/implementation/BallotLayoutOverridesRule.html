@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>BallotLayoutOverridesRule.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>BallotLayoutOverridesRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>BallotLayoutOverridesRule.kt</title><style>.line{display:block}.explanation{color:#286044;background:#edf6ef}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>BallotLayoutOverridesRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Зелёные комментарии добавлены для объяснения. Остальные строки сохранены как в проверенном прототипе; номера и ссылки относятся к исходнику. Рабочий JAR не менялся.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
 <span id="L2" class="line"><a href="#L2" class="number">2</a></span>
 <span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.rule.engine.core.api.*</span>
 <span id="L4" class="line"><a href="#L4" class="number">4</a>import com.pinterest.ktlint.rule.engine.core.api.editorconfig.EditorConfig</span>
@@ -8,7 +8,7 @@
 <span id="L8" class="line"><a href="#L8" class="number">8</a>import org.jetbrains.kotlin.psi.*</span>
 <span id="L9" class="line"><a href="#L9" class="number">9</a></span>
 <span id="L10" class="line"><a href="#L10" class="number">10</a>/** Optional survey prototypes. Disabled by default; not installed in application projects. */</span>
-<span id="L11" class="line"><a href="#L11" class="number">11</a>class BallotLayoutOverridesRule : Rule(</span>
+<span class="explanation line">// Дополнительные правила для сравнения вариантов команды. Переключаются настройками.</span><span id="L11" class="line"><a href="#L11" class="number">11</a>class BallotLayoutOverridesRule : Rule(</span>
 <span id="L12" class="line"><a href="#L12" class="number">12</a>    RuleId(&quot;nur:ballot-layout-overrides&quot;), About(),</span>
 <span id="L13" class="line"><a href="#L13" class="number">13</a>    usesEditorConfigProperties = setOf(BODY_FIRST_BLANK_LINE, PARAMETER_ANNOTATION_NEWLINE, ENUM_ANNOTATION_INLINE, EMPTY_CALL_PARENTHESES, EMPTY_LAMBDA_MULTILINE),</span>
 <span id="L14" class="line"><a href="#L14" class="number">14</a>    visitorModifiers = setOf(VisitorModifier.RunAsLateAsPossible,</span>
@@ -21,7 +21,7 @@
 <span id="L21" class="line"><a href="#L21" class="number">21</a>    private var blankFirst = false</span>
 <span id="L22" class="line"><a href="#L22" class="number">22</a>    private var parameterAnnotation = false</span>
 <span id="L23" class="line"><a href="#L23" class="number">23</a>    private var enumAnnotation = false</span>
-<span id="L24" class="line"><a href="#L24" class="number">24</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
+<span class="explanation line">// Читаем флаги: пустая строка, аннотации, скобки и пустые лямбды.</span><span id="L24" class="line"><a href="#L24" class="number">24</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
 <span id="L25" class="line"><a href="#L25" class="number">25</a>        blankFirst = editorConfig[BODY_FIRST_BLANK_LINE]</span>
 <span id="L26" class="line"><a href="#L26" class="number">26</a>        emptyParentheses = editorConfig[EMPTY_CALL_PARENTHESES]</span>
 <span id="L27" class="line"><a href="#L27" class="number">27</a>        emptyLambda = editorConfig[EMPTY_LAMBDA_MULTILINE]</span>
@@ -38,14 +38,14 @@
 <span id="L38" class="line"><a href="#L38" class="number">38</a>            }</span>
 <span id="L39" class="line"><a href="#L39" class="number">39</a>        }</span>
 <span id="L40" class="line"><a href="#L40" class="number">40</a></span>
-<span id="L41" class="line"><a href="#L41" class="number">41</a>        if (element is KtCallExpression &amp;&amp; emptyParentheses &amp;&amp; element.valueArgumentList == null &amp;&amp; element.lambdaArguments.size == 1) {</span>
+<span class="explanation line">// В выбранном варианте добавляем пустые () перед лямбдой без других аргументов.</span><span id="L41" class="line"><a href="#L41" class="number">41</a>        if (element is KtCallExpression &amp;&amp; emptyParentheses &amp;&amp; element.valueArgumentList == null &amp;&amp; element.lambdaArguments.size == 1) {</span>
 <span id="L42" class="line"><a href="#L42" class="number">42</a>            val anchor = element.typeArgumentList ?: element.calleeExpression ?: return</span>
 <span id="L43" class="line"><a href="#L43" class="number">43</a>            emit(element.textOffset, &quot;Use empty parentheses before the trailing lambda&quot;, true).ifAutocorrectAllowed {</span>
 <span id="L44" class="line"><a href="#L44" class="number">44</a>                val args = KtPsiFactory(element.project).createCallArguments(&quot;()&quot;)</span>
 <span id="L45" class="line"><a href="#L45" class="number">45</a>                node.addChild(args.node, anchor.node.treeNext)</span>
 <span id="L46" class="line"><a href="#L46" class="number">46</a>            }</span>
 <span id="L47" class="line"><a href="#L47" class="number">47</a>        }</span>
-<span id="L48" class="line"><a href="#L48" class="number">48</a>        if (element is KtBlockExpression &amp;&amp; blankFirst &amp;&amp; element.parent is KtNamedFunction) {</span>
+<span class="explanation line">// Пустую строку добавляем только в начало тела именованной функции; начальные комментарии защищены.</span><span id="L48" class="line"><a href="#L48" class="number">48</a>        if (element is KtBlockExpression &amp;&amp; blankFirst &amp;&amp; element.parent is KtNamedFunction) {</span>
 <span id="L49" class="line"><a href="#L49" class="number">49</a>            val first = element.statements.firstOrNull() ?: return</span>
 <span id="L50" class="line"><a href="#L50" class="number">50</a>            // Do not move a leading comment or rewrite its relation to the first statement.</span>
 <span id="L51" class="line"><a href="#L51" class="number">51</a>            if (element.children.any { it is PsiComment &amp;&amp; it.textOffset &lt; first.textOffset }) return</span>
@@ -58,7 +58,7 @@
 <span id="L58" class="line"><a href="#L58" class="number">58</a>                }</span>
 <span id="L59" class="line"><a href="#L59" class="number">59</a>            }</span>
 <span id="L60" class="line"><a href="#L60" class="number">60</a>        }</span>
-<span id="L61" class="line"><a href="#L61" class="number">61</a>        if (element is KtParameter &amp;&amp; parameterAnnotation &amp;&amp; element.annotationEntries.isNotEmpty()) {</span>
+<span class="explanation line">// Внимание: это условие выбирает и параметры функций, не только параметры классов.</span><span id="L61" class="line"><a href="#L61" class="number">61</a>        if (element is KtParameter &amp;&amp; parameterAnnotation &amp;&amp; element.annotationEntries.isNotEmpty()) {</span>
 <span id="L62" class="line"><a href="#L62" class="number">62</a>            if (PsiTreeUtil.findChildOfType(element, PsiComment::class.java) != null) return</span>
 <span id="L63" class="line"><a href="#L63" class="number">63</a>            val annotation = element.annotationEntries.last()</span>
 <span id="L64" class="line"><a href="#L64" class="number">64</a>            val following = annotation.node.lastChildLeafOrSelf20.nextLeaf ?: return</span>
@@ -72,7 +72,7 @@
 <span id="L72" class="line"><a href="#L72" class="number">72</a>                else following.upsertWhitespaceBeforeMe(desired)</span>
 <span id="L73" class="line"><a href="#L73" class="number">73</a>            }</span>
 <span id="L74" class="line"><a href="#L74" class="number">74</a>        }</span>
-<span id="L75" class="line"><a href="#L75" class="number">75</a>        if (element is KtEnumEntry &amp;&amp; enumAnnotation &amp;&amp; element.annotationEntries.size == 1) {</span>
+<span class="explanation line">// Для элемента enum с одной аннотацией собираем аннотацию и имя в строку; комментарии пропускаем.</span><span id="L75" class="line"><a href="#L75" class="number">75</a>        if (element is KtEnumEntry &amp;&amp; enumAnnotation &amp;&amp; element.annotationEntries.size == 1) {</span>
 <span id="L76" class="line"><a href="#L76" class="number">76</a>            if (PsiTreeUtil.findChildOfType(element, PsiComment::class.java) != null) return</span>
 <span id="L77" class="line"><a href="#L77" class="number">77</a>            val whitespace = element.node.prevLeaf?.takeIf { it.elementType == ElementType.WHITE_SPACE }</span>
 <span id="L78" class="line"><a href="#L78" class="number">78</a>            if (whitespace != null &amp;&amp; whitespace.text.count { it == &#x27;\n&#x27; } &gt; 1) {</span>

@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>NurStyleRules.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>NurStyleRules.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>NurStyleRules.kt</title><style>.line{display:block}.explanation{color:#286044;background:#edf6ef}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>NurStyleRules.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Зелёные комментарии добавлены для объяснения. Остальные строки сохранены как в проверенном прототипе; номера и ссылки относятся к исходнику. Рабочий JAR не менялся.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
 <span id="L2" class="line"><a href="#L2" class="number">2</a></span>
 <span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.cli.ruleset.core.api.RuleSetProviderV3</span>
 <span id="L4" class="line"><a href="#L4" class="number">4</a>import com.pinterest.ktlint.rule.engine.core.api.*</span>
@@ -12,7 +12,7 @@
 <span id="L12" class="line"><a href="#L12" class="number">12</a>import org.jetbrains.kotlin.psi.*</span>
 <span id="L13" class="line"><a href="#L13" class="number">13</a></span>
 <span id="L14" class="line"><a href="#L14" class="number">14</a>/** Preserve accepted inheritance spacing without disabling spacing for property/parameter types. */</span>
-<span id="L15" class="line"><a href="#L15" class="number">15</a>class TypeColonSpacingRule : Rule(RuleId(&quot;nur:type-colon-spacing&quot;), About(), usesEditorConfigProperties = setOf(INHERITANCE_COLON_SPACE)), RuleAutocorrectApproveHandler {</span>
+<span class="explanation line">// Здесь отдельно регулируется пробел перед двоеточием наследования.</span><span id="L15" class="line"><a href="#L15" class="number">15</a>class TypeColonSpacingRule : Rule(RuleId(&quot;nur:type-colon-spacing&quot;), About(), usesEditorConfigProperties = setOf(INHERITANCE_COLON_SPACE)), RuleAutocorrectApproveHandler {</span>
 <span id="L16" class="line"><a href="#L16" class="number">16</a>    private var inheritanceSpace = true</span>
 <span id="L17" class="line"><a href="#L17" class="number">17</a>    override fun beforeFirstNode(editorConfig: EditorConfig) { inheritanceSpace = editorConfig[INHERITANCE_COLON_SPACE] }</span>
 <span id="L18" class="line"><a href="#L18" class="number">18</a>    private val delegate = SpacingAroundColonRule()</span>
@@ -34,7 +34,7 @@
 <span id="L34" class="line"><a href="#L34" class="number">34</a>}</span>
 <span id="L35" class="line"><a href="#L35" class="number">35</a></span>
 <span id="L36" class="line"><a href="#L36" class="number">36</a>/** Keep a single nested call with a trailing lambda compact; retain stock wrapping elsewhere. */</span>
-<span id="L37" class="line"><a href="#L37" class="number">37</a>class NestedLambdaWrappingRule : Rule(</span>
+<span class="explanation line">// Обрабатываем поддержанные варианты вложенных лямбд; это не изменение их логики.</span><span id="L37" class="line"><a href="#L37" class="number">37</a>class NestedLambdaWrappingRule : Rule(</span>
 <span id="L38" class="line"><a href="#L38" class="number">38</a>    RuleId(&quot;nur:nested-lambda-wrapping&quot;), About(),</span>
 <span id="L39" class="line"><a href="#L39" class="number">39</a>    usesEditorConfigProperties = WrappingRule().usesEditorConfigProperties + setOf(FIRST_BASE_INLINE, PARAMETER_ANNOTATION_NEWLINE),</span>
 <span id="L40" class="line"><a href="#L40" class="number">40</a>    visitorModifiers = WrappingRule().visitorModifiers,</span>
@@ -87,7 +87,7 @@
 <span id="L87" class="line"><a href="#L87" class="number">87</a>}</span>
 <span id="L88" class="line"><a href="#L88" class="number">88</a></span>
 <span id="L89" class="line"><a href="#L89" class="number">89</a>/** Optional candidate: force a multiline call at 4+ parenthesized arguments. */</span>
-<span id="L90" class="line"><a href="#L90" class="number">90</a>class CallArgumentsRule : Rule(</span>
+<span class="explanation line">// Переносим аргументы подходящего вызова, когда достигнут заданный порог.</span><span id="L90" class="line"><a href="#L90" class="number">90</a>class CallArgumentsRule : Rule(</span>
 <span id="L91" class="line"><a href="#L91" class="number">91</a>    RuleId(&quot;nur:call-arguments&quot;), About(), usesEditorConfigProperties = setOf(CALL_MIN_ARGUMENTS),</span>
 <span id="L92" class="line"><a href="#L92" class="number">92</a>), RuleAutocorrectApproveHandler {</span>
 <span id="L93" class="line"><a href="#L93" class="number">93</a>    private var minimumArguments = 4</span>
@@ -110,7 +110,7 @@
 <span id="L110" class="line"><a href="#L110" class="number">110</a>}</span>
 <span id="L111" class="line"><a href="#L111" class="number">111</a></span>
 <span id="L112" class="line"><a href="#L112" class="number">112</a>/** Optional candidate: compact only a comment-free one-statement intent lambda within 120 columns. */</span>
-<span id="L113" class="line"><a href="#L113" class="number">113</a>class CompactIntentRule : Rule(</span>
+<span class="explanation line">// Ищем короткий вызов intent и оформляем его согласно выбранному варианту.</span><span id="L113" class="line"><a href="#L113" class="number">113</a>class CompactIntentRule : Rule(</span>
 <span id="L114" class="line"><a href="#L114" class="number">114</a>    RuleId(&quot;nur:compact-intent&quot;), About(),</span>
 <span id="L115" class="line"><a href="#L115" class="number">115</a>    usesEditorConfigProperties = setOf(MAX_LINE_LENGTH_PROPERTY, COMPACT_INTENT_MAX_WIDTH, INTENT_EXPANDED),</span>
 <span id="L116" class="line"><a href="#L116" class="number">116</a>), RuleAutocorrectApproveHandler {</span>
@@ -124,9 +124,9 @@
 <span id="L124" class="line"><a href="#L124" class="number">124</a>        val lambda = node.psi as? KtLambdaExpression ?: return</span>
 <span id="L125" class="line"><a href="#L125" class="number">125</a>        val argument = lambda.parent as? KtLambdaArgument ?: return</span>
 <span id="L126" class="line"><a href="#L126" class="number">126</a>        val call = argument.parent as? KtCallExpression ?: return</span>
-<span id="L127" class="line"><a href="#L127" class="number">127</a>        if (call.calleeExpression?.text != &quot;intent&quot;) return</span>
+<span class="explanation line">// Сравниваем имя вызова с intent. Это ещё не доказательство, что вызов принадлежит Orbit.</span><span id="L127" class="line"><a href="#L127" class="number">127</a>        if (call.calleeExpression?.text != &quot;intent&quot;) return</span>
 <span id="L128" class="line"><a href="#L128" class="number">128</a>        val block = lambda.bodyExpression ?: return</span>
-<span id="L129" class="line"><a href="#L129" class="number">129</a>        val statement = block.statements.singleOrNull() ?: return</span>
+<span class="explanation line">// Продолжаем только когда внутри ровно одно действие.</span><span id="L129" class="line"><a href="#L129" class="number">129</a>        val statement = block.statements.singleOrNull() ?: return</span>
 <span id="L130" class="line"><a href="#L130" class="number">130</a>        if ((!expanded &amp;&amp; &#x27;\n&#x27; !in lambda.text) || &#x27;\n&#x27; in statement.text) return</span>
 <span id="L131" class="line"><a href="#L131" class="number">131</a>        if (PsiTreeUtil.findChildOfType(lambda, PsiComment::class.java) != null) return</span>
 <span id="L132" class="line"><a href="#L132" class="number">132</a>        val literal = lambda.functionLiteral</span>
@@ -144,7 +144,7 @@
 <span id="L144" class="line"><a href="#L144" class="number">144</a>        val text = lambda.containingFile.text</span>
 <span id="L145" class="line"><a href="#L145" class="number">145</a>        val lineStart = text.lastIndexOf(&#x27;\n&#x27;, lambda.textOffset - 1) + 1</span>
 <span id="L146" class="line"><a href="#L146" class="number">146</a>        val lineEnd = text.indexOf(&#x27;\n&#x27;, lambda.textRange.endOffset).let { if (it &lt; 0) text.length else it }</span>
-<span id="L147" class="line"><a href="#L147" class="number">147</a>        if (lambda.textOffset - lineStart + proposed.length + lineEnd - lambda.textRange.endOffset &gt; limit) return</span>
+<span class="explanation line">// Учитываем длину всей строки. Если она слишком длинная, ничего не собираем.</span><span id="L147" class="line"><a href="#L147" class="number">147</a>        if (lambda.textOffset - lineStart + proposed.length + lineEnd - lambda.textRange.endOffset &gt; limit) return</span>
 <span id="L148" class="line"><a href="#L148" class="number">148</a>        emit(lambda.textOffset, &quot;Keep a short single-statement intent lambda on one line&quot;, true).ifAutocorrectAllowed {</span>
 <span id="L149" class="line"><a href="#L149" class="number">149</a>            val before = statement.node.firstChildLeafOrSelf20.prevLeaf</span>
 <span id="L150" class="line"><a href="#L150" class="number">150</a>            val after = statement.node.lastChildLeafOrSelf20.nextLeaf</span>
@@ -155,7 +155,7 @@
 <span id="L155" class="line"><a href="#L155" class="number">155</a>    }</span>
 <span id="L156" class="line"><a href="#L156" class="number">156</a>}</span>
 <span id="L157" class="line"><a href="#L157" class="number">157</a></span>
-<span id="L158" class="line"><a href="#L158" class="number">158</a>class NurStyleRuleSetProvider : RuleSetProviderV3(RuleSetId(&quot;nur&quot;)) {</span>
+<span class="explanation line">// Здесь перечислены классы правил, которые ktlint загрузит из этого JAR.</span><span id="L158" class="line"><a href="#L158" class="number">158</a>class NurStyleRuleSetProvider : RuleSetProviderV3(RuleSetId(&quot;nur&quot;)) {</span>
 <span id="L159" class="line"><a href="#L159" class="number">159</a>    override fun getRuleProviders(): Set&lt;RuleProvider&gt; = setOf(</span>
 <span id="L160" class="line"><a href="#L160" class="number">160</a>        RuleProvider { ModifierChainRule() },</span>
 <span id="L161" class="line"><a href="#L161" class="number">161</a>        RuleProvider { BallotLayoutOverridesRule() },</span>

@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>CompactCallRule.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>CompactCallRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>CompactCallRule.kt</title><style>.line{display:block}.explanation{color:#286044;background:#edf6ef}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>CompactCallRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Зелёные комментарии добавлены для объяснения. Остальные строки сохранены как в проверенном прототипе; номера и ссылки относятся к исходнику. Рабочий JAR не менялся.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
 <span id="L2" class="line"><a href="#L2" class="number">2</a></span>
 <span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.rule.engine.core.api.*</span>
 <span id="L4" class="line"><a href="#L4" class="number">4</a>import com.pinterest.ktlint.rule.engine.core.api.editorconfig.*</span>
@@ -8,7 +8,7 @@
 <span id="L8" class="line"><a href="#L8" class="number">8</a>import org.jetbrains.kotlin.psi.*</span>
 <span id="L9" class="line"><a href="#L9" class="number">9</a></span>
 <span id="L10" class="line"><a href="#L10" class="number">10</a>/** Compact a fitting argument list without changing arguments or moving lambda expressions. */</span>
-<span id="L11" class="line"><a href="#L11" class="number">11</a>class CompactCallRule : Rule(</span>
+<span class="explanation line">// Пробуем собрать многострочный вызов в одну строку.</span><span id="L11" class="line"><a href="#L11" class="number">11</a>class CompactCallRule : Rule(</span>
 <span id="L12" class="line"><a href="#L12" class="number">12</a>    RuleId(&quot;nur:compact-call&quot;), About(), usesEditorConfigProperties = setOf(MAX_LINE_LENGTH_PROPERTY),</span>
 <span id="L13" class="line"><a href="#L13" class="number">13</a>    visitorModifiers = setOf(VisitorModifier.RunAsLateAsPossible,</span>
 <span id="L14" class="line"><a href="#L14" class="number">14</a>        VisitorModifier.RunAfterRule(RuleId(&quot;nur:class-layout&quot;), VisitorModifier.RunAfterRule.Mode.REGARDLESS_WHETHER_RUN_AFTER_RULE_IS_LOADED_OR_DISABLED),</span>
@@ -20,9 +20,9 @@
 <span id="L20" class="line"><a href="#L20" class="number">20</a>        width = editorConfig[MAX_LINE_LENGTH_PROPERTY].let { if (it &lt;= 0) Int.MAX_VALUE else it }</span>
 <span id="L21" class="line"><a href="#L21" class="number">21</a>    }</span>
 <span id="L22" class="line"><a href="#L22" class="number">22</a>    override fun afterVisitChildNodes(node: ASTNode, emit: (Int, String, Boolean) -&gt; AutocorrectDecision) {</span>
-<span id="L23" class="line"><a href="#L23" class="number">23</a>        val list = node.psi as? KtValueArgumentList ?: return</span>
+<span class="explanation line">// Ищем список аргументов вызова, а не параметры объявления функции.</span><span id="L23" class="line"><a href="#L23" class="number">23</a>        val list = node.psi as? KtValueArgumentList ?: return</span>
 <span id="L24" class="line"><a href="#L24" class="number">24</a>        if (list.parent !is KtCallExpression || &#x27;\n&#x27; !in list.text) return</span>
-<span id="L25" class="line"><a href="#L25" class="number">25</a>        if (PsiTreeUtil.findChildOfType(list, PsiComment::class.java) != null ||</span>
+<span class="explanation line">// С комментариями и сложными вложенными конструкциями вызов оставляем как есть.</span><span id="L25" class="line"><a href="#L25" class="number">25</a>        if (PsiTreeUtil.findChildOfType(list, PsiComment::class.java) != null ||</span>
 <span id="L26" class="line"><a href="#L26" class="number">26</a>            PsiTreeUtil.findChildrenOfType(list, KtStringTemplateExpression::class.java).any { &#x27;\n&#x27; in it.text } ||</span>
 <span id="L27" class="line"><a href="#L27" class="number">27</a>            PsiTreeUtil.findChildrenOfType(list, KtBlockExpression::class.java).any { it.statements.size &gt; 1 } ||</span>
 <span id="L28" class="line"><a href="#L28" class="number">28</a>            PsiTreeUtil.findChildrenOfType(list, KtQualifiedExpression::class.java).any { &#x27;\n&#x27; in it.text } ||</span>
@@ -56,7 +56,7 @@
 <span id="L56" class="line"><a href="#L56" class="number">56</a>        val startOfLine = file.lastIndexOf(&#x27;\n&#x27;, list.textOffset - 1) + 1</span>
 <span id="L57" class="line"><a href="#L57" class="number">57</a>        val endOfLine = file.indexOf(&#x27;\n&#x27;, list.textRange.endOffset).let { if (it &lt; 0) file.length else it }</span>
 <span id="L58" class="line"><a href="#L58" class="number">58</a>        val trailingComma = list.rightParenthesis?.node?.prevCodeLeaf?.elementType == ElementType.COMMA</span>
-<span id="L59" class="line"><a href="#L59" class="number">59</a>        val compactWidth = list.textOffset - startOfLine + compact.length + endOfLine - list.textRange.endOffset - if (trailingComma) 1 else 0</span>
+<span class="explanation line">// Считаем длину всей получившейся строки, включая код до и после аргументов.</span><span id="L59" class="line"><a href="#L59" class="number">59</a>        val compactWidth = list.textOffset - startOfLine + compact.length + endOfLine - list.textRange.endOffset - if (trailingComma) 1 else 0</span>
 <span id="L60" class="line"><a href="#L60" class="number">60</a>        if (compactWidth &gt; width) return</span>
 <span id="L61" class="line"><a href="#L61" class="number">61</a>        for ((space, value) in replacements.entries.sortedByDescending { it.key.startOffset }) {</span>
 <span id="L62" class="line"><a href="#L62" class="number">62</a>            emit(space.startOffset, &quot;Keep a fitting call argument list on one line&quot;, true).ifAutocorrectAllowed {</span>

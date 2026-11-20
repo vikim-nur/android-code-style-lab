@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>ModifierChainRule.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>ModifierChainRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>ModifierChainRule.kt</title><style>.line{display:block}.explanation{color:#286044;background:#edf6ef}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>ModifierChainRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Зелёные комментарии добавлены для объяснения. Остальные строки сохранены как в проверенном прототипе; номера и ссылки относятся к исходнику. Рабочий JAR не менялся.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
 <span id="L2" class="line"><a href="#L2" class="number">2</a></span>
 <span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.cli.ruleset.core.api.RuleSetProviderV3</span>
 <span id="L4" class="line"><a href="#L4" class="number">4</a>import com.pinterest.ktlint.rule.engine.core.api.*</span>
@@ -8,7 +8,7 @@
 <span id="L8" class="line"><a href="#L8" class="number">8</a>import com.pinterest.ktlint.rule.engine.core.api.editorconfig.EditorConfig</span>
 <span id="L9" class="line"><a href="#L9" class="number">9</a></span>
 <span id="L10" class="line"><a href="#L10" class="number">10</a>/** Experimental syntax-only rule. Does not resolve Kotlin types or compile application code. */</span>
-<span id="L11" class="line"><a href="#L11" class="number">11</a>class ModifierChainRule : Rule(</span>
+<span class="explanation line">// Оформляем цепочки Modifier: каждый вызов отдельно либо короткая цепочка в строку.</span><span id="L11" class="line"><a href="#L11" class="number">11</a>class ModifierChainRule : Rule(</span>
 <span id="L12" class="line"><a href="#L12" class="number">12</a>    ruleId = RuleId(&quot;nur:modifier-chain&quot;),</span>
 <span id="L13" class="line"><a href="#L13" class="number">13</a>    about = About(),</span>
 <span id="L14" class="line"><a href="#L14" class="number">14</a>    usesEditorConfigProperties = setOf(MODIFIER_MIN_CALLS, COMPACT_SHORT_MODIFIER, com.pinterest.ktlint.rule.engine.core.api.editorconfig.MAX_LINE_LENGTH_PROPERTY),</span>
@@ -16,7 +16,7 @@
 <span id="L16" class="line"><a href="#L16" class="number">16</a>    private var minimumCalls = 2</span>
 <span id="L17" class="line"><a href="#L17" class="number">17</a>    private var compactShort = false</span>
 <span id="L18" class="line"><a href="#L18" class="number">18</a>    private var maxWidth = 140</span>
-<span id="L19" class="line"><a href="#L19" class="number">19</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
+<span class="explanation line">// Читаем порог числа вызовов, ширину строки и разрешение собирать короткие цепочки.</span><span id="L19" class="line"><a href="#L19" class="number">19</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
 <span id="L20" class="line"><a href="#L20" class="number">20</a>        minimumCalls = editorConfig[MODIFIER_MIN_CALLS]</span>
 <span id="L21" class="line"><a href="#L21" class="number">21</a>        compactShort = editorConfig[COMPACT_SHORT_MODIFIER]</span>
 <span id="L22" class="line"><a href="#L22" class="number">22</a>        maxWidth = editorConfig[com.pinterest.ktlint.rule.engine.core.api.editorconfig.MAX_LINE_LENGTH_PROPERTY]</span>
@@ -37,8 +37,8 @@
 <span id="L37" class="line"><a href="#L37" class="number">37</a>            chain.add(receiver)</span>
 <span id="L38" class="line"><a href="#L38" class="number">38</a>            receiver = receiver.receiverExpression</span>
 <span id="L39" class="line"><a href="#L39" class="number">39</a>        }</span>
-<span id="L40" class="line"><a href="#L40" class="number">40</a>        if (!isKnownModifier(receiver)) return</span>
-<span id="L41" class="line"><a href="#L41" class="number">41</a>        if (chain.size &lt; minimumCalls) {</span>
+<span class="explanation line">// Проверяем начало цепочки. Подходят известные написания Modifier и параметры с его типом.</span><span id="L40" class="line"><a href="#L40" class="number">40</a>        if (!isKnownModifier(receiver)) return</span>
+<span class="explanation line">// Короткую цепочку пробуем собрать только при включённой настройке и допустимой длине строки.</span><span id="L41" class="line"><a href="#L41" class="number">41</a>        if (chain.size &lt; minimumCalls) {</span>
 <span id="L42" class="line"><a href="#L42" class="number">42</a>            if (!compactShort || org.jetbrains.kotlin.com.intellij.psi.util.PsiTreeUtil.findChildOfType(expression,</span>
 <span id="L43" class="line"><a href="#L43" class="number">43</a>                org.jetbrains.kotlin.com.intellij.psi.PsiComment::class.java) != null) return</span>
 <span id="L44" class="line"><a href="#L44" class="number">44</a>            if (chain.any { &#x27;\n&#x27; in it.selectorExpression!!.text }) return</span>
@@ -63,7 +63,7 @@
 <span id="L63" class="line"><a href="#L63" class="number">63</a>        }</span>
 <span id="L64" class="line"><a href="#L64" class="number">64</a>    }</span>
 <span id="L65" class="line"><a href="#L65" class="number">65</a></span>
-<span id="L66" class="line"><a href="#L66" class="number">66</a>    private fun isKnownModifier(receiver: KtExpression): Boolean {</span>
+<span class="explanation line">// Распознаём Modifier по именам, импортам и локальному коду. Полной проверки типов здесь нет.</span><span id="L66" class="line"><a href="#L66" class="number">66</a>    private fun isKnownModifier(receiver: KtExpression): Boolean {</span>
 <span id="L67" class="line"><a href="#L67" class="number">67</a>        val name = (receiver as? KtNameReferenceExpression)?.getReferencedName() ?: return false</span>
 <span id="L68" class="line"><a href="#L68" class="number">68</a>        val file = receiver.containingFile as? KtFile ?: return false</span>
 <span id="L69" class="line"><a href="#L69" class="number">69</a>        val importedNames = file.importDirectives.filter {</span>

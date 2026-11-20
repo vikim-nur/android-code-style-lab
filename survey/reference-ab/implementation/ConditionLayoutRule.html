@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>ConditionLayoutRule.kt</title><style>.line{display:block}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>ConditionLayoutRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Это материал для просмотра; правило ещё не утверждено для приложений.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../style.css"><title>ConditionLayoutRule.kt</title><style>.line{display:block}.explanation{color:#286044;background:#edf6ef}.line:target{background:#fff0bc}.number{display:inline-block;width:4em;color:#596775;text-decoration:none}pre{max-height:none;white-space:normal}code .line{white-space:pre}</style></head><body><main><nav><a href="../index.html">Анкета</a><a href="../how-it-works.html">Описание правил</a></nav><h1>ConditionLayoutRule.kt</h1><p>Исходный код экспериментального правила 0.4.0-ballot.1. Зелёные комментарии добавлены для объяснения. Остальные строки сохранены как в проверенном прототипе; номера и ссылки относятся к исходнику. Рабочий JAR не менялся.</p><pre><code><span id="L1" class="line"><a href="#L1" class="number">1</a>package kg.nur.quality</span>
 <span id="L2" class="line"><a href="#L2" class="number">2</a></span>
 <span id="L3" class="line"><a href="#L3" class="number">3</a>import com.pinterest.ktlint.rule.engine.core.api.*</span>
 <span id="L4" class="line"><a href="#L4" class="number">4</a>import com.pinterest.ktlint.rule.engine.core.api.editorconfig.*</span>
@@ -8,19 +8,19 @@
 <span id="L8" class="line"><a href="#L8" class="number">8</a>import org.jetbrains.kotlin.psi.*</span>
 <span id="L9" class="line"><a href="#L9" class="number">9</a></span>
 <span id="L10" class="line"><a href="#L10" class="number">10</a>/** Normalize a short if condition after block wrapping, irrespective of the engine&#x27;s rule ordering. */</span>
-<span id="L11" class="line"><a href="#L11" class="number">11</a>class ConditionLayoutRule : Rule(</span>
+<span class="explanation line">// Пробуем собрать условие if в строку, если оно помещается.</span><span id="L11" class="line"><a href="#L11" class="number">11</a>class ConditionLayoutRule : Rule(</span>
 <span id="L12" class="line"><a href="#L12" class="number">12</a>    RuleId(&quot;nur:compact-condition&quot;), About(), usesEditorConfigProperties = setOf(MAX_LINE_LENGTH_PROPERTY),</span>
 <span id="L13" class="line"><a href="#L13" class="number">13</a>    visitorModifiers = setOf(VisitorModifier.RunAsLateAsPossible,</span>
 <span id="L14" class="line"><a href="#L14" class="number">14</a>        VisitorModifier.RunAfterRule(RuleId(&quot;nur:nested-lambda-wrapping&quot;), VisitorModifier.RunAfterRule.Mode.ONLY_WHEN_RUN_AFTER_RULE_IS_LOADED_AND_ENABLED),</span>
 <span id="L15" class="line"><a href="#L15" class="number">15</a>        VisitorModifier.RunAfterRule(RuleId(&quot;standard:condition-wrapping&quot;), VisitorModifier.RunAfterRule.Mode.ONLY_WHEN_RUN_AFTER_RULE_IS_LOADED_AND_ENABLED)),</span>
 <span id="L16" class="line"><a href="#L16" class="number">16</a>), RuleAutocorrectApproveHandler {</span>
 <span id="L17" class="line"><a href="#L17" class="number">17</a>    private var width = 140</span>
-<span id="L18" class="line"><a href="#L18" class="number">18</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
+<span class="explanation line">// Берём максимальную длину строки из .editorconfig.</span><span id="L18" class="line"><a href="#L18" class="number">18</a>    override fun beforeFirstNode(editorConfig: EditorConfig) {</span>
 <span id="L19" class="line"><a href="#L19" class="number">19</a>        width = editorConfig[MAX_LINE_LENGTH_PROPERTY].let { if (it &lt;= 0) Int.MAX_VALUE else it }</span>
 <span id="L20" class="line"><a href="#L20" class="number">20</a>    }</span>
 <span id="L21" class="line"><a href="#L21" class="number">21</a>    override fun beforeVisitChildNodes(node: ASTNode, emit: (Int, String, Boolean) -&gt; AutocorrectDecision) {</span>
 <span id="L22" class="line"><a href="#L22" class="number">22</a>        val expression = node.psi as? KtIfExpression ?: return</span>
-<span id="L23" class="line"><a href="#L23" class="number">23</a>        val condition = expression.condition ?: return</span>
+<span class="explanation line">// Работаем с условием найденного if; остальные конструкции пропускаем.</span><span id="L23" class="line"><a href="#L23" class="number">23</a>        val condition = expression.condition ?: return</span>
 <span id="L24" class="line"><a href="#L24" class="number">24</a>        val right = expression.rightParenthesis ?: return</span>
 <span id="L25" class="line"><a href="#L25" class="number">25</a>        val left = expression.leftParenthesis ?: return</span>
 <span id="L26" class="line"><a href="#L26" class="number">26</a>        if (PsiTreeUtil.findChildrenOfType(expression, PsiComment::class.java).any {</span>
