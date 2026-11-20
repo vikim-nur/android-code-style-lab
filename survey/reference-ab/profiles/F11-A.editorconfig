@@ -1,4 +1,4 @@
-# Candidate A: reference-inspired, ktlint 1.8.0 + rules 0.3.2-candidate.1.
+# Isolated formatting experiment: ktlint 1.8.0 + rules 0.4.0-ballot.1.
 # Not approved or deployed. Analysis/naming/import-policy decisions are separate.
 root = true
 
@@ -60,4 +60,8 @@ ktlint_nur_compact-condition = enabled
 
 ktlint_nur_compact-call = enabled
 
+nur_data_constructor_min_parameters = 3
+
 nur_inheritance_space_before_colon = false
+
+nur_first_of_multiple_bases_inline = true

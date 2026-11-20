@@ -1,6 +1,5 @@
 {
-  "id": "moyo-reference-vs-proposal-2026-11-19-v1",
-  "version": "6ab37eed2874da3ab38d",
+  "id": "moyo-original-formatting-2026-11-20-v2",
   "repository": "vikim-nur/android-code-style-lab",
   "pageUrl": "https://vikim-nur.github.io/android-code-style-lab/survey/reference-ab/",
   "status": "published proposal; team approval pending",
@@ -8,19 +7,37 @@
     {
       "id": "F01",
       "title": "Data class: два параметра — в строку, три и больше — столбиком?",
-      "explanation": "Предлагаем: у data class с тремя и более параметрами — каждый с новой строки; один-два — в строку, если помещаются в 140 символов. Сравнение ниже показывает случай с двумя параметрами.",
-      "note": "Обычные классы сохраняют отдельное правило. Длинные строки и сложные параметры могут потребовать переноса и при одном-двух параметрах. В обоих вариантах data class с тремя параметрами будет столбиком.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернатива: столбиком с трёх параметров"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Своё правило class-layout проверяет признак data и отдельный порог числа параметров. В варианте Б порог 3.",
+        "other_structures": "Обычные классы сохраняют свой порог 4. Аннотация Inject и ширина строки могут потребовать перенос раньше. Сложный заголовок с комментарием/where/лямбдой пропускается этим правилом."
       },
+      "source_examples": [
+        {
+          "id": "F01-1",
+          "file": "cmp_lk_main/src/main/java/kg/nurtelecom/cmp_lk_main/data/model/AutopayFaq.kt",
+          "owner": "file",
+          "line": 9,
+          "end_line": 12,
+          "partial_header": false,
+          "A": "data class AutopayFaqLink(\n    val name: String?,\n    val link: String?\n)",
+          "B": "data class AutopayFaqLink(val name: String?, val link: String?)",
+          "source_sha256": "ff4d8bd3ebd23b8c582c60d308a4433b5d5ca34927dd2fb9c9ca3d0cd7a10ecc",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "data class LinkInfo(\n    val name: String?,\n    val link: String?\n)\n",
-        "B": "data class LinkInfo(val name: String?, val link: String?)\n"
+        "A": "data class AutopayFaqLink(\n    val name: String?,\n    val link: String?\n)",
+        "B": "data class AutopayFaqLink(val name: String?, val link: String?)"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C07",
@@ -30,19 +47,37 @@
     {
       "id": "F02",
       "title": "Одна зависимость @Inject — в строку или отдельно?",
-      "explanation": "В эталоне есть обе формы. Здесь показан короткий вариант; предложение — переносить даже одну зависимость.",
-      "note": "Это не единственная форма эталона: у большинства проверенных ViewModel с одной зависимостью уже есть перенос.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "В конструкторе ищется аннотация с коротким именем Inject. Настройка разрешает или требует многострочный конструктор.",
+        "other_structures": "Работает по написанию аннотации, не по Hilt и не по имени ViewModel. Другие классы с Inject тоже затрагиваются; алиасы аннотаций не гарантированы."
       },
+      "source_examples": [
+        {
+          "id": "F02-1",
+          "file": "lottery/lk/src/main/java/kg/o/nurtelecom/lottery/lk/ui/LkLotteryVM.kt",
+          "owner": "file",
+          "line": 11,
+          "end_line": 12,
+          "partial_header": true,
+          "A": "@HiltViewModel\nclass LkLotteryVM @Inject constructor(private val _repo: LkLotteryRepo) : LotteryViewModel() {",
+          "B": "@HiltViewModel\nclass LkLotteryVM @Inject constructor(\n    private val _repo: LkLotteryRepo\n) : LotteryViewModel() {",
+          "source_sha256": "72d8e27b8adb3aa4c26ae0acd7b3ba9c57d572752efe98d9b774c4f966ad1265",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "@HiltViewModel\nclass ItemListVM @Inject constructor(private val repository: ItemRepository) : BaseViewModel() {}\n",
-        "B": "@HiltViewModel\nclass ItemListVM @Inject constructor(\n    private val repository: ItemRepository\n) : BaseViewModel() {}\n"
+        "A": "@HiltViewModel\nclass LkLotteryVM @Inject constructor(private val _repo: LkLotteryRepo) : LotteryViewModel() {",
+        "B": "@HiltViewModel\nclass LkLotteryVM @Inject constructor(\n    private val _repo: LkLotteryRepo\n) : LotteryViewModel() {"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C01",
@@ -54,19 +89,38 @@
     {
       "id": "F03",
       "title": "Три параметра функции — столбиком или в строку?",
-      "explanation": "Для обычных функций и Compose смотрим на один и тот же порог.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Штатный function-signature переносит параметры по порогу и длине строки.",
+        "other_structures": "Это общее правило функций, а не специальное правило Composable. Обычные функции тоже попадают под выбранную настройку."
       },
+      "source_examples": [
+        {
+          "id": "F03-1",
+          "file": "cmp_lk_saima_account/src/main/java/kg/nurtelecom/cmp_lk_saima_account/ui/tariff_details/component/ConnectTariffDialog.kt",
+          "owner": "file",
+          "line": 9,
+          "end_line": 14,
+          "partial_header": true,
+          "A": "@Composable\nfun ConnectTariffDialog(\n    tariffName: String,\n    onConfirm: () -> Unit,\n    onDismiss: () -> Unit\n) {",
+          "B": "@Composable\nfun ConnectTariffDialog(tariffName: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {",
+          "source_sha256": "996dd6f0eba3c5da89a09e0d82180c0be4bc3f0578b7741a3d5ee1a99e736428",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true,
+          "original_context": "@Composable\nfun ConnectTariffDialog(\n    tariffName: String,\n    onConfirm: () -> Unit,\n    onDismiss: () -> Unit\n) {\n    NurBaseDialog(\n        message = stringResource(\n            id = R.string.saima_connect_tariff_dialog,\n            tariffName\n        ).toAnnotatedString(),\n        positiveButton = stringResource(R.string.yes) to onConfirm,\n        negativeButton = stringResource(R.string.no) to onDismiss,\n        onDismissRequest = onDismiss\n    )\n}"
+        }
+      ],
       "examples": {
-        "A": "@Composable\nfun ConfirmDialog(\n    title: String,\n    onConfirm: () -> Unit,\n    onDismiss: () -> Unit\n) {}\n",
-        "B": "@Composable\nfun ConfirmDialog(title: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {}\n"
+        "A": "@Composable\nfun ConnectTariffDialog(\n    tariffName: String,\n    onConfirm: () -> Unit,\n    onDismiss: () -> Unit\n) {",
+        "B": "@Composable\nfun ConnectTariffDialog(tariffName: String, onConfirm: () -> Unit, onDismiss: () -> Unit) {"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "F01",
@@ -78,19 +132,37 @@
     {
       "id": "F04",
       "title": "Короткий вызов — аргументы столбиком или всё в строку?",
-      "explanation": "Это же решение влияет на короткие вызовы внутри цепочек и на лямбды внутри их аргументов.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "compact-call собирает подходящий список аргументов, если итоговая строка помещается в лимит. В А это правило отключено.",
+        "other_structures": "Затрагиваются обычные вызовы и вызовы конструкторов, не только показанного вызова. Комментарии, сложные тела лямбд, if/when/циклы и многострочные дочерние выражения ограничивают схлопывание. Отключение само не разворачивает каждый короткий вызов: строгий показанный А дополнительно задаёт порог."
       },
+      "source_examples": [
+        {
+          "id": "F04-1",
+          "file": "cmp_subscription/src/main/java/kg/nurtelecom/cmp_subscription/navigation/SubscriptionsNavGraph.kt",
+          "owner": "function:SubscriptionsNavGraph",
+          "line": 81,
+          "end_line": 85,
+          "partial_header": false,
+          "A": "            SubscriptionEditScreen(\n                subscription = arguments.subscription,\n                navController = navController,\n                backPressed = { backPress() }\n            )",
+          "B": "            SubscriptionEditScreen(subscription = arguments.subscription, navController = navController, backPressed = { backPress() })",
+          "source_sha256": "82370d1ee1d5f9a101b3403b8c2102dfe51fb42ce430a2dcdbe9ffddb7335a9e",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "fun example() {\n    renderCard(\n        title = title,\n        enabled = true,\n        onClick = { close() }\n    )\n}\n",
-        "B": "fun example() {\n    renderCard(title = title, enabled = true, onClick = { close() })\n}\n"
+        "A": "            SubscriptionEditScreen(\n                subscription = arguments.subscription,\n                navController = navController,\n                backPressed = { backPress() }\n            )",
+        "B": "            SubscriptionEditScreen(subscription = arguments.subscription, navController = navController, backPressed = { backPress() })"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "A01",
@@ -105,19 +177,37 @@
     {
       "id": "F05",
       "title": "Последняя запятая в вызове — оставляем или убираем?",
-      "explanation": "Здесь вызов длинный и в обоих вариантах остаётся столбиком. Отличается последняя запятая.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Общие настройки",
+      "scope": {
+        "mechanism": "Обёртка вызывает штатное правило последней запятой ktlint с выбранным значением .editorconfig.",
+        "other_structures": "Настройка относится к поддерживаемым движком местам вызовов, а не только к примеру показанного вызова. Переносы и возможность сборки вызова в строку влияют на применимость последней запятой."
       },
+      "source_examples": [
+        {
+          "id": "F05-1",
+          "file": "cmp_lk_services/src/main/java/kg/nurtelecom/cmp_lk_services/ui/where/child_location/MapSubtitledTopAppBar.kt",
+          "owner": "function:NurBaseTopAppBarPreview",
+          "line": 106,
+          "end_line": 110,
+          "partial_header": false,
+          "A": "        MapSubtitledTopAppBar(\n            title = \"Заголовок\",\n            subtitle = \"Подзаголовок\",\n            onNavigationClick = { /*TODO*/ },\n        )",
+          "B": "        MapSubtitledTopAppBar(\n            title = \"Заголовок\",\n            subtitle = \"Подзаголовок\",\n            onNavigationClick = { /*TODO*/ }\n        )",
+          "source_sha256": "1039791ef17849ac1f47fe4e33add8f1ff04267715a5905164d39fb35d4c8d76",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "fun example() {\n    renderCard(\n        title = selectedCustomerContractDisplayTitle,\n        subtitle = selectedCustomerContractAdditionalInformation,\n        onClick = onSelectedCustomerContractClick,\n    )\n}\n",
-        "B": "fun example() {\n    renderCard(\n        title = selectedCustomerContractDisplayTitle,\n        subtitle = selectedCustomerContractAdditionalInformation,\n        onClick = onSelectedCustomerContractClick\n    )\n}\n"
+        "A": "        MapSubtitledTopAppBar(\n            title = \"Заголовок\",\n            subtitle = \"Подзаголовок\",\n            onNavigationClick = { /*TODO*/ },\n        )",
+        "B": "        MapSubtitledTopAppBar(\n            title = \"Заголовок\",\n            subtitle = \"Подзаголовок\",\n            onNavigationClick = { /*TODO*/ }\n        )"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "A01",
@@ -128,19 +218,37 @@
     {
       "id": "F06",
       "title": "Последняя запятая в объявлении — оставляем или убираем?",
-      "explanation": "Сравниваем только запятую перед закрывающей скобкой.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Общие настройки",
+      "scope": {
+        "mechanism": "Обёртка вызывает штатное правило запятой в объявлениях после нашего переноса.",
+        "other_structures": "Это не правило только data class: поддерживаемые объявления функций и другие объявления тоже затрагиваются. Профили запятых вызовов и объявлений разделены."
       },
+      "source_examples": [
+        {
+          "id": "F06-1",
+          "file": "cmp_lk_password/src/main/java/kg/nurtelecom/cmp_lk_password/ui/screens/change_password/ChangePasswordState.kt",
+          "owner": "file",
+          "line": 6,
+          "end_line": 11,
+          "partial_header": false,
+          "A": "data class ChangePasswordState(\n    val isLoading: Boolean = false,\n    val policyRules: List<PasswordPolicyRule> = emptyList(),\n    val allRulesPassed: Boolean = false,\n    val passwordsMismatchError: Boolean = false,\n) : NurState",
+          "B": "data class ChangePasswordState(\n    val isLoading: Boolean = false,\n    val policyRules: List<PasswordPolicyRule> = emptyList(),\n    val allRulesPassed: Boolean = false,\n    val passwordsMismatchError: Boolean = false\n) : NurState",
+          "source_sha256": "c5716145f1aa20678afa1aeefcc486e0736321581e5f396147fcee18856a1072",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "data class ItemDetails(\n    val title: String,\n    val subtitle: String,\n    val enabled: Boolean,\n    val count: Int,\n)\n",
-        "B": "data class ItemDetails(\n    val title: String,\n    val subtitle: String,\n    val enabled: Boolean,\n    val count: Int\n)\n"
+        "A": "data class ChangePasswordState(\n    val isLoading: Boolean = false,\n    val policyRules: List<PasswordPolicyRule> = emptyList(),\n    val allRulesPassed: Boolean = false,\n    val passwordsMismatchError: Boolean = false,\n) : NurState",
+        "B": "data class ChangePasswordState(\n    val isLoading: Boolean = false,\n    val policyRules: List<PasswordPolicyRule> = emptyList(),\n    val allRulesPassed: Boolean = false,\n    val passwordsMismatchError: Boolean = false\n) : NurState"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C01",
@@ -158,19 +266,37 @@
     {
       "id": "F07",
       "title": "Аргументы базового класса ViewModel — столбиком или в строку?",
-      "explanation": "Конструктор с зависимостями одинаковый. Смотрим на вызов базового класса после него.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "class-layout считает аргументы вызова базового конструктора в круглых скобках и учитывает порог/ширину.",
+        "other_structures": "Затрагивает любые подходящие базовые конструкторы, не только ViewModel. Число аргументов в () не равно числу generic-типов в <>."
       },
+      "source_examples": [
+        {
+          "id": "F07-1",
+          "file": "cmp_lk_services/src/main/java/kg/nurtelecom/cmp_lk_services/ui/service_detail/quick_message/phone_number/QuickMessagePhoneNumberVM.kt",
+          "owner": "file",
+          "line": 19,
+          "end_line": 30,
+          "partial_header": true,
+          "A": "@HiltViewModel\nclass QuickMessagePhoneNumberVM @Inject constructor(\n    repository: ServicesRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    serverErrorHandler: ServerErrorHandler\n) : BaseServicesVM<QuickMessagePhoneNumberState>(\n    QuickMessagePhoneNumberState(),\n    repository,\n    profileService,\n    serverErrorHandler\n) {",
+          "B": "@HiltViewModel\nclass QuickMessagePhoneNumberVM @Inject constructor(\n    repository: ServicesRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    serverErrorHandler: ServerErrorHandler\n) : BaseServicesVM<QuickMessagePhoneNumberState>(QuickMessagePhoneNumberState(), repository, profileService, serverErrorHandler) {",
+          "source_sha256": "1b11f8029740e1e40f96b8906d6873469f160fc6c89cc56f3c8da5dd19c01413",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "@HiltViewModel\nclass CustomerSummaryVM @Inject constructor(\n    repository: ItemRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    errorHandler: ErrorHandler\n) : BaseFeatureVM<SummaryState>(\n    SummaryState(),\n    repository,\n    profileService,\n    errorHandler\n) {}\n",
-        "B": "@HiltViewModel\nclass CustomerSummaryVM @Inject constructor(\n    repository: ItemRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    errorHandler: ErrorHandler\n) : BaseFeatureVM<SummaryState>(SummaryState(), repository, profileService, errorHandler) {}\n"
+        "A": "@HiltViewModel\nclass QuickMessagePhoneNumberVM @Inject constructor(\n    repository: ServicesRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    serverErrorHandler: ServerErrorHandler\n) : BaseServicesVM<QuickMessagePhoneNumberState>(\n    QuickMessagePhoneNumberState(),\n    repository,\n    profileService,\n    serverErrorHandler\n) {",
+        "B": "@HiltViewModel\nclass QuickMessagePhoneNumberVM @Inject constructor(\n    repository: ServicesRepository,\n    savedStateHandle: SavedStateHandle,\n    profileService: ProfileService,\n    serverErrorHandler: ServerErrorHandler\n) : BaseServicesVM<QuickMessagePhoneNumberState>(QuickMessagePhoneNumberState(), repository, profileService, serverErrorHandler) {"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C03",
@@ -180,19 +306,37 @@
     {
       "id": "F08",
       "title": "Адаптер: callback отдельно или при базовом типе?",
-      "explanation": "Длинный базовый тип в обоих вариантах перенесён. Выбираем оформление его аргумента.",
-      "note": "Эта настройка влияет и на другие базовые вызовы, перенесённые ниже объявления: например, у холдера с интерфейсами. Сочетания проверяются отдельно.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "class-layout определяет, перенесён ли базовый тип, и раскрывает или собирает его аргументы.",
+        "other_structures": "То же условие применяется к короткому binding.root у холдера. В проверке 16 сочетаний наследования у 6 появились перекрёстные изменения; до принятия нужно проверить общий набор."
       },
+      "source_examples": [
+        {
+          "id": "F08-1",
+          "file": "nur_process_flow/src/main/java/kg/nurtelecom/nur_process_flow/ui/esim/select_phone_number/PhoneNumbersAdapter.kt",
+          "owner": "file",
+          "line": 20,
+          "end_line": 23,
+          "partial_header": true,
+          "A": "class PhoneNumbersAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, PhoneNumbersAdapter.PhoneNumberVH>(\n        PhoneNumberDiffUtilCallback\n    ) {",
+          "B": "class PhoneNumbersAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, PhoneNumbersAdapter.PhoneNumberVH>(PhoneNumberDiffUtilCallback) {",
+          "source_sha256": "652a9331cb0301cd2b6c841af61172f4d7c21cd34ed2739f950a6c47f8665fa0",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "class CustomerPhoneSuggestionsAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, CustomerPhoneSuggestionsAdapter.PhoneNumberViewHolder>(\n        PhoneNumberDiffUtilCallback\n    ) {}\n",
-        "B": "class CustomerPhoneSuggestionsAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, CustomerPhoneSuggestionsAdapter.PhoneNumberViewHolder>(PhoneNumberDiffUtilCallback) {}\n"
+        "A": "class PhoneNumbersAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, PhoneNumbersAdapter.PhoneNumberVH>(\n        PhoneNumberDiffUtilCallback\n    ) {",
+        "B": "class PhoneNumbersAdapter(private val onPhoneNumberItemClick: OnPhoneNumberItemClick) :\n    ListAdapter<PhoneNumberSuggestion, PhoneNumbersAdapter.PhoneNumberVH>(PhoneNumberDiffUtilCallback) {"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C06"
@@ -201,19 +345,37 @@
     {
       "id": "F09",
       "title": "Короткое наследование после конструктора — переносим или собираем?",
-      "explanation": "Правило будет общим для обычных конструкторов с одним базовым типом; имя ViewHolder не является условием.",
-      "note": "Если раскрывать аргументы любого перенесённого базового класса, здесь binding.root тоже уйдёт на отдельную строку. Этот выбор связан с оформлением аргументов у адаптера.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Флаг plain_constructor_base_newline переносит единственный базовый тип у объявления с обычным конструктором.",
+        "other_structures": "Условие не ищет слово ViewHolder и не связано с XML. Под него могут попасть и другие классы с параметрами, одним базовым типом и без распознанного Inject."
       },
+      "source_examples": [
+        {
+          "id": "F09-1",
+          "file": "nur_process_flow/src/main/java/kg/nurtelecom/nur_process_flow/view/PricePlanParamsAdapter.kt",
+          "owner": "class:PricePlanParamsAdapter",
+          "line": 31,
+          "end_line": 32,
+          "partial_header": true,
+          "A": "    inner class PricePlanParamsViewHolder(private val binding: ItemPricePlanParamBinding) :\n        RecyclerView.ViewHolder(binding.root) {",
+          "B": "    inner class PricePlanParamsViewHolder(private val binding: ItemPricePlanParamBinding) : RecyclerView.ViewHolder(binding.root) {",
+          "source_sha256": "a43cc200fcd461e15e56a847de0155575b1337bba1c0579353c620350bd12c47",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "class CustomerListRowViewHolder(private val binding: CustomerListRowBinding) :\n    RecyclerView.ViewHolder(binding.root) {}\n",
-        "B": "class CustomerListRowViewHolder(private val binding: CustomerListRowBinding) : RecyclerView.ViewHolder(binding.root) {}\n"
+        "A": "    inner class PricePlanParamsViewHolder(private val binding: ItemPricePlanParamBinding) :\n        RecyclerView.ViewHolder(binding.root) {",
+        "B": "    inner class PricePlanParamsViewHolder(private val binding: ItemPricePlanParamBinding) : RecyclerView.ViewHolder(binding.root) {"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C05",
@@ -225,19 +387,37 @@
     {
       "id": "F10",
       "title": "Класс и интерфейс: первый тип при объявлении или каждый с новой строки?",
-      "explanation": "В эталоне первый базовый тип иногда остаётся при объявлении, а следующий переносится.",
-      "note": "Имена изменены; вариант А повторяет форму VerticalConfigViewHolder с пробелом перед двоеточием. Перенос аргумента view также зависит от общего решения о раскрытии базовых вызовов.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Для нескольких базовых типов first_base_inline разрешает оставить первый рядом с объявлением, если строка помещается.",
+        "other_structures": "Применяется к классам с несколькими базовыми типами, а не только к показанному холдеру. Раскрытие аргументов первого типа связано с общим правилом аргументов базового конструктора."
       },
+      "source_examples": [
+        {
+          "id": "F10-1",
+          "file": "tariffs/src/main/java/kg/nurtelecom/tariffs/ui/config/adapter/VerticalConfigViewHolder.kt",
+          "owner": "file",
+          "line": 11,
+          "end_line": 12,
+          "partial_header": true,
+          "A": "class VerticalConfigViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    TitledTogglesAdapter.MultiCheckedListener {",
+          "B": "class VerticalConfigViewHolder(view: View) :\n    CoreViewHolder<Option<Group>>(view),\n    TitledTogglesAdapter.MultiCheckedListener {",
+          "source_sha256": "3046579c0c965487f523e6d198692aa5a1445bdf12f91f8fef6b4585f68b23d1",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "class CustomerChoiceViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {}\n",
-        "B": "class CustomerChoiceViewHolder(view: View) :\n    CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {}\n"
+        "A": "class VerticalConfigViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    TitledTogglesAdapter.MultiCheckedListener {",
+        "B": "class VerticalConfigViewHolder(view: View) :\n    CoreViewHolder<Option<Group>>(view),\n    TitledTogglesAdapter.MultiCheckedListener {"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C05",
@@ -248,19 +428,50 @@
     {
       "id": "F11",
       "title": "Перед двоеточием наследования — без пробела или с пробелом?",
-      "explanation": "Это относится к объявлению класса или object, а не к типам параметров.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Пробел перед двоеточием наследования определяется по узлу объявления класса/объекта.",
+        "other_structures": "Это общий стиль наследования: class, interface и object. Пробелы после двоеточия в типах свойств/параметров регулируются отдельно. Для object добавлен самостоятельный исходный образец."
       },
+      "source_examples": [
+        {
+          "id": "F11-1",
+          "file": "tariffs/src/main/java/kg/nurtelecom/tariffs/ui/config/adapter/HorizontalConfigViewHolder.kt",
+          "owner": "file",
+          "line": 12,
+          "end_line": 13,
+          "partial_header": true,
+          "A": "class HorizontalConfigViewHolder(view: View): CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {",
+          "B": "class HorizontalConfigViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {",
+          "source_sha256": "697a144a1eb0af5b3b5cf8724ca698facd6056621088c4aa14bb7ec4142db128",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        },
+        {
+          "id": "F11-2",
+          "file": "cmp_lk_saima_account/src/main/java/kg/nurtelecom/cmp_lk_saima_account/ui/notification_lang/NotificationLangSideEffect.kt",
+          "owner": "class:NotificationLangSideEffect",
+          "line": 6,
+          "end_line": 6,
+          "partial_header": false,
+          "A": "    data object NavigateBack: NurSideEffect",
+          "B": "    data object NavigateBack : NurSideEffect",
+          "source_sha256": "ccd06234c889abb985efc621084c8fdf7965f83b640ec4b4ed24784204270f5b",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "class RowHolder(view: View): BaseHolder(view) {}\n\nobject DefaultStyle: Style\n",
-        "B": "class RowHolder(view: View) : BaseHolder(view) {}\n\nobject DefaultStyle : Style\n"
+        "A": "class HorizontalConfigViewHolder(view: View): CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {\n\n    data object NavigateBack: NurSideEffect",
+        "B": "class HorizontalConfigViewHolder(view: View) : CoreViewHolder<Option<Group>>(view),\n    SingleSelectorAdapter.SingleSelectedListener {\n\n    data object NavigateBack : NurSideEffect"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "C01",
@@ -280,19 +491,50 @@
     {
       "id": "F12",
       "title": "Два вызова Modifier — в строку или по шагам?",
-      "explanation": "Смотрим на короткую цепочку, которая помещается в строку.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Шаблоны проекта",
+      "scope": {
+        "mechanism": "Правило узнаёт написание Modifier и локальные параметры с типом Modifier, считает цепочку вызовов.",
+        "other_structures": "Это синтаксическое распознавание без разрешения типов, не произвольные цепочки repository. Алиасы и сложные случаи требуют проверки. Оба примера с двумя вызовами подтверждены в исходнике."
       },
+      "source_examples": [
+        {
+          "id": "F12-1",
+          "file": "cmp_lk_services/src/main/java/kg/nurtelecom/cmp_lk_services/ui/category/search/ServiceSearchScreen.kt",
+          "owner": "function:ServiceSearchScreen",
+          "line": 105,
+          "end_line": 105,
+          "partial_header": false,
+          "A": "Modifier.fillMaxSize().imePadding()",
+          "B": "Modifier\n                    .fillMaxSize()\n                    .imePadding()",
+          "source_sha256": "69ca5d37bf80239d763bb4cd78f6e03469179b572db986c861396a4801a182bb",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        },
+        {
+          "id": "F12-2",
+          "file": "cmp_subscription/src/main/java/kg/nurtelecom/cmp_subscription/ui/otp/OtpConfirmationScreen.kt",
+          "owner": "function:OtpConfirmationContent",
+          "line": 217,
+          "end_line": 217,
+          "partial_header": false,
+          "A": "modifier.fillMaxWidth().padding(horizontal = 16.dp)",
+          "B": "modifier\n            .fillMaxWidth()\n            .padding(horizontal = 16.dp)",
+          "source_sha256": "21316483a80bd77d7bc2021d22532086b2efc941cab0d3c7597797b72abdfdc7",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "import androidx.compose.ui.Modifier\n\nfun example(modifier: Modifier) {\n    val objectChain = Modifier.fillMaxSize().imePadding()\n    val parameterChain = modifier.fillMaxWidth().padding(16)\n}\n",
-        "B": "import androidx.compose.ui.Modifier\n\nfun example(modifier: Modifier) {\n    val objectChain = Modifier\n        .fillMaxSize()\n        .imePadding()\n    val parameterChain = modifier\n        .fillMaxWidth()\n        .padding(16)\n}\n"
+        "A": "Modifier.fillMaxSize().imePadding()\n\nmodifier.fillMaxWidth().padding(horizontal = 16.dp)",
+        "B": "Modifier\n                    .fillMaxSize()\n                    .imePadding()\n\nmodifier\n            .fillMaxWidth()\n            .padding(horizontal = 16.dp)"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "M01"
@@ -301,19 +543,37 @@
     {
       "id": "F13",
       "title": "Короткий intent — блоком или в строку?",
-      "explanation": "Одно действие, без комментариев и вложенной логики.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Шаблоны проекта",
+      "scope": {
+        "mechanism": "compact-intent ищет вызов с именем intent, trailing lambda и одним выражением в теле, затем учитывает ширину.",
+        "other_structures": "Другие intent с таким же устройством тоже изменяются. Несколько выражений, комментарии и явные параметры лямбды ограничивают правило. Связь с Orbit определяется написанием вызова, не библиотекой в classpath."
       },
+      "source_examples": [
+        {
+          "id": "F13-1",
+          "file": "nur_core/src/main/java/kg/o/nurtelecom/base/BaseNurVM.kt",
+          "owner": "function:emitSideEffect",
+          "line": 61,
+          "end_line": 63,
+          "partial_header": false,
+          "A": "    protected fun emitSideEffect(sideEffect: NurSideEffect) = intent {\n        postSideEffect(sideEffect)\n    }",
+          "B": "    protected fun emitSideEffect(sideEffect: NurSideEffect) = intent { postSideEffect(sideEffect) }",
+          "source_sha256": "f00c85e3673717d8edeb0253a8cfd2a9fecf4eff2f907afc736055d2642e11a3",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "private fun back() = intent {\n    postSideEffect(Effect.Back)\n}\n",
-        "B": "private fun back() = intent { postSideEffect(Effect.Back) }\n"
+        "A": "    protected fun emitSideEffect(sideEffect: NurSideEffect) = intent {\n        postSideEffect(sideEffect)\n    }",
+        "B": "    protected fun emitSideEffect(sideEffect: NurSideEffect) = intent { postSideEffect(sideEffect) }"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "L01",
@@ -323,19 +583,38 @@
     {
       "id": "F14",
       "title": "После большой ветки when — сразу следующая или пустая строка?",
-      "explanation": "Оцениваем промежуток после ветки с несколькими строками.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "when-branch-spacing проверяет, содержит ли предыдущая ветка перенос строки, и выбирает промежуток.",
+        "other_structures": "Проверяется любая многострочная ветка, не только блок в фигурных скобках. Комментарии между ветками правило не переставляет. Источник карточки исправлен на реальный большой блок без пустой строки после него."
       },
+      "source_examples": [
+        {
+          "id": "F14-1",
+          "file": "cmp_lk_detalization/src/main/java/kg/nurtelecom/cmp_lk_detalization/data/model/Detailing.kt",
+          "owner": "function:getColorByType",
+          "line": 36,
+          "end_line": 40,
+          "partial_header": false,
+          "A": "            DetailingType.GPRS_OR_REPLENISHMENT -> {\n                if (isReplenishments) magenta_1\n                else cyan_1\n            }\n            DetailingType.OUT_SMS, DetailingType.INCOME_SMS -> purple_1",
+          "B": "            DetailingType.GPRS_OR_REPLENISHMENT -> {\n                if (isReplenishments) magenta_1\n                else cyan_1\n            }\n\n            DetailingType.OUT_SMS, DetailingType.INCOME_SMS -> purple_1",
+          "source_sha256": "d353e779705481ca8531b30757e456d873ec40e0812afda7e3314620d622cb6e",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true,
+          "original_context": "when(type) {\n            DetailingType.GPRS_OR_REPLENISHMENT -> {\n                if (isReplenishments) magenta_1\n                else cyan_1\n            }\n            DetailingType.OUT_SMS, DetailingType.INCOME_SMS -> purple_1\n            DetailingType.OUT_CALL, DetailingType.INCOME_CALL -> green_1\n            DetailingType.CHARGE -> green_5\n            else -> green_5\n        }"
+        }
+      ],
       "examples": {
-        "A": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n        Event.Back -> goBack()\n    }\n}\n",
-        "B": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> {\n            closeKeyboard()\n            openDetails()\n        }\n\n        Event.Back -> goBack()\n    }\n}\n"
+        "A": "            DetailingType.GPRS_OR_REPLENISHMENT -> {\n                if (isReplenishments) magenta_1\n                else cyan_1\n            }\n            DetailingType.OUT_SMS, DetailingType.INCOME_SMS -> purple_1",
+        "B": "            DetailingType.GPRS_OR_REPLENISHMENT -> {\n                if (isReplenishments) magenta_1\n                else cyan_1\n            }\n\n            DetailingType.OUT_SMS, DetailingType.INCOME_SMS -> purple_1"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "W01",
@@ -345,19 +624,38 @@
     {
       "id": "F15",
       "title": "Между короткими ветками when — оставляем пустую строку?",
-      "explanation": "Здесь обе ветки короткие. Это отдельное решение от промежутка после большой ветки.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "То же правило имеет отдельный флаг промежутка после однострочной ветки.",
+        "other_structures": "Настройка действует на все подходящие when. Выбор для коротких и многострочных веток должен быть согласован вместе."
       },
+      "source_examples": [
+        {
+          "id": "F15-1",
+          "file": "cmp_subscription/src/main/java/kg/nurtelecom/cmp_subscription/ui/main/SubscriptionMainScreen.kt",
+          "owner": "function:SubscriptionMainScreen",
+          "line": 62,
+          "end_line": 64,
+          "partial_header": false,
+          "A": "            is SubscriptionMainSideEffect.FinishActivity -> rootBackPress()\n\n            else -> {}",
+          "B": "            is SubscriptionMainSideEffect.FinishActivity -> rootBackPress()\n            else -> {}",
+          "source_sha256": "b0721205045229a01422b0600b327928e1ea9ec41150794efd588df1f5603c71",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true,
+          "original_context": "        when (it) {\n            is ShowMessage.Toast -> context.showMessage(it.message)\n            is SubscriptionMainSideEffect.OpenDetailsScreen -> {\n                navController?.navigate(SubscriptionScreens.SubscriptionDetailsScreen(it.id))\n            }\n            is SubscriptionMainSideEffect.OpenConfirmationScreen -> {\n                navController?.navigate(SubscriptionScreens.ConfirmationScreen(it.id))\n            }\n            is SubscriptionMainSideEffect.FinishActivity -> rootBackPress()\n\n            else -> {}\n        }"
+        }
+      ],
       "examples": {
-        "A": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> open()\n\n        Event.Back -> goBack()\n    }\n}\n",
-        "B": "fun handle(event: Event) {\n    when (event) {\n        Event.Open -> open()\n        Event.Back -> goBack()\n    }\n}\n"
+        "A": "            is SubscriptionMainSideEffect.FinishActivity -> rootBackPress()\n\n            else -> {}",
+        "B": "            is SubscriptionMainSideEffect.FinishActivity -> rootBackPress()\n            else -> {}"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "W01",
@@ -367,19 +665,37 @@
     {
       "id": "F16",
       "title": "Короткий результат функции после = — отдельно или в строку?",
-      "explanation": "Это обычная функция с выражением; короткий intent обсуждается отдельно.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Штатная настройка expression-body wrapping управляет размещением выражения после = у функции.",
+        "other_structures": "Меняются не только расширения String: это общая политика функций с телом-выражением. Имена readItemId и ITEM_PREFIX учебные; исходные имена другие, перенос сохранён."
       },
+      "source_examples": [
+        {
+          "id": "F16-1",
+          "file": "cmp_lk_saima_account/src/main/java/kg/nurtelecom/cmp_lk_saima_account/ui/application/sumbit_application/component/SubmitApplicationBottomSheet.kt",
+          "owner": "file",
+          "line": 94,
+          "end_line": 95,
+          "partial_header": false,
+          "A": "private fun String.toUserSideIdOrNull(): Long? =\n    removePrefix(ID_PREFIX_LOC).toLongOrNull()",
+          "B": "private fun String.toUserSideIdOrNull(): Long? = removePrefix(ID_PREFIX_LOC).toLongOrNull()",
+          "source_sha256": "f2a3eaa60c658bb7ecf595bc91b1c27ff82b0a09c20cd0f1eaffd3b397398308",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "private fun String.readItemId(): Long? =\n    removePrefix(ITEM_PREFIX).toLongOrNull()\n",
-        "B": "private fun String.readItemId(): Long? = removePrefix(ITEM_PREFIX).toLongOrNull()\n"
+        "A": "private fun String.toUserSideIdOrNull(): Long? =\n    removePrefix(ID_PREFIX_LOC).toLongOrNull()",
+        "B": "private fun String.toUserSideIdOrNull(): Long? = removePrefix(ID_PREFIX_LOC).toLongOrNull()"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "F03",
@@ -389,19 +705,37 @@
     {
       "id": "F17",
       "title": "В начале функции — пустая строка или сразу код?",
-      "explanation": "Сравниваем промежуток после открывающей фигурной скобки.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Экспериментальное правило ищет начало блочного тела именованной функции.",
+        "other_structures": "Это не правило только closeScreen или Composable. Другие именованные функции тоже затрагиваются. Начальные комментарии защищены; к произвольным лямбдам это условие не применяется."
       },
+      "source_examples": [
+        {
+          "id": "F17-1",
+          "file": "nur_core/src/main/java/kg/o/nurtelecom/theme/BaseNurTheme.kt",
+          "owner": "file",
+          "line": 9,
+          "end_line": 20,
+          "partial_header": false,
+          "A": "@Composable\nfun BaseNurTheme(content: @Composable () -> Unit) {\n\n    val context = LocalContext.current\n    val settingsPreference by lazy { AppSettingsPreference.getInstance(context) }\n\n    NurTheme(\n        colors = if (settingsPreference.isThemeLight()) nurDefaultLightColors() else nurDefaultDarkColors(),\n        darkTheme = !settingsPreference.isThemeLight(),\n        content = content\n    )\n}",
+          "B": "@Composable\nfun BaseNurTheme(content: @Composable () -> Unit) {\n    val context = LocalContext.current\n    val settingsPreference by lazy { AppSettingsPreference.getInstance(context) }\n\n    NurTheme(\n        colors = if (settingsPreference.isThemeLight()) nurDefaultLightColors() else nurDefaultDarkColors(),\n        darkTheme = !settingsPreference.isThemeLight(),\n        content = content\n    )\n}",
+          "source_sha256": "7866f76fe823ac55704cd91815272195da34aa5de6afc31d8f42acffccd4b72f",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "fun closeScreen() {\n\n    navigateBack()\n}\n",
-        "B": "fun closeScreen() {\n    navigateBack()\n}\n"
+        "A": "@Composable\nfun BaseNurTheme(content: @Composable () -> Unit) {\n\n    val context = LocalContext.current\n    val settingsPreference by lazy { AppSettingsPreference.getInstance(context) }\n\n    NurTheme(\n        colors = if (settingsPreference.isThemeLight()) nurDefaultLightColors() else nurDefaultDarkColors(),\n        darkTheme = !settingsPreference.isThemeLight(),\n        content = content\n    )\n}",
+        "B": "@Composable\nfun BaseNurTheme(content: @Composable () -> Unit) {\n    val context = LocalContext.current\n    val settingsPreference by lazy { AppSettingsPreference.getInstance(context) }\n\n    NurTheme(\n        colors = if (settingsPreference.isThemeLight()) nurDefaultLightColors() else nurDefaultDarkColors(),\n        darkTheme = !settingsPreference.isThemeLight(),\n        content = content\n    )\n}"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "F01",
@@ -411,19 +745,37 @@
     {
       "id": "F18",
       "title": "Аннотация параметра класса — отдельно или рядом с параметром?",
-      "explanation": "Смотрим на расположение @SerializedName, а не на значение аннотации.",
-      "note": "Здесь параметры классов. В обнаруженных 112 изменениях аннотаций параметров все случаи относятся к классам; API-функции не менялись.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Экспериментальное правило выбирает KtParameter с аннотацией и переносит параметр после последней аннотации.",
+        "other_structures": "Текущий код не ограничивает выбор конструкторами: параметры функций тоже могут затрагиваться. Пример анкеты подтверждён только для параметров класса. Перед принятием нужно проверить функции отдельно или явно сузить условие."
       },
+      "source_examples": [
+        {
+          "id": "F18-1",
+          "file": "cmp_lk_saima_account/src/main/java/kg/nurtelecom/cmp_lk_saima_account/data/model/FaqSaima.kt",
+          "owner": "class:FaqSaima",
+          "line": 6,
+          "end_line": 15,
+          "partial_header": false,
+          "A": "@Serializable\ndata class FaqSaima(\n    @SerializedName(\"id\")\n    var id: Long? = null,\n    @SerializedName(\"question\")\n    var question: String? = null,\n    @SerializedName(\"answer\")\n    var answer: String? = null,\n    var isExpanded: Boolean = false\n)",
+          "B": "@Serializable\ndata class FaqSaima(\n    @SerializedName(\"id\") var id: Long? = null,\n    @SerializedName(\"question\") var question: String? = null,\n    @SerializedName(\"answer\") var answer: String? = null,\n    var isExpanded: Boolean = false\n)",
+          "source_sha256": "a5a3825962a0df4eb92f4b8000bea3a0bf858bb53f38a63760ab3500d0300e16",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "data class ItemInfo(\n    @SerializedName(\"id\")\n    val id: Long,\n    @SerializedName(\"name\")\n    val name: String\n)\n",
-        "B": "data class ItemInfo(@SerializedName(\"id\") val id: Long, @SerializedName(\"name\") val name: String)\n"
+        "A": "@Serializable\ndata class FaqSaima(\n    @SerializedName(\"id\")\n    var id: Long? = null,\n    @SerializedName(\"question\")\n    var question: String? = null,\n    @SerializedName(\"answer\")\n    var answer: String? = null,\n    var isExpanded: Boolean = false\n)",
+        "B": "@Serializable\ndata class FaqSaima(\n    @SerializedName(\"id\") var id: Long? = null,\n    @SerializedName(\"question\") var question: String? = null,\n    @SerializedName(\"answer\") var answer: String? = null,\n    var isExpanded: Boolean = false\n)"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "N02",
@@ -434,19 +786,37 @@
     {
       "id": "F19",
       "title": "Аннотация enum — при значении или над ним?",
-      "explanation": "В эталоне встречается аннотация и значение на одной строке.",
-      "note": "",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Правило выбирает элемент enum с одной аннотацией и помещает её рядом с именем.",
+        "other_structures": "Только элементы enum; не аннотации классов вообще. Несколько аннотаций и комментарии требуют отдельного решения. Учебные имена и значения заменены."
       },
+      "source_examples": [
+        {
+          "id": "F19-1",
+          "file": "cmp_lk_saima_account/src/main/java/kg/nurtelecom/cmp_lk_saima_account/data/model/SaimaCrmResponse.kt",
+          "owner": "class:RequestSource",
+          "line": 12,
+          "end_line": 14,
+          "partial_header": false,
+          "A": "enum class RequestSource {\n    @SerializedName(\"MYO\") MYO\n}",
+          "B": "enum class RequestSource {\n    @SerializedName(\"MYO\")\n    MYO\n}",
+          "source_sha256": "e8ce2c239b421832e380e2f8fb6f534a887aee1c6d7f2e287a8a3f2dcd6ef011",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "enum class DeliveryMode {\n    @SerializedName(\"FAST\") FAST,\n    @SerializedName(\"REGULAR\") REGULAR\n}\n",
-        "B": "enum class DeliveryMode {\n    @SerializedName(\"FAST\")\n    FAST,\n\n    @SerializedName(\"REGULAR\")\n    REGULAR\n}\n"
+        "A": "enum class RequestSource {\n    @SerializedName(\"MYO\") MYO\n}",
+        "B": "enum class RequestSource {\n    @SerializedName(\"MYO\")\n    MYO\n}"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "V01",
@@ -456,19 +826,37 @@
     {
       "id": "F20",
       "title": "Импорты базовых типов — сначала или в общем алфавите?",
-      "explanation": "Показан образец, где общий базовый тип импортирован перед типом модуля.",
-      "note": "Для варианта А потребуется явный список общих пакетов. Из одного примера нельзя вывести порядок всех импортов команды.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Общие настройки",
+      "scope": {
+        "mechanism": "Штатный сортировщик использует порядок групп импортов из .editorconfig.",
+        "other_structures": "Группа задаётся явно по пакету, инструмент не понимает смысл «наша базовая библиотека». В исходнике наблюдался конкретный порядок импортов; универсальное преимущество всех core-пакетов из него не следует."
       },
+      "source_examples": [
+        {
+          "id": "F20-1",
+          "file": "cmp_lk_promotions/src/main/java/kg/nurtelecom/cmp_lk_promotions/ui/main/PromotionNewsState.kt",
+          "owner": "",
+          "line": 3,
+          "end_line": 4,
+          "partial_header": false,
+          "A": "import kg.o.nurtelecom.base.NurState\nimport kg.nurtelecom.cmp_lk_promotions.data.model.Promotion",
+          "B": "import kg.nurtelecom.cmp_lk_promotions.data.model.Promotion\nimport kg.o.nurtelecom.base.NurState",
+          "source_sha256": "c929af1d60e746b8d8adb601d58a3d52da8f81f56c55ed3fce8821ef1aa593cf",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "import sample.foundation.State\nimport sample.feature.Promotion\n\nclass Example\n",
-        "B": "import sample.feature.Promotion\nimport sample.foundation.State\n\nclass Example\n"
+        "A": "import kg.o.nurtelecom.base.NurState\nimport kg.nurtelecom.cmp_lk_promotions.data.model.Promotion",
+        "B": "import kg.nurtelecom.cmp_lk_promotions.data.model.Promotion\nimport kg.o.nurtelecom.base.NurState"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": true
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "U01"
@@ -477,23 +865,44 @@
     {
       "id": "F23",
       "title": "Пустые скобки перед лямбдой — оставляем или убираем?",
-      "explanation": "Оба варианта вызывают функцию с лямбдой. Выбираем запись вызова.",
-      "note": "Источник этого отдельного отличия — вызов темы в SaimaShimmerAccount; точный ID закреплён в локальном отчёте сопоставления.",
-      "labels": {
-        "A": "Как в образце «Мой О!»",
-        "B": "Альтернативный вариант"
+      "group": "Конструкции Kotlin",
+      "scope": {
+        "mechanism": "Правило ищет вызов с trailing lambda и без списка аргументов; вариант А добавляет пустые ().",
+        "other_structures": "Применяется к любым таким вызовам, а не только к AppTheme. Стандартное правило удаления пустых скобок настраивается согласованно."
       },
+      "source_examples": [
+        {
+          "id": "F23-1",
+          "file": "cmp_lk_saima_account/src/main/java/kg/nurtelecom/cmp_lk_saima_account/ui/manage_saima/component/SaimaShimmerAccount.kt",
+          "owner": "function:SaimaShimmerAccount_Preivew",
+          "line": 86,
+          "end_line": 88,
+          "partial_header": false,
+          "A": "    NurTheme() {\n        SaimaShimmerAccount()\n    }",
+          "B": "    NurTheme {\n        SaimaShimmerAccount()\n    }",
+          "source_sha256": "2a0ec78e972607b7b0b3fd635572c6f5afd301a9fe36d8dd672801028867df2b",
+          "A_roundtrip_exact": true,
+          "B_stable_check": true
+        }
+      ],
       "examples": {
-        "A": "fun example() {\n    AppTheme() {\n        Content()\n    }\n}\n",
-        "B": "fun example() {\n    AppTheme {\n        Content()\n    }\n}\n"
+        "A": "    NurTheme() {\n        SaimaShimmerAccount()\n    }",
+        "B": "    NurTheme {\n        SaimaShimmerAccount()\n    }"
+      },
+      "labels": {
+        "A": "Исходный фрагмент «Мой О!»",
+        "B": "Альтернативный вариант"
       },
       "capability": {
         "status": "strict",
-        "currentJarA": false
+        "prototype": "0.4.0-ballot.1"
       },
       "families": [
         "A02"
       ]
     }
-  ]
+  ],
+  "source_date": "2026-11-18",
+  "source_commit": "a5e20f175744cae856c99f5ac985cebe59c82587",
+  "version": "d106487352ab918491be"
 }

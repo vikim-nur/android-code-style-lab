@@ -1,4 +1,4 @@
-# Candidate A: reference-inspired, ktlint 1.8.0 + rules 0.3.2-candidate.1.
+# Isolated formatting experiment: ktlint 1.8.0 + rules 0.4.0-ballot.1.
 # Not approved or deployed. Analysis/naming/import-policy decisions are separate.
 root = true
 
@@ -7,7 +7,7 @@ ktlint_code_style = android_studio
 indent_style = space
 indent_size = 4
 max_line_length = 140
-ij_kotlin_imports_layout = sample.foundation.**,*,java.**,javax.**,kotlin.**,^
+ij_kotlin_imports_layout = kg.o.nurtelecom.base.**,*,java.**,javax.**,kotlin.**,^
 ktlint_standard_trailing-comma-on-call-site = disabled
 ktlint_standard_trailing-comma-on-declaration-site = disabled
 ktlint_standard_chain-method-continuation = disabled
@@ -59,3 +59,5 @@ nur_wrapped_base_arguments_multiline = false
 ktlint_nur_compact-condition = enabled
 
 ktlint_nur_compact-call = enabled
+
+nur_data_constructor_min_parameters = 3

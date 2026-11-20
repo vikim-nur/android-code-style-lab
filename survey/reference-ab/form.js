@@ -1,30 +1,19 @@
 'use strict';
-const spec = globalThis.FORMATTING_SURVEY;
-const model = globalThis.StyleBallot;
-const container = document.getElementById('questions');
-function element(tag, text, className) {
-  const node = document.createElement(tag);
-  if (text !== undefined) node.textContent = text;
-  if (className) node.className = className;
-  return node;
-}
-for (const [index,q] of spec.questions.entries()) {
-  const card = element('article', undefined, 'question'); card.id = q.id;
-  const fieldset = element('fieldset'); const legend = element('legend', (index+1)+'. '+q.title); fieldset.append(legend);
-  fieldset.append(element('p', q.explanation));
-  if (q.note) fieldset.append(element('p', q.note, 'tip'));
-  const longest = Math.max(...Object.values(q.examples).flatMap(code=>code.split('\n').map(line=>line.length)));
-  const grid = element('div', undefined, longest > 85 ? 'options long' : 'options');
-  for (const choice of ['A','B']) {
-    const label = element('label', undefined, 'option'); const input = element('input');
-    input.type = 'radio'; input.name = q.id; input.value = choice; input.setAttribute('aria-label', (choice==='A'?'А':'Б')+': '+q.labels[choice]);
-    label.append(input, element('strong', choice==='A'?'А':'Б'), element('span', ' — '+q.labels[choice]));
-    const pre = element('pre'); pre.append(element('code',q.examples[choice])); label.append(pre); grid.append(label);
-  }
-  fieldset.append(grid);
-  const details = element('details'); details.append(element('summary','Можно ли это автоматически форматировать?'));
-  details.append(element('p',q.capability.status==='strict'?'Оба варианта проверены: форматтер приводит к выбранному виду из другого оформления и не меняет результат повторно.':q.capability.status==='retains_only'?'Вариант Б проверен. Вариант А пока сохраняется, но автоматически выстроить его из другого оформления не удалось. Понадобится доработка своего правила.':'Вариант Б проверен. Для точного варианта А текущего прототипа пока недостаточно; ограничения и ближайший результат показаны в техническом отчёте.'));
-  const link=element('a','Открыть проверку этого вопроса');link.href='technical.html#'+q.id;details.append(link);fieldset.append(details);card.append(fieldset);container.append(card);
+const spec=globalThis.FORMATTING_SURVEY;
+const model=globalThis.StyleBallot;
+function node(tag,text){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
+function changedLines(a,b){const x=a.split('\n'),y=b.split('\n');const changedA=new Set(),changedB=new Set();let i=0,j=0;while(i<x.length&&j<y.length){if(x[i]===y[j]){i++;j++;continue;}let ai=x.length,bj=y.length,best=Infinity;for(let m=i;m<x.length;m++)for(let n=j;n<y.length;n++)if(x[m]===y[n]&&m-i+n-j<best){best=m-i+n-j;ai=m;bj=n;}for(let m=i;m<ai;m++)changedA.add(m);for(let n=j;n<bj;n++)changedB.add(n);i=ai;j=bj;}for(;i<x.length;i++)changedA.add(i);for(;j<y.length;j++)changedB.add(j);return[changedA,changedB];}
+function code(text,changed,id){const pre=node('pre'),code=node('code');code.id=id;const lines=text.split('\n');lines.forEach((line,i)=>{const span=node('span',line);span.className=changed.has(i)?'changed':'line';code.append(span);if(i<lines.length-1)code.append(document.createTextNode('\n'));});pre.append(code);return pre;}
+for(const [index,q]of spec.questions.entries()){
+ const section=node('section');section.className='panel question';section.id=q.id;section.append(node('h2',(index+1)+'. '+q.title));const badge=node('p',q.group);badge.className='badge';section.append(badge);
+ const fieldset=node('fieldset');fieldset.append(node('legend','Какой вариант удобнее читать?'));
+ for(const choice of ['A','B']){const label=node('label'),input=node('input');input.type='radio';input.name=q.id;input.value=choice;label.append(input,document.createTextNode(choice==='A'?' А — исходный фрагмент ':' Б — альтернативный вариант '));fieldset.append(label);}section.append(fieldset);
+ for(const ex of q.source_examples){const source=node('p',ex.file+':'+ex.line+(ex.end_line!==ex.line?'–'+ex.end_line:''));source.className='source';section.append(source);if(ex.partial_header)section.append(node('p','Показан настоящий заголовок объявления; тело не показано.'));
+  const flags=changedLines(ex.A,ex.B),grid=node('div');grid.className='comparison'+(Math.max(...(ex.A+'\n'+ex.B).split('\n').map(l=>l.length))>82?' long':'');for(const [ci,choice]of ['A','B'].entries()){const col=node('div');col.append(node('h3',choice==='A'?'А — как в исходнике':'Б — альтернативный вариант'),code(ex[choice],flags[ci],ex.id+'-'+choice));grid.append(col);}section.append(grid);
+  const details=node('details');details.append(node('summary','Источник и контекст'));details.append(node('p','Снимок от '+spec.source_date+'; строки '+ex.line+'–'+ex.end_line),node('p','SHA-256 файла: '+ex.source_sha256));if(ex.original_context){details.append(node('p','Окружение в оригинале:'),code(ex.original_context,new Set(),ex.id+'-context'));}section.append(details);
+ }
+ const details=node('details');details.append(node('summary','Как работает правило и на что ещё влияет'),node('p',q.scope.mechanism),node('p',q.scope.other_structures));section.append(details);section.append(node('p','Проверено на этих фрагментах: исходный А восстановлен из Б, повтор стабилен, check проходит.'));document.getElementById('questions').append(section);
+ const jump=node('a',String(index+1));jump.href='#'+q.id;document.getElementById('jump').append(jump);
 }
 function collect() {
   const answers = {};
