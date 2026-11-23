@@ -14,6 +14,19 @@ test('names, question IDs, choices and versions are validated',()=>{assert.throw
 test('the submitted JSON can be parsed back without losing Unicode or comments',()=>{const v=vote('Тестовый участник',{[first]:'A',[second]:'B'});v.comment='Короткий комментарий\nс новой строкой и ``` внутри';const i=issue(1,1,{[first]:'A'});i.body=model.issueBody(spec,v);assert.deepEqual(model.readIssue(spec,i),model.validate(spec,v));});
 test('a duplicated machine block is rejected',()=>{const i=issue(1,1,{[first]:'A'});i.body+='\n'+model.marker(spec);assert.throws(()=>model.readIssue(spec,i));});
 test('complete answers fit a GitHub draft URL, while long comments require shortening',()=>{const v=vote('Тестовый участник',Object.fromEntries(spec.questions.map(q=>[q.id,'B'])));assert.ok(model.issueUrl(spec,v)?.startsWith('https://github.com/vikim-nur/android-code-style-lab/issues/new?'));v.comment='Я'.repeat(1000);assert.equal(model.issueUrl(spec,v),null);});
+test('GitHub draft requires every answer without invalidating previously submitted partial ballots',()=>{
+ const v=vote('Участник',{[first]:'A'});
+ assert.throws(()=>model.issueUrl(spec,v),/в каждом вопросе/);
+ const previous=model.aggregate(spec,[issue(1,1,v.answers)]);
+ assert.equal(previous.questions[0].A,1);
+ assert.equal(previous.questions[1].total,0);
+ v.answers=Object.fromEntries(spec.questions.map(q=>[q.id,'A']));
+ v.answers[second]=null;
+ assert.throws(()=>model.issueUrl(spec,v),/в каждом вопросе/);
+ v.answers[second]='B';
+ const url=new URL(model.issueUrl(spec,v));
+ assert.deepEqual(model.readIssue(spec,{body:url.searchParams.get('body')}).answers,v.answers);
+});
 test('API pagination reads all pages without credentials or write methods',async()=>{const calls=[];const unrelated=Array.from({length:100},(_,i)=>({number:i+1,title:'Other',body:'',user:{id:i+10,login:'reader-'+(i+10)}}));const fetcher=async(url,options)=>{calls.push({url,options});return{ok:true,json:async()=>calls.length===1?unrelated:[issue(101,1,{[first]:'A'})],headers:{get:()=>calls.length===1?'<next>; rel="next"':''}};};const data=await model.loadIssues(spec,fetcher);assert.equal(data.length,101);assert.equal(calls.length,2);assert.ok(calls[1].url.endsWith('page=2'));for(const c of calls){assert.equal(c.options.credentials,'omit');assert.equal(c.options.headers.Authorization,undefined);assert.equal(c.options.body,undefined);assert.equal(c.options.method,undefined);}});
 test('HTTP errors are surfaced rather than converted to zero votes',async()=>{await assert.rejects(()=>model.loadIssues(spec,async()=>({ok:false,status:403})),/HTTP 403/);});
 test('a full final page is followed by an empty page, without dropping votes',async()=>{let n=0;const all=Array.from({length:100},(_,i)=>issue(i+1,i+1,{[first]:'A'}));const r=await model.loadIssues(spec,async()=>({ok:true,json:async()=>++n===1?all:[],headers:{get:()=>''}}));assert.equal(r.length,100);assert.equal(n,2);});

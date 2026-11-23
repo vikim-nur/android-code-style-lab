@@ -35,6 +35,7 @@
   }
   function issueUrl(spec, input) {
     const vote = validate(spec, input, true);
+    if (Object.values(vote.answers).some(value => value === null)) throw new Error('Выберите А или Б в каждом вопросе.');
     const base = 'https://github.com/' + spec.repository + '/issues/new';
     const url = base + '?title=' + encodeURIComponent(prefix(spec) + ' ' + vote.name) + '&body=' + encodeURIComponent(issueBody(spec, vote));
     return url.length <= 7500 ? url : null;

@@ -31,5 +31,22 @@ function collect() {
 function progress() {const data=collect();document.getElementById('progress').textContent='Выбрано '+Object.values(data.answers).filter(Boolean).length+' из '+spec.questions.length+'. А — образец, Б — альтернатива.';}
 function message(text){document.getElementById('message').textContent=text;}
 document.addEventListener('change',progress);
-document.getElementById('github').addEventListener('click',()=>{try{const vote=model.validate(spec,collect(),true);const url=model.issueUrl(spec,vote);if(url){window.open(url,'_blank','noopener,noreferrer');message('Открыт черновик на GitHub. Голос будет учтён после отправки Issue. Затем нажми в нём «Посмотреть результаты».');}else{message('Ответ слишком длинный для ссылки GitHub. Сократи комментарий и попробуй ещё раз; выбранные варианты сохранятся на странице.');}}catch(e){message(e.message);}});
+document.getElementById('github').addEventListener('click',()=>{
+ const vote=collect();
+ const missing=spec.questions.filter(q=>vote.answers[q.id]===null);
+ if(missing.length){
+  message('Выбери А или Б в каждом вопросе. Осталось без ответа: '+missing.length+' из '+spec.questions.length+'.');
+  document.querySelector('input[name="'+missing[0].id+'"]').focus();
+  return;
+ }
+ try{
+  const url=model.issueUrl(spec,vote);
+  if(url){
+   window.open(url,'_blank','noopener,noreferrer');
+   message('Открыт черновик на GitHub. Голос будет учтён после отправки Issue. Затем нажми в нём «Посмотреть результаты».');
+  }else{
+   message('Ответ слишком длинный для ссылки GitHub. Сократи комментарий и попробуй ещё раз; выбранные варианты сохранятся на странице.');
+  }
+ }catch(e){message(e.message);}
+});
 progress();
