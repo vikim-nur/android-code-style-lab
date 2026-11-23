@@ -2,26 +2,24 @@
 const spec=globalThis.FORMATTING_SURVEY;
 const model=globalThis.StyleBallot;
 function node(tag,text){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;}
-function changedLines(a,b){const x=a.split('\n'),y=b.split('\n');const changedA=new Set(),changedB=new Set();let i=0,j=0;while(i<x.length&&j<y.length){if(x[i]===y[j]){i++;j++;continue;}let ai=x.length,bj=y.length,best=Infinity;for(let m=i;m<x.length;m++)for(let n=j;n<y.length;n++)if(x[m]===y[n]&&m-i+n-j<best){best=m-i+n-j;ai=m;bj=n;}for(let m=i;m<ai;m++)changedA.add(m);for(let n=j;n<bj;n++)changedB.add(n);i=ai;j=bj;}for(;i<x.length;i++)changedA.add(i);for(;j<y.length;j++)changedB.add(j);return[changedA,changedB];}
-function highlightedLines(a,b){
- const diff=changedLines(a,b);
- const fullyChanged=(text,changed)=>text.split('\n').every((line,index)=>!line.trim()||changed.has(index));
- // When the entire comparison differs, a solid yellow block adds no information.
- return fullyChanged(a,diff[0])&&fullyChanged(b,diff[1])?[new Set(),new Set()]:diff;
+function displayCode(text,id){
+ // F12 starts at the expression, so subtract the enclosing argument's indent from continuations.
+ const baseIndent={'F12-1-B':16,'F12-2-B':8}[id];
+ return baseIndent?text.replace(new RegExp('^ {'+baseIndent+'}','gm'),''):text;
 }
-function code(text,changed,id){const pre=node('pre'),code=node('code');code.id=id;const lines=text.split('\n');lines.forEach((line,i)=>{const span=node('span',line);span.className=changed.has(i)?'changed':'line';code.append(span);if(i<lines.length-1)code.append(document.createTextNode('\n'));});pre.append(code);return pre;}
+function code(text,id){const pre=node('pre'),code=node('code',text);code.id=id;pre.append(code);return pre;}
 for(const [index,q]of spec.questions.entries()){
  const section=node('section');section.className='panel question';section.id=q.id;section.append(node('h2',(index+1)+'. '+q.title));const badge=node('p',q.group);badge.className='badge';section.append(badge);
  const fieldset=node('fieldset');fieldset.append(node('legend','Какой вариант удобнее читать?'));
  const grid=node('div');grid.className='comparison'+(Math.max(...q.source_examples.flatMap(ex=>(ex.A+'\n'+ex.B).split('\n').map(line=>line.length)))>82?' long':'');
- const highlights=q.source_examples.map(ex=>highlightedLines(ex.A,ex.B));
- for(const [ci,choice]of ['A','B'].entries()){
+ for(const choice of ['A','B']){
   const label=node('label');label.className='option';const input=node('input');input.type='radio';input.name=q.id;input.value=choice;
   const title=choice==='A'?'А — как в исходнике':'Б — альтернативный вариант';input.setAttribute('aria-label',title);label.append(input,node('strong',title));
   for(const [exampleIndex,ex] of q.source_examples.entries()){
    if(q.source_examples.length>1)label.append(node('p','Пример '+(exampleIndex+1)));
    if(ex.partial_header)label.append(node('p','Заголовок объявления; тело не показано.'));
-   label.append(code(ex[choice],highlights[exampleIndex][ci],ex.id+'-'+choice));
+    const id=ex.id+'-'+choice;
+    label.append(code(displayCode(ex[choice],id),id));
   }
   grid.append(label);
  }
