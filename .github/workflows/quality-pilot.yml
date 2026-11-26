@@ -1,0 +1,51 @@
+name: Quality pilot synthetic acceptance
+on:
+  workflow_dispatch:
+  push:
+    branches: ["quality-pilot/**"]
+    paths: ["tooling/quality/**", "tooling/quality-ci/**", ".github/workflows/quality-pilot.yml"]
+  pull_request:
+    paths: ["tooling/quality/**", "tooling/quality-ci/**", ".github/workflows/quality-pilot.yml"]
+permissions:
+  contents: read
+concurrency:
+  group: quality-pilot-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # official v4 ref, 2026-11-26
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3 # official v4 ref
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Download verified Gradle 9.4.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/gradle.zip" https://services.gradle.org/distributions/gradle-9.4.1-bin.zip
+          echo "2ab2958f2a1e51120c326cad6f385153bb11ee93b3c216c5fccebfdfbb7ec6cb  $RUNNER_TEMP/gradle.zip" | sha256sum --check --strict
+          unzip -q "$RUNNER_TEMP/gradle.zip" -d "$RUNNER_TEMP"
+          echo "GRADLE_BINARY=$RUNNER_TEMP/gradle-9.4.1/bin/gradle" >> "$GITHUB_ENV"
+      - name: Synthetic multi-module Maven acceptance
+        shell: bash
+        run: |
+          python3 tooling/quality-ci/run.py \
+            --quality-source tooling/quality \
+            --work-dir "$RUNNER_TEMP/quality-acceptance"
+      - name: Upload allowlisted synthetic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # official v4 ref
+        with:
+          name: quality-synthetic-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/quality-acceptance/evidence/*.json
+            ${{ runner.temp }}/quality-acceptance/evidence/*.log
+            ${{ runner.temp }}/quality-acceptance/evidence/*.xml
+            ${{ runner.temp }}/quality-acceptance/evidence/*.health
+          if-no-files-found: warn
+          retention-days: 7

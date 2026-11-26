@@ -1,0 +1,22 @@
+# Explicit allowlist: do not use --build-upon-default-config.
+# Pilot warnings, not an approved universal policy.
+config:
+  validation: true
+  excludes: ['Compose']
+coroutines:
+  active: true
+  GlobalCoroutineUsage:
+    active: true
+style:
+  active: true
+  ForbiddenComment:
+    active: true
+    comments: ['\bTODO\b']
+exceptions:
+  active: true
+  NotImplementedDeclaration:
+    active: true
+Compose:
+  active: true
+  PreviewPublic:
+    active: true

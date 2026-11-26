@@ -1,0 +1,22 @@
+{
+  "checked_date": "2026-11-26",
+  "gradle": {
+    "version": "9.4.1",
+    "checksum_url": "https://services.gradle.org/distributions/gradle-9.4.1-bin.zip.sha256",
+    "sha256": "2ab2958f2a1e51120c326cad6f385153bb11ee93b3c216c5fccebfdfbb7ec6cb"
+  },
+  "actions": {
+    "actions/checkout": {
+      "source": "https://api.github.com/repos/actions/checkout/git/ref/tags/v4",
+      "commit": "11d5960a326750d5838078e36cf38b85af677262"
+    },
+    "actions/setup-java": {
+      "source": "https://api.github.com/repos/actions/setup-java/git/ref/tags/v4",
+      "commit": "cf277c60eb25467037889841efdb72551f06f6c3"
+    },
+    "actions/upload-artifact": {
+      "source": "https://api.github.com/repos/actions/upload-artifact/git/ref/tags/v4",
+      "commit": "ea165f8d65b6e75b540449e92b4886f43607fa02"
+    }
+  }
+}

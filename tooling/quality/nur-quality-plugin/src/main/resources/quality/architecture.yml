@@ -1,0 +1,17 @@
+# Detekt 2 FULL mode. Independent mandatory health listener cannot be suppressed.
+config:
+  validation: true
+  excludes: ['TeamArchitecture']
+TeamArchitecture:
+  active: true
+  ScreenForbiddenParameterType:
+    active: true
+    functionPattern: '.*(Screen|ScreenContent)$'
+    allowedFunctionPattern: '.*(NavHost|NavGraph|Graph|Flow)$'
+    onlyComposable: true
+    forbiddenTypePattern: 'androidx\.navigation\.NavController'
+  LayerForbiddenDependency:
+    active: true
+    packagePattern: '(^|\.)(domain|ui|presentation)(\.|$)'
+    forbiddenSymbolPattern: '.*\.(data|network_api)\.(?:[^.]+\.)*(model|dto)\..*'
+    reportImports: true
