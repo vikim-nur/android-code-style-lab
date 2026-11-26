@@ -71,7 +71,8 @@ internal object AutomaticArchitecture {
                     ?: throw GradleException("Compiler source FileCollection API is unavailable")
                 val sources = module.files(module.provider { read(compile.get(), sourceProperty) })
                     .asFileTree.matching { it.include("**/*.kt") }
-                val libraries = module.files(module.provider { read(compile.get(), "Libraries") })
+                val rawLibraries = module.files(module.provider { read(compile.get(), "Libraries") })
+                val libraries = KspOptionalClasspath.adapt(module, compileName, rawLibraries, entry)
                 val cp = module.objects.fileCollection()
                 var javaSources: FileCollection? = null
                 val compilation = if (android) compileName.removePrefix("compile").removeSuffix("Kotlin")

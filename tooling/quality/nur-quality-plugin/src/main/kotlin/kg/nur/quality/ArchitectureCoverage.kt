@@ -13,6 +13,7 @@ internal class ArchitectureScope(val projectPath: String) {
     var classpathCount: Int? = null
     var healthNonce: String? = null
     var report = ""
+    @Volatile var classpathAdjustments: List<Map<String, Any?>> = emptyList()
 }
 
 /** Writes an initial non-clean snapshot before execution, each result, and a buildFinished
@@ -64,7 +65,7 @@ internal class ArchitectureCoverage(private val output: File, paths: List<String
                     "compilation" to s.compilation, "task" to s.taskPath,
                     "status" to s.status, "reason" to s.reason, "sources" to s.sourceCount,
                     "classpathEntries" to s.classpathCount, "healthNonce" to s.healthNonce,
-                    "report" to s.report)
+                    "report" to s.report, "classpathAdjustments" to s.classpathAdjustments)
             })
         val temporary = File(output.parentFile, output.name + ".tmp")
         temporary.writeText(json(values) + "\n")

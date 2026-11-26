@@ -10,6 +10,7 @@ is not a remote publication or a completed GitHub Actions run.
 |---|---|
 | Frozen portable plugin `nur-quality-plugin/`, `nur-detekt-rules/`, `nur-ktlint-rules/`, `config/` | `tooling/quality/` with the same four relative directories |
 | This `run.py`, `fixture/`, `provenance.json`, README | `tooling/quality-ci/` |
+| This `ksp_regression.py`, `ksp-fixture/`, `ksp-processor/` | `tooling/quality-ci/` (same relative paths) |
 | This `workflow.yml` | `.github/workflows/quality-pilot.yml` |
 
 Exclude build outputs, IDE configuration, cached artifacts, signing material,
@@ -45,6 +46,14 @@ entire working repositories or every profile/example merely to satisfy a directo
    and fresh nonces. Root coverage must remain auto, never manual.
 9. `build --dry-run` must not contain architecture tasks. Actual compile producers
    are allowed; assemble/build lifecycle is not added to the analyzer.
+10. Real KSP2.3.12 uses a source-built generic processor in a separate build (not
+    a Java-only module hidden from coverage). Cold Kotlin-only generation may
+    omit only the exact registered absent binary output after producer success;
+    warm execution retains fresh analysis health. Binary mode emits actual
+    JVM11 class bytes through CodeGenerator and uses them from Kotlin.
+11. Missing required library, neighboring missing directory, failed/disabled/
+    generic-skipped KSP producers must remain blocking with fresh blocked coverage.
+    Original compiler FileCollections/producer edges are never replaced manually.
 
 Final task/report layout must be checked against the frozen root-auto contract.
 The runner exposes `--architecture-task` and `--report-glob` for report layout,

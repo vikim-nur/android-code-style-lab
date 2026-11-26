@@ -9,10 +9,13 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import time
 import uuid
 import xml.etree.ElementTree as ET
 import zipfile
+
+sys.dont_write_bytecode = True
 
 
 def digest(data):
@@ -273,7 +276,10 @@ project(":ui") {
         receipt.update(passed=True, versions=[v1, v2], changed_class=changed,
                        immutable_versions=True, rollback_byte_exact=True,
                        unresolved_fixture_sha256=negative_hash, source_unchanged=True)
+        from ksp_regression import run_ksp
+        receipt["ksp_regression"] = run_ksp(work, evidence, repository, v1, execute)
     except Exception as error:
+        receipt["passed"] = False
         receipt["error"] = f"{type(error).__name__}: {error}"
         raise
     finally:

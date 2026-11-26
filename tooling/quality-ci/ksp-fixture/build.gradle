@@ -1,0 +1,14 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.2.21' apply false
+    id 'com.google.devtools.ksp' version '2.3.12' apply false
+    id 'kg.nur.quality' version '@QUALITY_VERSION@'
+}
+allprojects { repositories { mavenCentral() } }
+gradle.taskGraph.whenReady { graph ->
+    def analysis = project(':generated').tasks.named('qualityArchitectureModule').get()
+    file('producer-edge.json').text = groovy.json.JsonOutput.toJson([
+        direct: analysis.taskDependencies.getDependencies(analysis).collect { it.path }.sort(),
+        graph: graph.allTasks.collect { it.path },
+        classesExist: file('generated/build/generated/ksp/main/classes').exists()
+    ])
+}
